@@ -6,6 +6,10 @@
 * Open the project’s xcworkspace file with xcode
 
 #### Installing libraries on IOS with React v0.60.0+ 
-* `npm install react-native-camera --save`
+* Install the required modules:
+  * `npm install react-native-camera --save`
+  * `npm install react-native-video --save`
+  * `npm install react-navigation --save`
+  * `npm install react-native-gesture-handler --save`
 * `cd ios/`
 * `pod install` (as cocoapods is integrated by default)
