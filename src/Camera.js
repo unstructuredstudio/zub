@@ -1,3 +1,11 @@
+/**
+ * Camera.js
+ * =========
+ * 
+ * (C) 2019 Unstructured.Studio <http://unstrucured.studio>
+ * 
+ */
+
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { RNCamera } from 'react-native-camera';
@@ -65,7 +73,7 @@ export default class VideoRecorder extends PureComponent {
           }}
         />
         <View
-          style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}
+          // style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
         >
           {button}
           <Button title="Play" onPress={() => this.props.navigation.navigate('Player')} />
@@ -89,8 +97,7 @@ export default class VideoRecorder extends PureComponent {
 const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
+    display: 'flex',
   },
   preview: {
     flex: 1,

@@ -1,3 +1,11 @@
+/**
+ * Player.js
+ * =========
+ * 
+ * (C) 2019 Unstructured.Studio <http://unstrucured.studio>
+ * 
+ */
+
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Video from 'react-native-video';

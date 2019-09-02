@@ -1,18 +1,25 @@
+/**
+ * App.js
+ * ======
+ * 
+ * (C) 2019 Unstructured.Studio <http://unstrucured.studio>
+ * 
+ */
+
 import React, { Component, PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Video from 'react-native-video';
-import VideoRecorder from './src/Camera';
+import { createStackNavigator, createAppContainer, Header } from 'react-navigation';
 import VideoPlayer from './src/Player';
+import PrimaryScreen from './src/PrimaryScreen';
 
 const RootStack = createStackNavigator(
   {
-    Camera: VideoRecorder,
+    PrimaryScreen: PrimaryScreen, 
     Player: VideoPlayer,
   },
   {
-    initialRouteName: 'Camera',
-  }
+    initialRouteName: 'PrimaryScreen',
+  },
+  { headerMode: 'none' }
 );
 
 const AppContainer = createAppContainer(RootStack);
