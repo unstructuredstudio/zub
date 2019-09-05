@@ -18,27 +18,22 @@ import {
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import AnimatedBar from "react-native-animated-bar";
 
-export default class PrimaryScreen extends Component {
-    
-    /* Remove top navigation header */
-    static navigationOptions = { header: null };
+export default function PrimaryScreen(props) {
+  const [recording, setRecording] = React.useState(false);
+  const [processing, setProcessing] = React.useState(false);
 
-    render() {
-        let bigRedButton = (
-            <AwesomeButtonCartman 
-                borderRadius={50} 
-                height={100} 
-                stretch={true} 
-                type="secondary"
-            >      </AwesomeButtonCartman>
-        );
         return (
             <Fragment>
             <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.container}>
                     <View style={styles.containerLeft}>
                         <View style={styles.video}>
-                            <VideoRecorder />
+                            <VideoRecorder
+                              recording={recording}
+                              setRecording={setRecording}
+                              processing={processing}
+                              setProcessing={setProcessing}
+                            />
                         </View>
                         <View style={styles.progressBarContainer}>
                         <AnimatedBar
@@ -74,21 +69,33 @@ export default class PrimaryScreen extends Component {
                         <View style={styles.videoButtonContainer}
                             ref={component => this._button1 = component}
                         >
-                        <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">2</AwesomeButtonCartman>
+                            <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">2</AwesomeButtonCartman>
                         </View>
                         <View style={styles.videoButtonContainer}>
-                        <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">3</AwesomeButtonCartman>
+                            <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">3</AwesomeButtonCartman>
                         </View>
                         <View style={styles.recordButtonContainer}>
-                            {bigRedButton}
+                        <AwesomeButtonCartman 
+                          borderRadius={50} 
+                          height={100} 
+                          stretch={true} 
+                          type="secondary"
+                          onPress={() => setRecording(!recording)}
+                        >
+                        {
+                          recording ? 'STOP': 'RECORD'
+                        }
+                        </AwesomeButtonCartman>
                         </View>
                     </View>
                     </View>
             </SafeAreaView>
             </Fragment>
         );
-    }
 }
+
+// Remove Navigation Header
+PrimaryScreen.navigationOptions = { header: null };
 
 const styles = StyleSheet.create({
   recordButtonContainer: {

@@ -14,7 +14,7 @@ export default class VideoPlayer extends Component {
   render() {
     return(
       <View style={styles.videoContainer}>
-        <Video source={{ uri: global.clipUrl }}   // Can be a URL or a localfile.
+        <Video source={{ uri: global.clipUrl || this.props.clipUri }}   // Can be a URL or a localfile.
          ref={(ref) => {
            this.player = ref
          }}                                      // Store reference
