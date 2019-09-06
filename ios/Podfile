@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '9.3'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'zub' do
@@ -27,6 +27,7 @@ target 'zub' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'react-native-ffmpeg', :podspec => '../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg.podspec'
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 

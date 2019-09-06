@@ -11,6 +11,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - mobile-ffmpeg-https (4.2.2)
   - React (0.60.4):
     - React-Core (= 0.60.4)
     - React-DevSupport (= 0.60.4)
@@ -57,13 +58,19 @@ PODS:
     - React-cxxreact (= 0.60.4)
     - React-jsi (= 0.60.4)
   - React-jsinspector (0.60.4)
-  - react-native-camera (3.0.0):
+  - react-native-camera (3.3.0):
     - React
-    - react-native-camera/RCT (= 3.0.0)
-    - react-native-camera/RN (= 3.0.0)
-  - react-native-camera/RCT (3.0.0):
+    - react-native-camera/RCT (= 3.3.0)
+    - react-native-camera/RN (= 3.3.0)
+  - react-native-camera/RCT (3.3.0):
     - React
-  - react-native-camera/RN (3.0.0):
+  - react-native-camera/RN (3.3.0):
+    - React
+  - react-native-ffmpeg (0.3.5):
+    - React
+    - react-native-ffmpeg/https (= 0.3.5)
+  - react-native-ffmpeg/https (0.3.5):
+    - mobile-ffmpeg-https (= 4.2.2)
     - React
   - react-native-video (5.0.0):
     - React
@@ -94,7 +101,9 @@ PODS:
   - React-RCTWebSocket (0.60.4):
     - React-Core (= 0.60.4)
     - React-fishhook (= 0.60.4)
-  - RNGestureHandler (1.3.0):
+  - RNGestureHandler (1.4.1):
+    - React
+  - RNSoundRecorder (1.3.3):
     - React
   - yoga (0.60.4.React)
 
@@ -111,6 +120,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-ffmpeg (from `../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg.podspec`)
   - react-native-video (from `../node_modules/react-native-video`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -123,11 +133,13 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNSoundRecorder (from `../node_modules/react-native-sound-recorder`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
+    - mobile-ffmpeg-https
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -154,6 +166,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-ffmpeg:
+    :podspec: "../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg.podspec"
   react-native-video:
     :path: "../node_modules/react-native-video"
   React-RCTActionSheet:
@@ -178,6 +192,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/WebSocket"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNSoundRecorder:
+    :path: "../node_modules/react-native-sound-recorder"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -186,6 +202,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  mobile-ffmpeg-https: 9474e6e0958b6c12d981073d81a3b9484da02f48
   React: ff7ee2ae5ee1c1d9ae2183b4111045b25294bb01
   React-Core: 8e0ea421cae5609d2562850f98421b15030476fa
   React-cxxreact: 326880209990151a7182a813311054e9772ba510
@@ -194,7 +211,8 @@ SPEC CHECKSUMS:
   React-jsi: 21d3153b1153fbf6510a92b6b11e33e725cb7432
   React-jsiexecutor: 7549641e48bafae7bfee3f3ea19bf4901639c5de
   React-jsinspector: 73f24a02fa684ed6a2b828ba116874a2191ded88
-  react-native-camera: fa20f6aa54ce4a84c47e38a2d63dc0f3c18dccf9
+  react-native-camera: 0f1eb70648aa810d692b13fa69a37e7f844bbb22
+  react-native-ffmpeg: dc6abf774939509b701de58a33e2cc6b373add19
   react-native-video: 37a0a4628b985c080cfd7b0768457be84c8c3fd0
   React-RCTActionSheet: 9f71d7ae3e8fb10e08d162cbf14c621349dbfab3
   React-RCTAnimation: 981d8c95b0e30918a9832ccac32af83562a27fae
@@ -206,9 +224,10 @@ SPEC CHECKSUMS:
   React-RCTText: e0f224898b13af9aa036ea7cb3d438daa68c1044
   React-RCTVibration: 0bea40cd51bd089bd591a8f74c86e91fdf2666c5
   React-RCTWebSocket: 163873f4cdd5f1058a9483443404fc3801581cb6
-  RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
+  RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
+  RNSoundRecorder: 9a7dd93152b08d4a560cbd7b70f074af05c6d720
   yoga: c2c050f6ae6e222534760cc82f559b89214b67e2
 
-PODFILE CHECKSUM: 71c47b6f0bf4ed598308c9c9c807f7d578629616
+PODFILE CHECKSUM: e9656f626512acd399e54b494aa525cc28c45595
 
 COCOAPODS: 1.7.5
