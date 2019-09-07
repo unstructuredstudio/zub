@@ -19,7 +19,7 @@ import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/
 import AnimatedBar from "react-native-animated-bar";
 
 export default function PrimaryScreen(props) {
-  const [recording, setRecording] = React.useState(false);
+  const [recording, setRecording] = React.useState(null);
   const [processing, setProcessing] = React.useState(false);
 
         return (

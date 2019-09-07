@@ -7,28 +7,33 @@
  */
 
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { StyleSheet, View, Button }  from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import VideoPlayer from './Player';
 
 export default function VideoRecorder(props) {
-
+  let cameraRef;
+    
   const [ playing, setPlaying ] = React.useState(false);
 
   const { recording, setRecording, processing, setProcessing } = props;
   
   let clipUri;
   React.useEffect(() => {
-    if(recording) {
-      startRecording();
-      setPlaying(false);
-    } else {
+    console.log('recording', recording);
+    if(recording === true) {
+      try {
+        setPlaying(false);
+        setTimeout(startRecording, 100);
+      } catch(ex) {
+        console.log(ex);
+      }
+    } else if(recording === false) {
       stopRecording();
     }
   }, [recording]);
   
 
-    const cameraRef = React.useRef();
     if (processing) {
       button = (
         <View style={styles.capture}>
@@ -37,16 +42,20 @@ export default function VideoRecorder(props) {
       );
     }
     async function startRecording() {
-      if(cameraRef && cameraRef.stopRecording) {
-        const { uri, codec = "mp4" } = await cameraRef.recordAsync();
-        global.clipUrl = uri;
-        clipUri = uri;
-      }
+        try {
+          const { uri, codec = "mp4" } = await cameraRef.recordAsync({});
+          global.clipUrl = uri;
+        } catch(ex) {
+          setRecording(false);
+          console.log(ex);
+        }
     }
   
     function stopRecording() {
-      if(cameraRef && cameraRef.stopRecording) {
-        cameraRef.stopRecording();
+      try {
+      cameraRef.stopRecording();
+      } catch(ex) {
+        console.log(ex);
       }
     }
 
@@ -59,7 +68,7 @@ export default function VideoRecorder(props) {
           !playing && (
             <>
               <RNCamera
-                ref={cameraRef}
+                ref={ref => cameraRef = ref}
                 style={styles.preview}
                 type={RNCamera.Constants.Type.back}
                 flashMode={RNCamera.Constants.FlashMode.off}
