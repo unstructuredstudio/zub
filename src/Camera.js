@@ -84,6 +84,7 @@ export default function VideoRecorder(props) {
                   buttonPositive: 'Ok',
                   buttonNegative: 'Cancel',
                 }}
+                captureAudio={false}
               />
               {
                 !recording && <Button onPress={() => setPlaying(true)} title="Play"> Play</Button>

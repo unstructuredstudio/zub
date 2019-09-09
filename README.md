@@ -19,10 +19,13 @@
   * `npm install react-native-gesture-handler --save`
   * `npm install react-native-really-awesome-button --save`
   * `npm install react-native-animated-bar --save`
+  * `npm install react-native-ffmpeg --save`
+  * `npm install react-native-sound-recorder --save`
 
 #### Extra Setup (iOS)
 * `cd ios/`
 * `pod install` (as cocoapods is integrated by default)
+* In case you are not relying on the latest version of `react-native-sound-recorder` node module, make additional changes to `ios/RNSRecorder.m` library from this pull request: https://github.com/kevinresol/react-native-sound-recorder/pull/31/files
 
 #### Extra Setup (Android)
 * Add following lines in `AndroidManifest.xml`
