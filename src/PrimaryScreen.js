@@ -14,7 +14,6 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
 } from 'react-native';
 
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
