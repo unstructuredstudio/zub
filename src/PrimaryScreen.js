@@ -13,14 +13,32 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import AnimatedBar from "react-native-animated-bar";
 
 export default function PrimaryScreen(props) {
+  const [maxClipSize] = React.useState(40);
   const [recording, setRecording] = React.useState(null);
   const [processing, setProcessing] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    let interval = null;
+
+    if (recording && count < maxClipSize) {
+      interval = setInterval(() => {
+        setCount(count => count + 1);
+      }, 1000);
+    } else {
+      setRecording(null);
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [recording, count]);
 
         return (
             <Fragment>
@@ -33,19 +51,38 @@ export default function PrimaryScreen(props) {
                               setRecording={setRecording}
                               processing={processing}
                               setProcessing={setProcessing}
+                              count={count}
+                              setCount={setCount}
                             />
                         </View>
                         <View style={styles.progressBarContainer}>
-                        <AnimatedBar
-                            progress={0.3}
-                            height={40}
-                            borderColor="#edca31"
-                            barColor="#EE3253"
-                            fillColor={"#edca31"}
-                            borderRadius={13}
-                            borderWidth={10}
-                            duration={500}
-                            />
+                          <AnimatedBar
+                              progress={count * 0.025}
+                              height={40}
+                              borderColor="#edca31"
+                              barColor="#EE3253"
+                              fillColor={"#edca31"}
+                              borderRadius={13}
+                              borderWidth={10}
+                              duration={count}
+                              animate={true}
+                              >
+
+                            <View style={styles.barContainer}>
+                              <View>
+                              {count > 0 &&
+                                <Text style={styles.barText}>
+                                {count}s</Text>
+                              }
+                              </View>
+                              <View>
+                              {count !== 40 &&
+                              <Text style={styles.barText}>{maxClipSize}s</Text>
+                              }
+                              </View>
+                            </View>
+
+                          </AnimatedBar>
                         </View>
                     </View>
                     <View style={styles.containerRight}>
@@ -161,5 +198,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: "#000000",
+  },
+  barText: {
+    backgroundColor: "transparent",
+    color: "#FFF",
+  },
+  barContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "stretch",
   },
 });
