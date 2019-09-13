@@ -16,7 +16,7 @@ export default function VideoRecorder(props) {
     
   const [ playing, setPlaying ] = React.useState(false);
 
-  const { recording, setRecording, processing, setProcessing, count, setCount } = props;
+  const { recording, setRecording, processing, setProcessing } = props;
   
   let clipUri;
   React.useEffect(() => {
@@ -43,7 +43,6 @@ export default function VideoRecorder(props) {
     }
     async function startRecording() {
         try {
-          setCount(0); //reset progress bar counter
           const { uri, codec = "mp4" } = await cameraRef.recordAsync({});
           global.clipUrl = uri;
         } catch(ex) {
