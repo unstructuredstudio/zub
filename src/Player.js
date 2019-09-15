@@ -62,7 +62,7 @@ export default class VideoPlayer extends Component {
 
   async startAudioRecording() {
     this.setState({ recording: true });
-    await SoundRecorder.start(SoundRecorder.PATH_CACHE + '/audio.mp4')
+    await SoundRecorder.start(SoundRecorder.PATH_CACHE + '/audio-001.mp4')
     .then(function() {
       console.log('started recording'); 
     });
@@ -75,7 +75,7 @@ export default class VideoPlayer extends Component {
       console.log('Stopped recording, audio file saved at: ' + result.path);
 
       //Combine audio and video
-      RNFFmpeg.execute('-i ' + global.clipUrl + ' -i ' + result.path + ' -c copy ' + SoundRecorder.PATH_CACHE + '/output.mov', ' ').then(result => console.log("FFmpeg process exited with rc " + result.rc));
+      RNFFmpeg.execute('-i ' + global.clipUrl + ' -i ' + result.path + ' -c copy ' + SoundRecorder.PATH_CACHE + '/output-002.mov', ' ').then(result => console.log("FFmpeg process exited with rc " + result.rc));
     }).catch(function(error) {
       console.log("An error occured while stoping the recording: " + error);
     });
