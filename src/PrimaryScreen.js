@@ -9,6 +9,7 @@
 import React, {Component, Fragment} from 'react';
 import Video from 'react-native-video';
 import VideoRecorder from './Camera';
+import ProgressBar from './ProgressBar';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,7 +17,6 @@ import {
 } from 'react-native';
 
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import AnimatedBar from "react-native-animated-bar";
 
 export default function PrimaryScreen(props) {
   const [recording, setRecording] = React.useState(null);
@@ -35,18 +35,10 @@ export default function PrimaryScreen(props) {
                               setProcessing={setProcessing}
                             />
                         </View>
-                        <View style={styles.progressBarContainer}>
-                        <AnimatedBar
-                            progress={0.3}
-                            height={40}
-                            borderColor="#edca31"
-                            barColor="#EE3253"
-                            fillColor={"#edca31"}
-                            borderRadius={13}
-                            borderWidth={10}
-                            duration={500}
-                            />
-                        </View>
+                        <ProgressBar
+                          recording={recording}
+                          setRecording={setRecording}
+                        />
                     </View>
                     <View style={styles.containerRight}>
                         <View style={styles.videoButtonContainer}>
@@ -108,13 +100,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     backgroundColor: 'gray',
-  },
-  progressBarContainer: {
-    flex: 0.1,
-    backgroundColor: '#00B8C4',
-    display: 'flex',
-    paddingHorizontal: 10,
-    paddingBottom: 10,
   },
   video: {
     flex: 1,
