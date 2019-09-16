@@ -19,8 +19,35 @@ import {
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 
 export default function PrimaryScreen(props) {
-  const [recording, setRecording] = React.useState(null);
-  const [processing, setProcessing] = React.useState(false);
+  const [recording, setRecording] = React.useState(null),
+        [processing, setProcessing] = React.useState(false),
+        [curScreenNum, setCurScreenNum] = React.useState(1),
+        [nextScreenNum, setNextScreenNum] = React.useState(1),
+        [workInProgress, SetWorkInProgress] = React.useState(false),
+
+        [buttonTypes, setButtonTypes] = React.useState([
+          { 'button': 1, type: 'primary' },
+          { 'button': 2, type: 'enabled' },
+          { 'button': 3, type: 'enabled' },
+        ]);
+
+
+  React.useEffect(() => {
+    switchScreen();
+  });
+
+  function switchScreen() {  
+    if (nextScreenNum === curScreenNum || workInProgress ||
+      buttonTypes[nextScreenNum - 1].type === 'disabled') {
+      return;
+    }
+
+    buttonTypes[curScreenNum - 1].type = 'enabled';
+    buttonTypes[nextScreenNum - 1].type = 'primary';
+
+    setButtonTypes(buttonTypes);
+    setCurScreenNum(nextScreenNum);
+  }
 
         return (
             <Fragment>
@@ -42,35 +69,52 @@ export default function PrimaryScreen(props) {
                     </View>
                     <View style={styles.containerRight}>
                         <View style={styles.videoButtonContainer}>
-                        <AwesomeButtonCartman 
-                            borderRadius={0} 
-                            borderWidth={0} 
-                            height={100} 
-                            textFontFamily={'RoundyRainbows'} 
-                            textSize={50} 
-                            stretch={true} 
-                            type="primary"
 
+                        <AwesomeButtonCartman
+                            borderRadius={buttonTypes[0].type === 'primary' ? 5 : 0}
+                            borderWidth={buttonTypes[0].type === 'primary' ? 5 : 0}
+                            height={100}
+                            textSize={50}
+                            stretch={true}
+                            type={buttonTypes[0].type}
                             onPress={() => {
-                            this._button1.setNativeProps({type: "disabled"});
+                              setNextScreenNum(1);
                             }}
                             >
-                            1
+                            <Text>1</Text>
                         </AwesomeButtonCartman>
                         </View>
-                        <View style={styles.videoButtonContainer}
-                            ref={component => this._button1 = component}
-                        >
-                            <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">2</AwesomeButtonCartman>
+                        <View style={styles.videoButtonContainer}>
+                            <AwesomeButtonCartman
+                            height={100}
+                            stretch={true}
+                            textSize={50}
+                            borderRadius={buttonTypes[1].type === 'primary' ? 5 : 0}
+                            borderWidth={buttonTypes[1].type === 'primary' ? 5 : 0}
+                            type={buttonTypes[1].type}
+                            onPress={() => {
+                              setNextScreenNum(2);
+                            }}
+                            ><Text>2</Text></AwesomeButtonCartman>
                         </View>
                         <View style={styles.videoButtonContainer}>
-                            <AwesomeButtonCartman borderRadius={5} height={100} stretch={true}  textSize={50}  type="disabled">3</AwesomeButtonCartman>
+                            <AwesomeButtonCartman
+                            height={100}
+                            stretch={true}
+                            textSize={50}
+                            borderRadius={buttonTypes[2].type === 'primary' ? 5 : 0}
+                            borderWidth={buttonTypes[2].type === 'primary' ? 5 : 0}
+                            type={buttonTypes[2].type}
+                            onPress={() => {
+                              setNextScreenNum(3);
+                            }}
+                            ><Text>3</Text></AwesomeButtonCartman>
                         </View>
                         <View style={styles.recordButtonContainer}>
-                        <AwesomeButtonCartman 
-                          borderRadius={50} 
-                          height={100} 
-                          stretch={true} 
+                        <AwesomeButtonCartman
+                          borderRadius={50}
+                          height={100}
+                          stretch={true}
                           type="secondary"
                           onPress={() => setRecording(!recording)}
                         >
@@ -123,7 +167,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 60,
-    fontFamily: 'RoundyRainbows',
     textAlign: 'center',
     margin: 10,
     color: '#ffffff',
