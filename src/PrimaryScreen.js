@@ -1,19 +1,19 @@
 /**
  * PrimaryScreen.js
  * ================
- * 
+ *
  * (C) 2019 Unstructured.Studio <http://unstrucured.studio>
- * 
+ *
  */
 
-import React, {Component, Fragment} from 'react';
-import Video from 'react-native-video';
+import React, { Fragment } from 'react';
 import VideoRecorder from './Camera';
 import ProgressBar from './ProgressBar';
 import {
   SafeAreaView,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
@@ -36,7 +36,7 @@ export default function PrimaryScreen(props) {
     switchScreen();
   });
 
-  function switchScreen() {  
+  function switchScreen() {
     if (nextScreenNum === curScreenNum || workInProgress ||
       buttonTypes[nextScreenNum - 1].type === 'disabled') {
       return;
@@ -51,7 +51,7 @@ export default function PrimaryScreen(props) {
 
         return (
             <Fragment>
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView flex={1}>
                     <View style={styles.container}>
                     <View style={styles.containerLeft}>
                         <View style={styles.video}>
@@ -81,34 +81,33 @@ export default function PrimaryScreen(props) {
                               setNextScreenNum(1);
                             }}
                             >
-                            <Text>1</Text>
+                            <Text style={styles.buttonText}>1</Text>
                         </AwesomeButtonCartman>
                         </View>
                         <View style={styles.videoButtonContainer}>
                             <AwesomeButtonCartman
                             height={100}
                             stretch={true}
-                            textSize={50}
                             borderRadius={buttonTypes[1].type === 'primary' ? 5 : 0}
                             borderWidth={buttonTypes[1].type === 'primary' ? 5 : 0}
                             type={buttonTypes[1].type}
                             onPress={() => {
                               setNextScreenNum(2);
                             }}
-                            ><Text>2</Text></AwesomeButtonCartman>
+                            ><Text style={styles.buttonText}>2</Text></AwesomeButtonCartman>
                         </View>
                         <View style={styles.videoButtonContainer}>
                             <AwesomeButtonCartman
                             height={100}
                             stretch={true}
-                            textSize={50}
                             borderRadius={buttonTypes[2].type === 'primary' ? 5 : 0}
                             borderWidth={buttonTypes[2].type === 'primary' ? 5 : 0}
                             type={buttonTypes[2].type}
                             onPress={() => {
                               setNextScreenNum(3);
                             }}
-                            ><Text>3</Text></AwesomeButtonCartman>
+                            >
+                            <Text style={styles.buttonText}>3</Text></AwesomeButtonCartman>
                         </View>
                         <View style={styles.recordButtonContainer}>
                         <AwesomeButtonCartman
@@ -119,7 +118,7 @@ export default function PrimaryScreen(props) {
                           onPress={() => setRecording(!recording)}
                         >
                         {
-                          recording ? 'STOP': 'RECORD'
+                          recording ? 'STOP' : 'RECORD'
                         }
                         </AwesomeButtonCartman>
                         </View>
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
   recordButtonContainer: {
     flex: 1,
     flexGrow: 1,
-    padding:10, 
+    padding: 10,
     backgroundColor: 'gray',
   },
   videoButtonContainer: {
@@ -166,19 +165,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B8C4',
   },
   buttonText: {
-    fontSize: 60,
+    fontSize: 50,
+    fontWeight: '600',
     textAlign: 'center',
     margin: 10,
     color: '#ffffff',
     backgroundColor: 'transparent',
   },
   body: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   container: {
-    flex: 1, 
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems:'flex-start',
@@ -188,6 +188,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: "#000000",
+    color: '#000000',
   },
 });
