@@ -24,17 +24,38 @@ export default function PrimaryScreen(props) {
     [curScreenNum, setCurScreenNum] = React.useState(1),
     [nextScreenNum, setNextScreenNum] = React.useState(1),
     [workInProgress, SetWorkInProgress] = React.useState(false),
-
     [buttonTypes, setButtonTypes] = React.useState([
       { 'button': 1, type: 'primary' },
       { 'button': 2, type: 'enabled' },
       { 'button': 3, type: 'enabled' },
-    ]);
+    ]),
+    buttonElements = [];
 
 
   React.useEffect(() => {
     switchScreen();
   });
+
+  for (let i = 0; i < 3; i++) {
+    buttonElements.push(
+      <View key={'view_' + i} style={styles.videoButtonContainer}>
+        <AwesomeButtonCartman
+          key={'button_' + i}
+          borderRadius={buttonTypes[i].type === 'primary' ? 5 : 0}
+          borderWidth={buttonTypes[i].type === 'primary' ? 5 : 0}
+          height={100}
+          textSize={50}
+          stretch={true}
+          type={buttonTypes[i].type}
+          onPress={() => {
+            setNextScreenNum(i + 1);
+          }}
+          >
+          <Text style={styles.buttonText}>{i + 1}</Text>
+        </AwesomeButtonCartman>
+      </View>
+    );
+  }
 
   return (
     <Fragment>
@@ -55,46 +76,7 @@ export default function PrimaryScreen(props) {
         />
       </View>
       <View style={styles.containerRight}>
-        <View style={styles.videoButtonContainer}>
-        <AwesomeButtonCartman
-          borderRadius={buttonTypes[0].type === 'primary' ? 5 : 0}
-          borderWidth={buttonTypes[0].type === 'primary' ? 5 : 0}
-          height={100}
-          textSize={50}
-          stretch={true}
-          type={buttonTypes[0].type}
-          onPress={() => {
-            setNextScreenNum(1);
-          }}
-          >
-          <Text style={styles.buttonText}>1</Text>
-        </AwesomeButtonCartman>
-        </View>
-        <View style={styles.videoButtonContainer}>
-          <AwesomeButtonCartman
-          height={100}
-          stretch={true}
-          borderRadius={buttonTypes[1].type === 'primary' ? 5 : 0}
-          borderWidth={buttonTypes[1].type === 'primary' ? 5 : 0}
-          type={buttonTypes[1].type}
-          onPress={() => {
-            setNextScreenNum(2);
-          }}
-          ><Text style={styles.buttonText}>2</Text></AwesomeButtonCartman>
-        </View>
-        <View style={styles.videoButtonContainer}>
-          <AwesomeButtonCartman
-          height={100}
-          stretch={true}
-          borderRadius={buttonTypes[2].type === 'primary' ? 5 : 0}
-          borderWidth={buttonTypes[2].type === 'primary' ? 5 : 0}
-          type={buttonTypes[2].type}
-          onPress={() => {
-            setNextScreenNum(3);
-          }}
-          >
-          <Text style={styles.buttonText}>3</Text></AwesomeButtonCartman>
-        </View>
+        {buttonElements}
         <View style={styles.recordButtonContainer}>
           <AwesomeButtonCartman
             borderRadius={50}
