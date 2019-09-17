@@ -26,8 +26,8 @@ export default function PrimaryScreen(props) {
     [workInProgress, SetWorkInProgress] = React.useState(false),
     [buttonTypes, setButtonTypes] = React.useState([
       { 'button': 1, type: 'primary' },
-      { 'button': 2, type: 'enabled' },
-      { 'button': 3, type: 'enabled' },
+      { 'button': 2, type: 'disabled' },
+      { 'button': 3, type: 'disabled' },
     ]),
     buttonElements = [];
 
@@ -41,8 +41,8 @@ export default function PrimaryScreen(props) {
       <View key={'view_' + i} style={styles.videoButtonContainer}>
         <AwesomeButtonCartman
           key={'button_' + i}
-          borderRadius={buttonTypes[i].type === 'primary' ? 5 : 0}
-          borderWidth={buttonTypes[i].type === 'primary' ? 5 : 0}
+          borderRadius={buttonTypes[i].type === 'disabled' ? 5 : 0}
+          borderWidth={0}
           height={100}
           textSize={50}
           stretch={true}
@@ -51,7 +51,7 @@ export default function PrimaryScreen(props) {
             setNextScreenNum(i + 1);
           }}
           >
-          <Text style={styles.buttonText}>{i + 1}</Text>
+          {(i + 1).toString()}
         </AwesomeButtonCartman>
       </View>
     );
@@ -98,11 +98,11 @@ export default function PrimaryScreen(props) {
 
   function switchScreen() {
     if (nextScreenNum === curScreenNum || workInProgress ||
-      buttonTypes[nextScreenNum - 1].type === 'disabled') {
+      buttonTypes[nextScreenNum - 1].type === 'enabled') {
       return;
     }
 
-    buttonTypes[curScreenNum - 1].type = 'enabled';
+    buttonTypes[curScreenNum - 1].type = 'disabled';
     buttonTypes[nextScreenNum - 1].type = 'primary';
 
     setButtonTypes(buttonTypes);
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 50,
-    fontWeight: '600',
+    fontWeight: '700',
     textAlign: 'center',
     margin: 10,
     color: '#ffffff',
