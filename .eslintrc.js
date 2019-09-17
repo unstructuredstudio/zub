@@ -22,6 +22,7 @@ module.exports = {
     "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
     "react-native/no-raw-text": 2,
-    "prettier/prettier": 0
+    "prettier/prettier": 0,
+    "react-native/no-raw-text": 0
   }
 };

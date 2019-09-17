@@ -44,9 +44,10 @@
                 missingDimensionStrategy 'react-native-camera', 'general'
             }
         }
+
 * Since Zub is in fullscreen landscape mode by default, add the following lines to `AndroidManifest.xml` 
 
-  * under `MainActivity`'s `<activity>` tag:
+  * Under `MainActivity`'s `<activity>` tag:
 
         android:screenOrientation="landscape"
 
@@ -54,6 +55,13 @@
 
         android:theme="@style/Theme.ReactNative.AppCompat.Light.NoActionBar.FullScreen">
 
+* For `react-native-ffmpeg` change `minSdkVersion` to `24` in `build.gradle` and add the following lines to `AndroidManifest.xml`
+
+  * `package="com.zub" xmlns:tools="http://schemas.android.com/tools">`
+
+  * Under `<application>` tag:
+
+        tools:replace="android:theme">
 
 ### Build and Install
 * On iOS, use XCode GUI to build and deploy the app directly
