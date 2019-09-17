@@ -10,17 +10,34 @@ import * as React from 'react';
 import { StyleSheet, View }  from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import VideoPlayer from './Player';
-
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function VideoRecorder(props) {
-  let cameraRef;
-  const [ playing, setPlaying ] = React.useState(false);
-  const { recording, setRecording} = props;
+  let cameraRef,
+    clipUri;
 
-  let clipUri;
+  const [ playing, setPlaying ] = React.useState(false),
+    { recording, setRecording } = props;
+
   React.useEffect(() => {
-    console.log('recording', recording);
+    async function startRecording() {
+      try {
+        const { uri } = await cameraRef.recordAsync({});
+        global.clipUrl = uri;
+      } catch (ex) {
+        setRecording(false);
+        console.log(ex);
+      }
+    }
+
+    function stopRecording() {
+      try {
+        cameraRef.stopRecording();
+      } catch (ex) {
+        console.log(ex);
+      }
+    }
+
     if (recording === true) {
       try {
         setPlaying(false);
@@ -31,25 +48,7 @@ export default function VideoRecorder(props) {
     } else if (recording === false) {
       stopRecording();
     }
-  }, [recording]);
-
-  async function startRecording() {
-      try {
-        const { uri, codec = 'mp4' } = await cameraRef.recordAsync({});
-        global.clipUrl = uri;
-      } catch (ex) {
-        setRecording(false);
-        console.log(ex);
-      }
-  }
-
-  function stopRecording() {
-    try {
-    cameraRef.stopRecording();
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
+  }, [recording, setRecording, cameraRef]);
 
   return (
     <View style={styles.cameraContainer}>
@@ -60,7 +59,7 @@ export default function VideoRecorder(props) {
         !playing && (
           <>
             <RNCamera
-              ref={ref => cameraRef = ref}
+              ref={ref => { cameraRef = ref; }}
               style={styles.cameraContainer}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.off}
@@ -76,25 +75,26 @@ export default function VideoRecorder(props) {
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}
-              captureAudio={false}
-            >
+              captureAudio={false}>
               {
-              !recording &&  (
-              <>
-                <View style={styles.box}>
-                  <AwesomeButtonRick
-                    borderRadius={50}
-                    height={50}
-                    stretch={true}
-                    type="anchor"
-                    onPress={() => setPlaying(true)} title="Play"> PLAY ▶ </AwesomeButtonRick>
-                </View>
-                <View style={styles.box} />
-                <View style={styles.box} />
-                <View style={styles.box} />
-              </>
-              )
-            }
+                !recording &&  (
+                <>
+                  <View style={styles.box}>
+                    <AwesomeButtonRick
+                      borderRadius={50}
+                      height={50}
+                      stretch={true}
+                      type="anchor"
+                      onPress={() => setPlaying(true)} title="Play">
+                      PLAY ▶
+                    </AwesomeButtonRick>
+                  </View>
+                  <View style={styles.box} />
+                  <View style={styles.box} />
+                  <View style={styles.box} />
+                </>
+                )
+              }
             </RNCamera>
           </>
         )
