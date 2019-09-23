@@ -1,23 +1,27 @@
 /**
  * Player.js
  * =========
- * 
+ *
  * (C) 2019 Unstructured.Studio <http://unstrucured.studio>
- * 
+ *
  */
 
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Video from 'react-native-video';
 import SoundRecorder from 'react-native-sound-recorder';
-import { LogLevel, RNFFmpeg } from 'react-native-ffmpeg';
+import { RNFFmpeg } from 'react-native-ffmpeg';
+import RNFS from 'react-native-fs';
 
 export default class VideoPlayer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      recording: false
-    }
+      recording: false,
+    };
+    this.fileNum = props.fileNum;
+    this.startAudioRecording = this.startAudioRecording.bind(this);
+    this.stopAudioRecording = this.stopAudioRecording.bind(this);
   }
 
   render() {
@@ -41,11 +45,11 @@ export default class VideoPlayer extends Component {
       );
     }
 
-    return(
+    return (
       <View style={styles.videoContainer}>
-        <Video source={{ uri: global.clipUrl }}
+        <Video source={{ uri: global.clipUri }}
           ref={(ref) => {
-            this.player = ref
+            this.player = ref;
           }}
           onBuffer={this.onBuffer}                // Callback when remote video is buffering
           onEnd={this.onEnd}                      // Callback when playback finishes
@@ -53,7 +57,7 @@ export default class VideoPlayer extends Component {
           muted={false}
           style={styles.backgroundVideo} />
 
-        <View style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}>
+        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
         {button}
         </View>
       </View>
@@ -62,22 +66,25 @@ export default class VideoPlayer extends Component {
 
   async startAudioRecording() {
     this.setState({ recording: true });
-    await SoundRecorder.start(SoundRecorder.PATH_CACHE + '/audio-001.mp4')
+    await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + this.fileNum + '.mp4')
     .then(function() {
-      console.log('started recording'); 
+      console.log('started recording');
     });
   }
 
   stopAudioRecording() {
     this.setState({ recording: false });
+    const destPath = RNFS.CachesDirectoryPath + '/output_' + this.fileNum + '.mp4';
+
     SoundRecorder.stop()
-    .then(function(result) {
-      console.log('Stopped recording, audio file saved at: ' + result.path);
+    .then(function(audio) {
+      console.log('Stopped recording, audio file saved at: ' + audio.path);
 
       //Combine audio and video
-      RNFFmpeg.execute('-i ' + global.clipUrl + ' -i ' + result.path + ' -c copy ' + SoundRecorder.PATH_CACHE + '/output-002.mov', ' ').then(result => console.log("FFmpeg process exited with rc " + result.rc));
+      RNFFmpeg.execute('-i ' + global.clipUri + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
+      .then(media => console.log('FFmpeg process exited with rc ' + media.rc));
     }).catch(function(error) {
-      console.log("An error occured while stoping the recording: " + error);
+      console.log('An error occured while stoping the recording: ' + error);
     });
   }
 }
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
   videoContainer:{
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fc3'
+    backgroundColor: '#fc3',
   },
   backgroundVideo: {
     flex: 1,

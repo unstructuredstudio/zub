@@ -9,21 +9,22 @@
 import * as React from 'react';
 import { StyleSheet, View }  from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function VideoRecorder(props) {
-  let cameraRef,
-    clipUri;
+  let cameraRef;
 
   const [ playing, setPlaying ] = React.useState(false),
-    { recording, setRecording } = props;
+    { recording, setRecording, curScreenNum } = props;
 
   React.useEffect(() => {
     async function startRecording() {
       try {
-        const { uri } = await cameraRef.recordAsync({});
-        global.clipUrl = uri;
+        const options = { path: RNFS.CachesDirectoryPath + '/video_' + curScreenNum + '.mp4' };
+        const { uri } = await cameraRef.recordAsync(options);
+        global.clipUri = uri;
       } catch (ex) {
         setRecording(false);
         console.log(ex);
@@ -48,12 +49,12 @@ export default function VideoRecorder(props) {
     } else if (recording === false) {
       stopRecording();
     }
-  }, [recording, setRecording, cameraRef]);
+  }, [recording, setRecording, cameraRef, curScreenNum]);
 
   return (
     <View style={styles.cameraContainer}>
       {
-        playing && <VideoPlayer clipUri={clipUri} />
+        playing && <VideoPlayer fileNum={curScreenNum} />
       }
       {
         !playing && (
