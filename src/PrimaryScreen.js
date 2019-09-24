@@ -68,6 +68,7 @@ export default function PrimaryScreen(props) {
             setRecording={setRecording}
             processing={processing}
             setProcessing={setProcessing}
+            curScreenNum={curScreenNum}
           />
         </View>
         <ProgressBar
