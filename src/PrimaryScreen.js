@@ -9,54 +9,101 @@
 import React, { Fragment } from 'react';
 import VideoRecorder from './Camera';
 import ProgressBar from './ProgressBar';
+import { PlayerState } from './Constants'; 
 import {
   SafeAreaView,
   StyleSheet,
-  View,
-  Text,
+  View
 } from 'react-native';
 
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 
 export default function PrimaryScreen(props) {
-  const [recording, setRecording] = React.useState(null),
-    [processing, setProcessing] = React.useState(false),
-    [curScreenNum, setCurScreenNum] = React.useState(1),
-    [nextScreenNum, setNextScreenNum] = React.useState(1),
-    [workInProgress, SetWorkInProgress] = React.useState(false),
-    [buttonTypes, setButtonTypes] = React.useState([
-      { 'button': 1, type: 'primary' },
-      { 'button': 2, type: 'disabled' },
-      { 'button': 3, type: 'disabled' },
-    ]),
+  const [playersState, setPlayerState] = React.useState([
+    {
+      state: PlayerState.NONE,
+      filePath: '',
+      button: '1',
+      isActive: true,
+    },
+    {
+      state: PlayerState.NONE,
+      filePath: '',
+      button: '2',
+      isActive: false,
+    },
+    {
+      state: PlayerState.NONE,
+      filePath: '',
+      button: '3',
+      isActive: false,
+    }
+  ]);
+
+  const [curScreenNum, setCurScreenNum] = React.useState(0),
     buttonElements = [];
 
-
-  React.useEffect(() => {
-    switchScreen();
-  });
-
-  for (let i = 0; i < 3; i++) {
+  const switchScreenFn = index => () => switchScreen(index); 
+    
+  for (let i = 0; i < playersState.length; i++) {
     buttonElements.push(
       <View key={'view_' + i} style={styles.videoButtonContainer}>
         <AwesomeButtonCartman
           key={'button_' + i}
-          borderRadius={buttonTypes[i].type === 'disabled' ? 5 : 0}
+          borderRadius={playersState[i].isActive ? 0 : 5}
           borderWidth={0}
           height={100}
           textSize={50}
           stretch={true}
-          type={buttonTypes[i].type}
-          onPress={() => {
-            setNextScreenNum(i + 1);
-          }}
+          type={playersState[i].isActive ? 'primary': 'disabled'}
+          onPress={switchScreenFn(i)}
           >
-          {(i + 1).toString()}
+          {playersState[i].button}
         </AwesomeButtonCartman>
       </View>
     );
   }
+  const decideNextState = (state) => {
+    let newState;
+    switch(state) {
+      case PlayerState.NONE:
+        newState = PlayerState.RECORDING;
+        break;
+      
+      case PlayerState.RECORDING:
+        newState = PlayerState.PREVIEW;
+        break;
 
+      case PlayerState.PREVIEW:
+        newState = PlayerState.PLAYING;
+        break;
+      
+      case PlayerState.PLAYING:
+        newState = PlayerState.SAVED;
+        break;
+      
+      default:
+        newState = PlayerState.NONE;
+        
+    }
+    return newState;
+  }
+
+  const updatePlayerRecordingState = (state) => {
+    console.log(state, decideNextState(playersState[curScreenNum].state));
+    playersState[curScreenNum].state = state > 0 ? state : decideNextState(playersState[curScreenNum].state);
+    console.log(playersState[curScreenNum]);
+    // ... indicates creating new copy of playersState
+    setPlayerState([...playersState]);
+  };
+
+  const updateClipUri = (uri) => {
+    playersState[curScreenNum].filePath = uri;
+    setPlayerState([...playersState]);
+  }
+
+  
+  console.log(playersState);
   return (
     <Fragment>
     <SafeAreaView flex={1}>
@@ -64,16 +111,16 @@ export default function PrimaryScreen(props) {
       <View style={styles.containerLeft}>
         <View style={styles.video}>
           <VideoRecorder
-            recording={recording}
-            setRecording={setRecording}
-            processing={processing}
-            setProcessing={setProcessing}
+            updateClipUri={updateClipUri}
+            state={playersState[curScreenNum].state}
+            fileUri={playersState[curScreenNum].filePath}
+            updateState={updatePlayerRecordingState}
             curScreenNum={curScreenNum}
           />
         </View>
         <ProgressBar
-          recording={recording}
-          setRecording={setRecording}
+          state={playersState[curScreenNum].state}
+          updateState={updatePlayerRecordingState}
         />
       </View>
       <View style={styles.containerRight}>
@@ -84,10 +131,13 @@ export default function PrimaryScreen(props) {
             height={100}
             stretch={true}
             type="secondary"
-            onPress={() => setRecording(!recording)}
+            onPress={() => {
+              let newState = playersState[curScreenNum].state === PlayerState.RECORDING ? PlayerState.PREVIEW: PlayerState.RECORDING;
+              updatePlayerRecordingState(newState);
+            }}
           >
           {
-            recording ? 'STOP' : 'RECORD'
+            playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
           }
           </AwesomeButtonCartman>
         </View>
@@ -97,16 +147,13 @@ export default function PrimaryScreen(props) {
     </Fragment>
   );
 
-  function switchScreen() {
-    if (nextScreenNum === curScreenNum || workInProgress ||
-      buttonTypes[nextScreenNum - 1].type === 'enabled') {
+  function switchScreen(nextScreenNum) {
+    if (nextScreenNum === curScreenNum) {
       return;
     }
-
-    buttonTypes[curScreenNum - 1].type = 'disabled';
-    buttonTypes[nextScreenNum - 1].type = 'primary';
-
-    setButtonTypes(buttonTypes);
+    playersState[curScreenNum].isActive = false;
+    playersState[nextScreenNum].isActive = true;
+    setPlayerState(playersState);
     setCurScreenNum(nextScreenNum);
   }
 }

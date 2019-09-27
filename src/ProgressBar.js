@@ -9,26 +9,29 @@
 import React from 'react';
 import AnimatedBar from 'react-native-animated-bar';
 import { StyleSheet, View, Text } from 'react-native';
+import { PlayerState } from './Constants';
+
+const maxClipSize = 40;
 
 export default function ProgressBar(props) {
-  const [maxClipSize] = React.useState(40);
   const [count, setCount] = React.useState(0);
-  const { recording, setRecording } = props;
+  const { state, updateState } = props;
 
   React.useEffect(() => {
     let interval = null;
-
-    if (recording && count < maxClipSize) {
+    if (state === PlayerState.RECORDING && count < maxClipSize) {
       interval = setInterval(() => {
-        setCount(count + 1);
+        if(count >= maxClipSize) {
+          clearInterval(interval);
+          updateState();
+        } else {
+          setCount(count + 1);
+        }
       }, 1000);
-    } else {
-      setRecording(null);
-      clearInterval(interval);
     }
 
-    return () => clearInterval(interval);
-  }, [recording, count, maxClipSize, setRecording]);
+    return () => interval && clearInterval(interval);
+  }, [state, count, maxClipSize]);
 
   return (
     <View style={styles.progressBarContainer}>

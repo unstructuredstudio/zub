@@ -11,13 +11,13 @@ import { StyleSheet, View }  from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
+import { PlayerState } from './Constants';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function VideoRecorder(props) {
   let cameraRef;
 
-  const [ playing, setPlaying ] = React.useState(false),
-    { recording, setRecording, curScreenNum } = props;
+  const { state, updateState, curScreenNum, updateClipUri, fileUri } = props;
 
   React.useEffect(() => {
     async function startRecording() {
@@ -25,39 +25,46 @@ export default function VideoRecorder(props) {
         const options = { path: RNFS.CachesDirectoryPath + '/video_' + curScreenNum + '.mp4' };
         const { uri } = await cameraRef.recordAsync(options);
         global.clipUri = uri;
+        updateClipUri(uri);
       } catch (ex) {
-        setRecording(false);
         console.log(ex);
+        updateState();
+        
       }
     }
 
     function stopRecording() {
       try {
-        cameraRef.stopRecording();
+        if(cameraRef.stopRecording) {
+          cameraRef.stopRecording();
+        }
       } catch (ex) {
         console.log(ex);
       }
     }
 
-    if (recording === true) {
+
+    if (state === PlayerState.RECORDING) {
       try {
-        setPlaying(false);
         setTimeout(startRecording, 100);
       } catch (ex) {
         console.log(ex);
       }
-    } else if (recording === false) {
+    } else if (state === PlayerState.PREVIEW){
       stopRecording();
     }
-  }, [recording, setRecording, cameraRef, curScreenNum]);
+
+    return stopRecording;
+
+  }, [state, curScreenNum]);
 
   return (
     <View style={styles.cameraContainer}>
       {
-        playing && <VideoPlayer fileNum={curScreenNum} />
+        (state === PlayerState.PREVIEW || state === PlayerState.PLAYING) && <VideoPlayer fileUri={fileUri} />
       }
       {
-        !playing && (
+        (state === PlayerState.NONE || state === PlayerState.RECORDING) && (
           <>
             <RNCamera
               ref={ref => { cameraRef = ref; }}
@@ -78,7 +85,7 @@ export default function VideoRecorder(props) {
               }}
               captureAudio={false}>
               {
-                !recording &&  (
+                state === PlayerState.PLAYING &&  (
                 <>
                   <View style={styles.box}>
                     <AwesomeButtonRick
