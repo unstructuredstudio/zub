@@ -35,14 +35,11 @@ export default function VideoRecorder(props) {
 
     function stopRecording() {
       try {
-        if(cameraRef.stopRecording) {
           cameraRef.stopRecording();
-        }
       } catch (ex) {
         console.log(ex);
       }
     }
-
 
     if (state === PlayerState.RECORDING) {
       try {
@@ -61,7 +58,7 @@ export default function VideoRecorder(props) {
   return (
     <View style={styles.cameraContainer}>
       {
-        (state === PlayerState.PREVIEW || state === PlayerState.PLAYING) && <VideoPlayer fileUri={fileUri} />
+        (state === PlayerState.PREVIEW || state === PlayerState.PLAYING) && <VideoPlayer fileUri={fileUri} fileNum={curScreenNum} />
       }
       {
         (state === PlayerState.NONE || state === PlayerState.RECORDING) && (
@@ -85,6 +82,7 @@ export default function VideoRecorder(props) {
               }}
               captureAudio={false}>
               {
+                // TODO We neet to move player button when auto-preview mode is eventually disabled
                 state === PlayerState.PLAYING &&  (
                 <>
                   <View style={styles.box}>

@@ -6,12 +6,14 @@
  *
  */
 
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Platform} from 'react-native';
 import Video from 'react-native-video';
 import SoundRecorder from 'react-native-sound-recorder';
 import { RNFFmpeg } from 'react-native-ffmpeg';
 import RNFS from 'react-native-fs';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import {requestMicPermission } from './Utils';
 
 export default function VideoPlayer(props) {
   const [recording, setRecording] = React.useState(false);
@@ -19,9 +21,12 @@ export default function VideoPlayer(props) {
 
   async function startAudioRecording() {
     setRecording(true);
+    if (Platform.OS === "android") {
+      await requestMicPermission();
+    }
     await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + fileNum + '.mp4')
     .then(function() {
-      console.log('started recording');
+      console.log('Started Audio Recording');
     });
   }
 
@@ -31,7 +36,7 @@ export default function VideoPlayer(props) {
 
     SoundRecorder.stop()
     .then(function(audio) {
-      console.log('Stopped recording, audio file saved at: ' + audio.path);
+      console.log('Stopped audio recording, audio file saved at: ' + audio.path);
 
       //Combine audio and video
       RNFFmpeg.execute('-i ' + fileUri + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
@@ -42,60 +47,70 @@ export default function VideoPlayer(props) {
   }
 
   let button = (
-    <TouchableOpacity onPress={startAudioRecording}
-      style={styles.capture}>
-      <Text style={{ fontSize: 14 }}> RECORD </Text>
-    </TouchableOpacity>
+    <AwesomeButtonCartman
+      borderRadius={10}
+      height={50}
+      stretch={true}
+      raiseLevel={5}
+      type="secondary"
+      onPress={startAudioRecording} title="Record">
+      Record Audio ⬤  
+    </AwesomeButtonCartman>
   );
 
   if (recording) {
     button = (
-      <TouchableOpacity
-        onPress={stopAudioRecording}
-        style={styles.capture}
-      >
-        <Text style={{ fontSize: 14 }}> STOP </Text>
-      </TouchableOpacity>
+      <AwesomeButtonCartman
+        borderRadius={10}
+        height={50}
+        stretch={true}
+        raiseLevel={5}
+        type="secondary"
+        onPress={stopAudioRecording} title="Stop">
+        Stop ■ 
+      </AwesomeButtonCartman>
     );
   }
 
   return (
     <View style={styles.videoContainer}>
       <Video source={{ uri: fileUri }}
-        ref={(ref) => {
-          this.player = ref;
-        }}
-        onBuffer={this.onBuffer}                // Callback when remote video is buffering
-        onEnd={this.onEnd}                      // Callback when playback finishes
-        onError={this.videoError}
+        // TODO: We will use this eventually, keeping them here so we remember ;-)
+        // ref={(ref) => {
+        //   this.player = ref;
+        // }}
+        // onBuffer={this.onBuffer}                // Callback when remote video is buffering
+        // onEnd={this.onEnd}                      // Callback when playback finishes
+        // onError={this.videoError}
         muted={false}
-        style={styles.backgroundVideo} />
-
-      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-      {button}
-      </View>
+        style={styles.backgroundVideo}>
+      </Video>
+        <View style={styles.box}>
+          {button}
+        </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  videoContainer:{
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fc3',
-  },
   backgroundVideo: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    flexGrow: 1,
   },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+  videoContainer: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'flex-end',
+    flexDirection: 'row-reverse',
+    overflow: 'hidden', // Needed for Android
+    borderRadius: 10,
+  },
+  box: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    width: '22%',
   },
 });
