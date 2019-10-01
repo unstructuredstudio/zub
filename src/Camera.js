@@ -29,7 +29,6 @@ export default function VideoRecorder(props) {
       } catch (ex) {
         console.log(ex);
         updateState();
-        
       }
     }
 
@@ -47,7 +46,7 @@ export default function VideoRecorder(props) {
       } catch (ex) {
         console.log(ex);
       }
-    } else if (state === PlayerState.PREVIEW){
+    } else if (state === PlayerState.SAVED){
       stopRecording();
     }
 
@@ -58,7 +57,7 @@ export default function VideoRecorder(props) {
   return (
     <View style={styles.cameraContainer}>
       {
-        (state === PlayerState.PREVIEW || state === PlayerState.PLAYING) && <VideoPlayer fileUri={fileUri} fileNum={curScreenNum} />
+        (state === PlayerState.SAVED || state === PlayerState.PLAYING) && <VideoPlayer fileUri={fileUri} fileNum={curScreenNum} />
       }
       {
         (state === PlayerState.NONE || state === PlayerState.RECORDING) && (

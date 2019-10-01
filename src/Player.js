@@ -13,7 +13,7 @@ import SoundRecorder from 'react-native-sound-recorder';
 import { RNFFmpeg } from 'react-native-ffmpeg';
 import RNFS from 'react-native-fs';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import {requestMicPermission } from './Utils';
+import {requestMicPermission, deleteMediaFile } from './Utils';
 
 export default function VideoPlayer(props) {
   const [recording, setRecording] = React.useState(false);
@@ -21,7 +21,7 @@ export default function VideoPlayer(props) {
 
   async function startAudioRecording() {
     setRecording(true);
-    if (Platform.OS === "android") {
+    if (Platform.OS === 'android') {
       await requestMicPermission();
     }
     await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + fileNum + '.mp4')
@@ -30,9 +30,10 @@ export default function VideoPlayer(props) {
     });
   }
 
-  function stopAudioRecording() {
+  async function stopAudioRecording() {
     setRecording(false);
     const destPath = RNFS.CachesDirectoryPath + '/output_' + fileNum + '.mp4';
+    await deleteMediaFile(destPath);
 
     SoundRecorder.stop()
     .then(function(audio) {
@@ -54,7 +55,7 @@ export default function VideoPlayer(props) {
       raiseLevel={5}
       type="secondary"
       onPress={startAudioRecording} title="Record">
-      Record Audio ⬤  
+      Record Audio ⬤
     </AwesomeButtonCartman>
   );
 
@@ -67,7 +68,7 @@ export default function VideoPlayer(props) {
         raiseLevel={5}
         type="secondary"
         onPress={stopAudioRecording} title="Stop">
-        Stop ■ 
+        Stop ■
       </AwesomeButtonCartman>
     );
   }
@@ -83,13 +84,44 @@ export default function VideoPlayer(props) {
         // onEnd={this.onEnd}                      // Callback when playback finishes
         // onError={this.videoError}
         muted={false}
-        style={styles.backgroundVideo}>
-      </Video>
+        style={styles.backgroundVideo} />
         <View style={styles.box}>
           {button}
         </View>
     </View>
   );
+}
+
+export async function mergeVideos() {
+  console.log('Merging videos...');
+
+  let cacheDir = RNFS.CachesDirectoryPath,
+    output_0 = cacheDir + '/output_0.mp4',
+    output_1 = cacheDir + '/output_1.mp4',
+    output_2 = cacheDir + '/output_2.mp4',
+    im_0 = cacheDir + '/im_0.ts',
+    im_1 = cacheDir + '/im_1.ts',
+    im_2 = cacheDir + '/im_2.ts',
+    zub_vid = cacheDir + '/zub_video.mp4',
+    ff_trans_cmd = ' -c copy -bsf:v h264_mp4toannexb -f mpegts ',
+    ff_con_cmd = ' -c copy -bsf:a aac_adtstoasc ';
+
+  await deleteMediaFile(zub_vid);
+  await deleteMediaFile(im_0);
+  await deleteMediaFile(im_1);
+  await deleteMediaFile(im_2);
+
+  await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
+  .then(media_1 => console.log(media_1.rc));
+
+  await RNFFmpeg.execute('-i ' + output_1 + ff_trans_cmd + im_1)
+  .then(media_2 => console.log(media_2.rc));
+
+  await RNFFmpeg.execute('-i ' + output_2 + ff_trans_cmd + im_2)
+  .then(media_3 => console.log(media_3.rc));
+
+  await RNFFmpeg.execute('-i concat:' + im_0 + '|' + im_1 + '|' + im_2 + ff_con_cmd + zub_vid)
+  .then(media_zub => console.log(media_zub.rc));
 }
 
 const styles = StyleSheet.create({

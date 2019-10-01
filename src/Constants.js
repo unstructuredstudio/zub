@@ -4,4 +4,5 @@ export const PlayerState = {
     PREVIEW: 2,
     PLAYING: 3,
     SAVED: 4,
+    MERGING: 5,
 }
