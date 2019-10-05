@@ -114,21 +114,15 @@ export async function mergeVideos() {
   await Promise.all([promise1, promise2, promise3, promise4]).then(function(res) {
     console.log('Existing videos deleted ' + res);
   });
+  
+  await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
+  .then(media_0 => console.log(media_0.rc));
 
   await RNFFmpeg.execute('-i ' + output_1 + ff_trans_cmd + im_1)
-  .then(media_2 => console.log(media_2.rc));
-
-  await RNFFmpeg.execute('-i ' + output_2 + ff_trans_cmd + im_2)
-  .then(media_3 => console.log(media_3.rc));
-
-  await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
   .then(media_1 => console.log(media_1.rc));
 
-  await RNFFmpeg.execute('-i ' + output_1 + ff_trans_cmd + im_1)
-  .then(media_2 => console.log(media_2.rc));
-
   await RNFFmpeg.execute('-i ' + output_2 + ff_trans_cmd + im_2)
-  .then(media_3 => console.log(media_3.rc));
+  .then(media_2 => console.log(media_2.rc));
 
   await RNFFmpeg.execute('-i concat:' + im_0 + '|' + im_1 + '|' + im_2 + ff_con_cmd + zub_vid)
   .then(media_zub => console.log(media_zub.rc));
