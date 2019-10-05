@@ -106,10 +106,20 @@ export async function mergeVideos() {
     ff_trans_cmd = ' -c copy -bsf:v h264_mp4toannexb -f mpegts ',
     ff_con_cmd = ' -c copy -bsf:a aac_adtstoasc ';
 
-  await deleteMediaFile(zub_vid);
-  await deleteMediaFile(im_0);
-  await deleteMediaFile(im_1);
-  await deleteMediaFile(im_2);
+  const promise1 = deleteMediaFile(zub_vid);
+  const promise2 = deleteMediaFile(im_0);
+  const promise3 = deleteMediaFile(im_1);
+  const promise4 = deleteMediaFile(im_2);
+
+  await Promise.all([promise1, promise2, promise3, promise4]).then(function(res) {
+    console.log('Existing videos deleted ' + res);
+  });
+
+  await RNFFmpeg.execute('-i ' + output_1 + ff_trans_cmd + im_1)
+  .then(media_2 => console.log(media_2.rc));
+
+  await RNFFmpeg.execute('-i ' + output_2 + ff_trans_cmd + im_2)
+  .then(media_3 => console.log(media_3.rc));
 
   await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
   .then(media_1 => console.log(media_1.rc));

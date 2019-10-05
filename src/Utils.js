@@ -35,11 +35,9 @@ export async function requestMicPermission() {
 
 export async function deleteMediaFile(file) {
   const exists = await RNFS.exists(file);
-
+  let promise = {};
   if (exists) {
-    await RNFS.unlink(file)
-    .then(() => {
-      console.log('File deleted ' + file);
-    });
+    promise = await RNFS.unlink(file);
   }
+  return promise;
 }
