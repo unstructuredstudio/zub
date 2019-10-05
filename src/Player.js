@@ -114,7 +114,12 @@ export async function mergeVideos() {
   await Promise.all([promise1, promise2, promise3, promise4]).then(function(res) {
     console.log('Existing videos deleted ' + res);
   });
-  
+
+  /* Parallel execution is not possible right now with react-native-ffmpeg:
+  * https://github.com/tanersener/react-native-ffmpeg/issues/87. When the
+  * support is added, the FFMPEG executions below can be done in parallel
+  * like the media file deletions above.
+  */
   await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
   .then(media_0 => console.log(media_0.rc));
 
