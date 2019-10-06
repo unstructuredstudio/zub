@@ -7,6 +7,7 @@
  */
 
 import {PermissionsAndroid} from 'react-native';
+import RNFS from 'react-native-fs';
 
 export async function requestMicPermission() {
   try {
@@ -30,4 +31,13 @@ export async function requestMicPermission() {
   } catch (err) {
     console.warn(err);
   }
+}
+
+export async function deleteMediaFile(file) {
+  const exists = await RNFS.exists(file);
+  let promise = {};
+  if (exists) {
+    promise = await RNFS.unlink(file);
+  }
+  return promise;
 }
