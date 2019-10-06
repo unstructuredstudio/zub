@@ -24,7 +24,13 @@ export default function VideoPlayer(props) {
     if (Platform.OS === 'android') {
       await requestMicPermission();
     }
-    await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + fileNum + '.mp4')
+
+    // We need to specify audio codec as AAC for audio in Android
+    let options = {
+      encoder: 3    // AAC (https://developer.android.com/reference/android/media/MediaRecorder.AudioEncoder#AAC)
+    }
+
+    await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + fileNum + '.mp4', options)
     .then(function() {
       console.log('Started Audio Recording');
     });
@@ -131,6 +137,7 @@ export async function mergeVideos() {
 
   await RNFFmpeg.execute('-i concat:' + im_0 + '|' + im_1 + '|' + im_2 + ff_con_cmd + zub_vid)
   .then(media_zub => console.log(media_zub.rc));
+
 }
 
 const styles = StyleSheet.create({
