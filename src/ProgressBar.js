@@ -20,13 +20,12 @@ export default function ProgressBar(props) {
   React.useEffect(() => {
     let interval = null;
 
-    if (state === PlayerState.NONE) {
+    if (state === PlayerState.NONE || state === PlayerState.PREVIEW) {
       setCount(0);
       setClipSize(maxClipSize);
     }
 
     if (state === PlayerState.PLAYING) {
-      setCount(0);
       setClipSize(videoDuration);
     }
 
