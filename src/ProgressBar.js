@@ -11,17 +11,28 @@ import AnimatedBar from 'react-native-animated-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import { PlayerState } from './Constants';
 
-const maxClipSize = 40;
-
 export default function ProgressBar(props) {
+  const maxClipSize = 40;
   const [count, setCount] = React.useState(0);
-  const { state, updateState } = props;
+  const { state, updateState, videoDuration, updateVideoDuration } = props;
+  const [ clipSize, setClipSize ] = React.useState(maxClipSize);
 
   React.useEffect(() => {
     let interval = null;
-    if (state === PlayerState.RECORDING && count < maxClipSize) {
+
+    if (state === PlayerState.NONE) {
+      setCount(0);
+      setClipSize(maxClipSize);
+    }
+
+    if (state === PlayerState.PLAYING) {
+      setCount(0);
+      setClipSize(videoDuration);
+    }
+
+    if (state === PlayerState.RECORDING || state === PlayerState.PLAYING) {
       interval = setInterval(() => {
-        if(count >= maxClipSize) {
+        if (count >= clipSize) {
           clearInterval(interval);
           updateState();
         } else {
@@ -31,12 +42,12 @@ export default function ProgressBar(props) {
     }
 
     return () => interval && clearInterval(interval);
-  }, [state, count, maxClipSize]);
+  }, [state, updateState, count, clipSize, updateVideoDuration]);
 
   return (
     <View style={styles.progressBarContainer}>
       <AnimatedBar
-        progress={count * 0.025}
+        progress={count / clipSize}
         height={40}
         borderColor={'#edca31'}
         barColor={'#EE3253'}
@@ -51,7 +62,7 @@ export default function ProgressBar(props) {
             {count > 0 && <Text style={styles.barText}>{count}s</Text>}
           </View>
           <View>
-            {count !== 40 && <Text style={styles.barText}>{maxClipSize}s</Text>}
+            {count !== clipSize && <Text style={styles.barText}>{clipSize}s</Text>}
           </View>
         </View>
       </AnimatedBar>
