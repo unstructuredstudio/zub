@@ -24,18 +24,21 @@ export default function PrimaryScreen(props) {
     {
       state: PlayerState.NONE,
       filePath: '',
+      videoDuration: 0,
       button: '1',
       isActive: true,
     },
     {
       state: PlayerState.NONE,
       filePath: '',
+      videoDuration: 0,
       button: '2',
       isActive: false,
     },
     {
       state: PlayerState.NONE,
       filePath: '',
+      videoDuration: 0,
       button: '3',
       isActive: false,
     },
@@ -72,15 +75,15 @@ export default function PrimaryScreen(props) {
         break;
 
       case PlayerState.RECORDING:
-        newState = PlayerState.SAVED;
-        break;
-
-      case PlayerState.SAVED:
         newState = PlayerState.PREVIEW;
         break;
 
       case PlayerState.PREVIEW:
         newState = PlayerState.PLAYING;
+        break;
+
+      case PlayerState.PLAYING:
+        newState = PlayerState.SAVED;
         break;
 
       default:
@@ -103,6 +106,11 @@ export default function PrimaryScreen(props) {
     setPlayerState([...playersState]);
   };
 
+  const updateVideoDuration = (duration) => {
+    playersState[curScreenNum].videoDuration = duration;
+    setPlayerState([...playersState]);
+  };
+
   return (
     <Fragment>
     <SafeAreaView flex={1}>
@@ -113,21 +121,28 @@ export default function PrimaryScreen(props) {
             updateClipUri={updateClipUri}
             state={playersState[curScreenNum].state}
             fileUri={playersState[curScreenNum].filePath}
+            updateVideoDuration={updateVideoDuration}
+            videoDuration={playersState[curScreenNum].videoDuration}
             updateState={updatePlayerRecordingState}
             curScreenNum={curScreenNum}
           />
         </View>
+        { (playersState[curScreenNum].state === PlayerState.RECORDING ||
+        playersState[curScreenNum].state === PlayerState.PLAYING) &&
         <ProgressBar
           state={playersState[curScreenNum].state}
           updateState={updatePlayerRecordingState}
+          videoDuration={playersState[curScreenNum].videoDuration}
+          updateVideoDuration={updateVideoDuration}
         />
+        }
       </View>
       <View style={styles.containerRight}>
         {buttonElements}
 
-        {playersState[0].state === PlayerState.SAVED &&
-          playersState[1].state === PlayerState.SAVED &&
-          playersState[2].state === PlayerState.SAVED ? (
+        {playersState[0].filePath !== '' &&
+          playersState[1].filePath !== '' &&
+          playersState[2].filePath !== '' ? (
           <View style={styles.recordButtonContainer}>
             <AwesomeButtonRick
               borderRadius={50}
@@ -149,7 +164,7 @@ export default function PrimaryScreen(props) {
               stretch={true}
               type="secondary"
               onPress={() => {
-                let newState = playersState[curScreenNum].state === PlayerState.RECORDING ? PlayerState.SAVED : PlayerState.RECORDING;
+                let newState = playersState[curScreenNum].state === PlayerState.RECORDING ? PlayerState.PREVIEW : PlayerState.RECORDING;
                 updatePlayerRecordingState(newState);
               }}>
               {
