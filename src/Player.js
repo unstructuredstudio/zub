@@ -14,7 +14,7 @@ import { RNFFmpeg } from 'react-native-ffmpeg';
 import { PlayerState } from './Constants';
 import RNFS from 'react-native-fs';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import {requestMicPermission, deleteMediaFile } from './Utils';
+import {requestMicPermission, deleteMediaFile, moveMediaFile } from './Utils';
 
 export default function VideoPlayer(props) {
   const { fileNum, fileUri, state, updateState, videoDuration,
@@ -22,14 +22,16 @@ export default function VideoPlayer(props) {
 
   React.useEffect(() => {
     async function startAudioRecording() {
+      let options = {};
+
       if (Platform.OS === 'android') {
+        // We need to specify audio codec as AAC for audio in Android
+        options = {
+          encoder: 3,    // AAC (https://developer.android.com/reference/android/media/MediaRecorder.AudioEncoder#AAC)
+        };
+
         await requestMicPermission();
       }
-
-      // We need to specify audio codec as AAC for audio in Android
-      let options = {
-        encoder: 3,    // AAC (https://developer.android.com/reference/android/media/MediaRecorder.AudioEncoder#AAC)
-      };
 
       await SoundRecorder.start(RNFS.CachesDirectoryPath + '/audio_' + fileNum + '.mp4', options)
       .then(function() {
@@ -47,7 +49,11 @@ export default function VideoPlayer(props) {
 
         //Combine audio and video
         RNFFmpeg.execute('-i ' + fileUri + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
-        .then(media => console.log('FFmpeg process exited with rc ' + media.rc));
+        .then(function(media) {
+          console.log('FFmpeg process exited with rc ' + media.rc);
+          deleteMediaFile(fileUri);
+          moveMediaFile(destPath, fileUri);
+        });
       }).catch(function(error) {
         console.log('An error occured while stoping the recording: ' + error);
       });
@@ -112,9 +118,9 @@ export async function mergeVideos() {
   console.log('Merging videos...');
 
   let cacheDir = RNFS.CachesDirectoryPath,
-    output_0 = cacheDir + '/output_0.mp4',
-    output_1 = cacheDir + '/output_1.mp4',
-    output_2 = cacheDir + '/output_2.mp4',
+    video_0 = cacheDir + '/video_0.mp4',
+    video_1 = cacheDir + '/video_1.mp4',
+    video_2 = cacheDir + '/video_2.mp4',
     im_0 = cacheDir + '/im_0.ts',
     im_1 = cacheDir + '/im_1.ts',
     im_2 = cacheDir + '/im_2.ts',
@@ -136,13 +142,13 @@ export async function mergeVideos() {
   * support is added, the FFMPEG executions below can be done in parallel
   * like the media file deletions above.
   */
-  await RNFFmpeg.execute('-i ' + output_0 + ff_trans_cmd + im_0)
+  await RNFFmpeg.execute('-i ' + video_0 + ff_trans_cmd + im_0)
   .then(media_0 => console.log(media_0.rc));
 
-  await RNFFmpeg.execute('-i ' + output_1 + ff_trans_cmd + im_1)
+  await RNFFmpeg.execute('-i ' + video_1 + ff_trans_cmd + im_1)
   .then(media_1 => console.log(media_1.rc));
 
-  await RNFFmpeg.execute('-i ' + output_2 + ff_trans_cmd + im_2)
+  await RNFFmpeg.execute('-i ' + video_2 + ff_trans_cmd + im_2)
   .then(media_2 => console.log(media_2.rc));
 
   await RNFFmpeg.execute('-i concat:' + im_0 + '|' + im_1 + '|' + im_2 + ff_con_cmd + zub_vid)
