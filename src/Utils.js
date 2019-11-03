@@ -41,3 +41,12 @@ export async function deleteMediaFile(file) {
   }
   return promise;
 }
+
+export async function moveMediaFile(filePath, destPath) {
+  const exists = await RNFS.exists(filePath);
+  let promise = {};
+  if (exists) {
+    promise = await RNFS.moveFile(filePath, destPath);
+  }
+  return promise;
+}
