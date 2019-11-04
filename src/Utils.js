@@ -6,8 +6,10 @@
  *
  */
 
-import {PermissionsAndroid} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import RNFS from 'react-native-fs';
+import CameraRoll from '@react-native-community/cameraroll';
+import { RNFFmpeg } from 'react-native-ffmpeg';
 
 export async function requestMicPermission() {
   try {
@@ -49,4 +51,58 @@ export async function moveMediaFile(filePath, destPath) {
     promise = await RNFS.moveFile(filePath, destPath);
   }
   return promise;
+}
+
+export async function saveToCameraRoll(filePath) {
+  let promise = {};
+  promise = await CameraRoll.saveToCameraRoll(filePath, 'video');
+  return promise;
+}
+
+export async function mergeVideos() {
+  console.log('Merging videos...');
+
+  let cacheDir = RNFS.CachesDirectoryPath,
+    video_0 = cacheDir + '/video_0.mp4',
+    video_1 = cacheDir + '/video_1.mp4',
+    video_2 = cacheDir + '/video_2.mp4',
+    im_0 = cacheDir + '/im_0.ts',
+    im_1 = cacheDir + '/im_1.ts',
+    im_2 = cacheDir + '/im_2.ts',
+    zub_vid = cacheDir + '/zub_video.mp4',
+    ff_trans_cmd = ' -c copy -bsf:v h264_mp4toannexb -f mpegts ',
+    ff_con_cmd = ' -c copy -bsf:a aac_adtstoasc ',
+    output = '';
+
+  const promise1 = deleteMediaFile(zub_vid);
+  const promise2 = deleteMediaFile(im_0);
+  const promise3 = deleteMediaFile(im_1);
+  const promise4 = deleteMediaFile(im_2);
+
+  await Promise.all([promise1, promise2, promise3, promise4]).then(function(res) {
+    console.log('Existing videos deleted ' + res);
+  });
+
+  /* Parallel execution is not possible right now with react-native-ffmpeg:
+  * https://github.com/tanersener/react-native-ffmpeg/issues/87. When the
+  * support is added, the FFMPEG executions below can be done in parallel
+  * like the media file deletions above.
+  */
+  await RNFFmpeg.execute('-i ' + video_0 + ff_trans_cmd + im_0)
+  .then(media_0 => console.log(media_0.rc));
+
+  await RNFFmpeg.execute('-i ' + video_1 + ff_trans_cmd + im_1)
+  .then(media_1 => console.log(media_1.rc));
+
+  await RNFFmpeg.execute('-i ' + video_2 + ff_trans_cmd + im_2)
+  .then(media_2 => console.log(media_2.rc));
+
+  await RNFFmpeg.execute('-i concat:' + im_0 + '|' + im_1 + '|' + im_2 + ff_con_cmd + zub_vid)
+  .then(function(media_zub) {
+    if (media_zub.rc === 0) {
+      output = zub_vid;
+    }
+  });
+
+  return output;
 }
