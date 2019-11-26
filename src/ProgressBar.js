@@ -14,8 +14,10 @@ import { PlayerState } from './Constants';
 export default function ProgressBar(props) {
   const maxClipSize = 40;
   const [count, setCount] = React.useState(0);
-  const { state, updateState, videoDuration, updateVideoDuration } = props;
+  const { curScreenNum, playersState, updatePlayersState } = props;
   const [ clipSize, setClipSize ] = React.useState(maxClipSize);
+  const videoDuration = playersState[curScreenNum].videoDuration,
+    state = playersState[curScreenNum].state;
 
   React.useEffect(() => {
     let interval = null;
@@ -33,7 +35,7 @@ export default function ProgressBar(props) {
       interval = setInterval(() => {
         if (count >= clipSize) {
           clearInterval(interval);
-          updateState();
+          updatePlayersState('state', state);
         } else {
           setCount(count + 1);
         }
@@ -41,7 +43,7 @@ export default function ProgressBar(props) {
     }
 
     return () => interval && clearInterval(interval);
-  }, [state, updateState, count, clipSize, updateVideoDuration]);
+  }, [count, clipSize]);
 
   return (
     <View style={styles.progressBarContainer}>
