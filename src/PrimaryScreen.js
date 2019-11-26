@@ -15,11 +15,12 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { mergeVideos } from './Player';
+import { mergeVideos } from './Utils';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function PrimaryScreen(props) {
+  const {navigate} = props.navigation;
   const [playersState, setPlayerState] = React.useState([
     {
       state: PlayerState.NONE,
@@ -45,6 +46,7 @@ export default function PrimaryScreen(props) {
   ]);
 
   const [curScreenNum, setCurScreenNum] = React.useState(0),
+    [zubVideoUrl, setZubVideoUrl] = React.useState(''),
     buttonElements = [];
 
   const switchScreenFn = index => () => switchScreen(index);
@@ -125,6 +127,7 @@ export default function PrimaryScreen(props) {
             videoDuration={playersState[curScreenNum].videoDuration}
             updateState={updatePlayerRecordingState}
             curScreenNum={curScreenNum}
+            zubVideoUrl={zubVideoUrl}
           />
         </View>
         { (playersState[curScreenNum].state === PlayerState.RECORDING ||
@@ -151,7 +154,7 @@ export default function PrimaryScreen(props) {
               textSize={50}
               type="anchor"
               onPress={() => {
-                mergeVideos();
+                mergeVideosAndNavigate();
             }}>
             ✓
             </AwesomeButtonRick>
@@ -178,6 +181,15 @@ export default function PrimaryScreen(props) {
     </SafeAreaView>
     </Fragment>
   );
+
+  async function mergeVideosAndNavigate() {
+    let merged_video = await mergeVideos();
+
+    if (merged_video) {
+      setZubVideoUrl(merged_video);
+      navigate('ShareScreen', {zubVideoUrl: merged_video});
+    }
+  }
 
   function switchScreen(nextScreenNum) {
     if (nextScreenNum === curScreenNum) {
