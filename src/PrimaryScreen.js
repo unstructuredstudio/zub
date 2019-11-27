@@ -15,13 +15,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { mergeVideos } from './Utils';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function PrimaryScreen(props) {
   const {navigate} = props.navigation;
-  const [playersState, setPlayerState] = React.useState([
+  const [playersState, setPlayersState] = React.useState([
     {
       state: PlayerState.NONE,
       filePath: '',
@@ -90,27 +88,24 @@ export default function PrimaryScreen(props) {
 
       default:
         newState = PlayerState.NONE;
-
     }
     return newState;
   };
 
-  const updatePlayerRecordingState = (state) => {
-    //console.log(state, decideNextState(playersState[curScreenNum].state));
-    playersState[curScreenNum].state = state > 0 ? state : decideNextState(playersState[curScreenNum].state);
-    //console.log(playersState[curScreenNum]);
-    // ... indicates creating new copy of playersState
-    setPlayerState([...playersState]);
+  const updatePlayersState = (key, value) => {
+    if (key === 'state') {
+      playersState[curScreenNum].state = decideNextState(value);
+    } else if (key === 'filePath') {
+      playersState[curScreenNum].filePath = value;
+    } else if (key === 'videoDuration') {
+      playersState[curScreenNum].videoDuration = value;
+    }
+    setPlayersState([...playersState]);
   };
 
-  const updateClipUri = (uri) => {
-    playersState[curScreenNum].filePath = uri;
-    setPlayerState([...playersState]);
-  };
-
-  const updateVideoDuration = (duration) => {
-    playersState[curScreenNum].videoDuration = duration;
-    setPlayerState([...playersState]);
+  const updateZubVideoUrl = (url) => {
+    setZubVideoUrl(url);
+    navigate('ShareScreen', {zubVideoUrl: url});
   };
 
   return (
@@ -120,46 +115,23 @@ export default function PrimaryScreen(props) {
       <View style={styles.containerLeft}>
         <View style={styles.video}>
           <VideoRecorder
-            updateClipUri={updateClipUri}
-            state={playersState[curScreenNum].state}
-            fileUri={playersState[curScreenNum].filePath}
-            updateVideoDuration={updateVideoDuration}
-            videoDuration={playersState[curScreenNum].videoDuration}
-            updateState={updatePlayerRecordingState}
+            playersState={playersState}
             curScreenNum={curScreenNum}
-            zubVideoUrl={zubVideoUrl}
+            updateZubVideoUrl={updateZubVideoUrl}
+            updatePlayersState={updatePlayersState}
           />
         </View>
         { (playersState[curScreenNum].state === PlayerState.RECORDING ||
         playersState[curScreenNum].state === PlayerState.PLAYING) &&
         <ProgressBar
-          state={playersState[curScreenNum].state}
-          updateState={updatePlayerRecordingState}
-          videoDuration={playersState[curScreenNum].videoDuration}
-          updateVideoDuration={updateVideoDuration}
+          playersState={playersState}
+          curScreenNum={curScreenNum}
+          updatePlayersState={updatePlayersState}
         />
         }
       </View>
       <View style={styles.containerRight}>
         {buttonElements}
-
-        {playersState[0].filePath !== '' &&
-          playersState[1].filePath !== '' &&
-          playersState[2].filePath !== '' ? (
-          <View style={styles.recordButtonContainer}>
-            <AwesomeButtonRick
-              borderRadius={50}
-              height={100}
-              stretch={true}
-              textSize={50}
-              type="anchor"
-              onPress={() => {
-                mergeVideosAndNavigate();
-            }}>
-            ✓
-            </AwesomeButtonRick>
-          </View>
-            ) : (
           <View style={styles.recordButtonContainer}>
             <AwesomeButtonCartman
               borderRadius={50}
@@ -167,29 +139,18 @@ export default function PrimaryScreen(props) {
               stretch={true}
               type="secondary"
               onPress={() => {
-                let newState = playersState[curScreenNum].state === PlayerState.RECORDING ? PlayerState.PREVIEW : PlayerState.RECORDING;
-                updatePlayerRecordingState(newState);
+                updatePlayersState('state', playersState[curScreenNum].state);
               }}>
               {
                 playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
               }
             </AwesomeButtonCartman>
           </View>
-          )}
       </View>
       </View>
     </SafeAreaView>
     </Fragment>
   );
-
-  async function mergeVideosAndNavigate() {
-    let merged_video = await mergeVideos();
-
-    if (merged_video) {
-      setZubVideoUrl(merged_video);
-      navigate('ShareScreen', {zubVideoUrl: merged_video});
-    }
-  }
 
   function switchScreen(nextScreenNum) {
     if (nextScreenNum === curScreenNum) {
@@ -197,7 +158,7 @@ export default function PrimaryScreen(props) {
     }
     playersState[curScreenNum].isActive = false;
     playersState[nextScreenNum].isActive = true;
-    setPlayerState(playersState);
+    setPlayersState(playersState);
     setCurScreenNum(nextScreenNum);
   }
 }

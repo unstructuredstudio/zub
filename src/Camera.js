@@ -16,16 +16,15 @@ import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/ric
 
 export default function VideoRecorder(props) {
   let cameraRef;
-
-  const { state, updateState, curScreenNum, updateClipUri, fileUri,
-    videoDuration, updateVideoDuration } = props;
+  const { updatePlayersState, curScreenNum, playersState, updateZubVideoUrl } = props;
+  const state = playersState[curScreenNum].state;
 
   React.useEffect(() => {
     async function startRecording() {
       try {
         const options = { path: RNFS.CachesDirectoryPath + '/video_' + curScreenNum + '.mp4' };
         const { uri } = await cameraRef.recordAsync(options);
-        updateClipUri(uri);
+        updatePlayersState('filePath', uri);
       } catch (ex) {
         console.log(ex);
       }
@@ -60,12 +59,10 @@ export default function VideoRecorder(props) {
         (state === PlayerState.PREVIEW || state === PlayerState.PLAYING ||
           state === PlayerState.SAVED) &&
         <VideoPlayer
-          state={state}
-          fileUri={fileUri}
-          fileNum={curScreenNum}
-          updateState={updateState}
-          videoDuration={videoDuration}
-          updateVideoDuration={updateVideoDuration}
+          playersState={playersState}
+          updatePlayersState={updatePlayersState}
+          updateZubVideoUrl={updateZubVideoUrl}
+          curScreenNum={curScreenNum}
         />
       }
       {
