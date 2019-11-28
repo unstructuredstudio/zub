@@ -31,6 +31,10 @@ export default function ShareScreen(props) {
                         style={styles.backgroundVideo}
                         resizeMode="cover"
                         paused={videoPaused}
+                        repeat={true}
+                        onEnd={() => {
+                            setVideoPaused(!videoPaused);
+                        }}
                     />
                     <View style={styles.backButton}>
                         <AwesomeButtonRick
