@@ -21,6 +21,7 @@
   * `npm install react-native-animated-bar --save`
   * `npm install react-native-ffmpeg --save`
   * `npm install react-native-sound-recorder --save`
+  * `npm install react-native-fontawesome --save`
 
 #### Extra Setup (iOS)
 * `cd ios/`
