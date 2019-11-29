@@ -13,12 +13,10 @@ import { PlayerState } from './Constants';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import ScreenTitle from './ScreenTitle';
 
 export default function PrimaryScreen(props) {
   const {navigate} = props.navigation;
@@ -114,42 +112,9 @@ export default function PrimaryScreen(props) {
   return (
     <Fragment>
     <SafeAreaView flex={1}>
-      <View style={styles.box}>
-        <AwesomeButtonCartman
-          borderRadius={15}
-          borderWidth={10}
-          borderColor="#00B8C4"
-          stretch={true}
-          raiseLevel={0}
-          textSize={30}
-          height={70}
-          type="disabled"
-          onPress={() => {
-          }}
-          title="title"
-          ExtraContent={
-            <AwesomeButtonCartman
-            borderRadius={7}
-            height={50}
-            stretch={true}
-            raiseLevel={5}
-            type="secondary"
-            onPress={() => {
-              // updatePlayersState('state', state);
-            }}
-            title="Record">
-            <Text style={{fontWeight: 'bold', fontSize: 25, color:'#e1dfe2'}}>INTRO   </Text>
-            <FontAwesomeIcon
-              icon={ faInfoCircle }
-              color={ '#ffc200' }
-              size={20}
-            />
-            </AwesomeButtonCartman>
-          }
-          >
-          <Text style={{fontWeight: 'bold', fontSize: 10, color:'#959595'}}>INTRO   </Text>
-      </AwesomeButtonCartman>
-      </View>
+      <ScreenTitle
+        curScreenNum={curScreenNum}
+      />
       <View style={styles.container}>
       <View style={styles.containerLeft}>
         <View style={styles.video}>
@@ -262,11 +227,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: '#000000',
-  },
-  box: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '22%',
   },
 });
