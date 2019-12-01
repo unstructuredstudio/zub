@@ -18,6 +18,7 @@ import {
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import ScreenTitle from './ScreenTitle';
 
+
 export default function PrimaryScreen(props) {
   const {navigate} = props.navigation;
   const [playersState, setPlayersState] = React.useState([
@@ -116,41 +117,42 @@ export default function PrimaryScreen(props) {
         curScreenNum={curScreenNum}
       />
       <View style={styles.container}>
-      <View style={styles.containerLeft}>
-        <View style={styles.video}>
-          <VideoRecorder
+        <View style={styles.containerLeft}>
+          <View style={styles.video}>
+            <VideoRecorder
+              playersState={playersState}
+              curScreenNum={curScreenNum}
+              updateZubVideoUrl={updateZubVideoUrl}
+              updatePlayersState={updatePlayersState}
+            />
+          </View>
+          { (playersState[curScreenNum].state === PlayerState.RECORDING ||
+          playersState[curScreenNum].state === PlayerState.PLAYING) &&
+          <ProgressBar
             playersState={playersState}
             curScreenNum={curScreenNum}
             updateZubVideoUrl={updateZubVideoUrl}
             updatePlayersState={updatePlayersState}
           />
+          }
         </View>
-        { (playersState[curScreenNum].state === PlayerState.RECORDING ||
-        playersState[curScreenNum].state === PlayerState.PLAYING) &&
-        <ProgressBar
-          playersState={playersState}
-          curScreenNum={curScreenNum}
-          updatePlayersState={updatePlayersState}
-        />
-        }
-      </View>
-      <View style={styles.containerRight}>
-        {buttonElements}
-          <View style={styles.recordButtonContainer}>
-            <AwesomeButtonCartman
-              borderRadius={50}
-              height={100}
-              stretch={true}
-              type="secondary"
-              onPress={() => {
-                updatePlayersState('state', playersState[curScreenNum].state);
-              }}>
-              {
-                playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
-              }
-            </AwesomeButtonCartman>
-          </View>
-      </View>
+        <View style={styles.containerRight}>
+          {buttonElements}
+            <View style={styles.recordButtonContainer}>
+              <AwesomeButtonCartman
+                borderRadius={50}
+                height={100}
+                stretch={true}
+                type="secondary"
+                onPress={() => {
+                  updatePlayersState('state', playersState[curScreenNum].state);
+                }}>
+                {
+                  playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
+                }
+              </AwesomeButtonCartman>
+            </View>
+        </View>
       </View>
     </SafeAreaView>
     </Fragment>
