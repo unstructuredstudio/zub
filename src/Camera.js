@@ -13,6 +13,7 @@ import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
 import { PlayerState } from './Constants';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import {  generateHash, deleteMediaFile } from './Utils';
 
 export default function VideoRecorder(props) {
   let cameraRef;
@@ -22,9 +23,12 @@ export default function VideoRecorder(props) {
   React.useEffect(() => {
     async function startRecording() {
       try {
-        const options = { path: RNFS.CachesDirectoryPath + '/video_' + curScreenNum + '.mp4' };
-        const { uri } = await cameraRef.recordAsync(options);
-        updatePlayersState('filePath', uri);
+        const options = { path: RNFS.CachesDirectoryPath + '/' + generateHash() +
+          '_video_' + curScreenNum + '.mp4' },
+          { uri } = await cameraRef.recordAsync(options),
+          preVideoOnly = playersState[curScreenNum].videoOnly;
+        await deleteMediaFile(preVideoOnly);
+        updatePlayersState('videoOnly', uri);
       } catch (ex) {
         console.log(ex);
       }
@@ -33,6 +37,7 @@ export default function VideoRecorder(props) {
     async function stopRecording() {
       try {
         console.log('Stop the recording...');
+        updatePlayersState('videoWithAudio', '');
         await cameraRef.stopRecording();
       } catch (ex) {
         console.log(ex);
@@ -48,16 +53,13 @@ export default function VideoRecorder(props) {
     } else if (state === PlayerState.PREVIEW){
       stopRecording();
     }
-
-    return stopRecording;
-
   }, [state, curScreenNum]);
 
   return (
     <View style={styles.cameraContainer}>
       {
         (state === PlayerState.PREVIEW || state === PlayerState.PLAYING ||
-          state === PlayerState.SAVED) &&
+          state === PlayerState.SAVED || state === PlayerState.LAST) &&
         <VideoPlayer
           playersState={playersState}
           updatePlayersState={updatePlayersState}
@@ -87,7 +89,6 @@ export default function VideoRecorder(props) {
               }}
               captureAudio={false}>
               {
-                // TODO We neet to move player button when auto-preview mode is eventually disabled
                 state === PlayerState.PLAYING &&  (
                 <>
                   <View style={styles.box}>
