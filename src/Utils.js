@@ -59,13 +59,13 @@ export async function saveToCameraRoll(filePath) {
   return promise;
 }
 
-export async function mergeVideos() {
+export async function mergeVideos(playersState) {
   console.log('Merging videos...');
 
   let cacheDir = RNFS.CachesDirectoryPath,
-    video_0 = cacheDir + '/video_0.mp4',
-    video_1 = cacheDir + '/video_1.mp4',
-    video_2 = cacheDir + '/video_2.mp4',
+    video_0 = playersState[0].videoWithAudio || playersState[0].videoOnly,
+    video_1 = playersState[1].videoWithAudio || playersState[1].videoOnly,
+    video_2 = playersState[2].videoWithAudio || playersState[2].videoOnly,
     im_0 = cacheDir + '/im_0.ts',
     im_1 = cacheDir + '/im_1.ts',
     im_2 = cacheDir + '/im_2.ts',
@@ -105,4 +105,16 @@ export async function mergeVideos() {
   });
 
   return output;
+}
+
+export function generateHash() {
+  let length = 6,
+    chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    result = '';
+
+  for (let i = length; i > 0; --i) {
+    result += chars[Math.round(Math.random() * (chars.length - 1))];
+  }
+
+  return result.toLowerCase();
 }

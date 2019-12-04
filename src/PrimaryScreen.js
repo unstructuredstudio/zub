@@ -24,21 +24,24 @@ export default function PrimaryScreen(props) {
   const [playersState, setPlayersState] = React.useState([
     {
       state: PlayerState.NONE,
-      filePath: '',
+      videoOnly: '',
+      videoWithAudio: '',
       videoDuration: 0,
       button: '1',
       isActive: true,
     },
     {
       state: PlayerState.NONE,
-      filePath: '',
+      videoOnly: '',
+      videoWithAudio: '',
       videoDuration: 0,
       button: '2',
       isActive: false,
     },
     {
       state: PlayerState.NONE,
-      filePath: '',
+      videoOnly: '',
+      videoWithAudio: '',
       videoDuration: 0,
       button: '3',
       isActive: false,
@@ -88,6 +91,10 @@ export default function PrimaryScreen(props) {
         newState = PlayerState.SAVED;
         break;
 
+      case PlayerState.SAVED:
+        newState = PlayerState.LAST;
+        break;
+
       default:
         newState = PlayerState.NONE;
     }
@@ -97,8 +104,10 @@ export default function PrimaryScreen(props) {
   const updatePlayersState = (key, value) => {
     if (key === 'state') {
       playersState[curScreenNum].state = decideNextState(value);
-    } else if (key === 'filePath') {
-      playersState[curScreenNum].filePath = value;
+    } else if (key === 'videoOnly') {
+      playersState[curScreenNum].videoOnly = value;
+    } else if (key === 'videoWithAudio') {
+      playersState[curScreenNum].videoWithAudio = value;
     } else if (key === 'videoDuration') {
       playersState[curScreenNum].videoDuration = value;
     }
