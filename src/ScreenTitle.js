@@ -8,14 +8,10 @@
 
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
-
 import Modal from "react-native-modal";
 
 
@@ -70,21 +66,21 @@ export default function ScreenTitle(props) {
           title="dummy"
           ExtraContent={
             <AwesomeButtonCartman
-            borderRadius={7}
-            height={50}
-            stretch={true}
-            raiseLevel={4}
-            type="secondary"
-            onPress={() => {
-              setIsModalVisible(true)
-            }}
-            title="screen title">
-            <Text style={{fontWeight: 'bold', fontSize: 25, color:'#e1dfe2'}}>{title}   </Text>
-            <FontAwesomeIcon
-              icon={ faInfoCircle }
-              color={ '#ffc200' }
-              size={20}
-            />
+              borderRadius={7}
+              height={50}
+              stretch={true}
+              raiseLevel={4}
+              type="secondary"
+              onPress={() => {
+                setIsModalVisible(true)
+              }}
+              title="screen title">
+              <Text style={{fontWeight: 'bold', fontSize: 25, color:'#e1dfe2'}}>{title}   </Text>
+              <FontAwesomeIcon
+                icon={ faInfoCircle }
+                color={ '#ffc200' }
+                size={20}
+              />
             </AwesomeButtonCartman>
           }
           >
@@ -115,7 +111,6 @@ export default function ScreenTitle(props) {
             </View>
           </View>
       </Modal>
-
     </View>
   );
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* zubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* zubTests.m */; };
-		111D6EE5A9ACAB9CBE4B4A9E /* libPods-zub-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2821BF2F7D77FB62B2644713 /* libPods-zub-tvOSTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -17,9 +16,10 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* zubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* zubTests.m */; };
-		334BD48265C3AC4DB6E5AB5A /* libPods-zubTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EE0626E19304E694A1CB68 /* libPods-zubTests.a */; };
-		9CB5B943538FA86EC7D43342 /* libPods-zub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5614897B2D68350CF93D85 /* libPods-zub.a */; };
-		EC9B728457D129905167D869 /* libPods-zub-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 779538153ABFDCC59EB165DA /* libPods-zub-tvOS.a */; };
+		4662A1BFEDC4F1570BEB6DEE /* libPods-zub-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AFFC1D1BFFB2941FD19CD10 /* libPods-zub-tvOS.a */; };
+		618E2ED15AB6083CAB2BE718 /* libPods-zubTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9F47594FB0A11F3ACC2DFD /* libPods-zubTests.a */; };
+		7A85706E9C500FA97474FB93 /* libPods-zub-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12CF25D2AFB97D36B1D07B98 /* libPods-zub-tvOSTests.a */; };
+		CD529FC2220D7B52E2A577C1 /* libPods-zub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E21A18AA4244E70C11E88258 /* libPods-zub.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +170,9 @@
 		00E356EE1AD99517003FC87E /* zubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* zubTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = zubTests.m; sourceTree = "<group>"; };
+		0229D3D2A3A752F7AFFDFBE4 /* Pods-zub-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-zub-tvOS/Pods-zub-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		0DEB5A31670BBF633D791959 /* Pods-zubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zubTests.release.xcconfig"; path = "Target Support Files/Pods-zubTests/Pods-zubTests.release.xcconfig"; sourceTree = "<group>"; };
+		12CF25D2AFB97D36B1D07B98 /* libPods-zub-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* zub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = zub/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = zub/AppDelegate.m; sourceTree = "<group>"; };
@@ -177,26 +180,23 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = zub/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = zub/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = zub/main.m; sourceTree = "<group>"; };
-		2821BF2F7D77FB62B2644713 /* libPods-zub-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* zub-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "zub-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* zub-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zub-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AAAB1189E05B24D5A13F168 /* Pods-zub-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		42369CA512B371C0F95656C1 /* Pods-zub-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOS.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOS/Pods-zub-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		6E7966CB223188BD9E30E0AD /* Pods-zub-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-zub-tvOS/Pods-zub-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		779538153ABFDCC59EB165DA /* libPods-zub-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8074AB6E84B62EC75C8B60F7 /* Pods-zub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.debug.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.debug.xcconfig"; sourceTree = "<group>"; };
-		8D39CA9EA4C5FB1DCD0BE529 /* Pods-zub-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9C3A666DC86D4402F20BF2A0 /* Pods-zubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zubTests.release.xcconfig"; path = "Target Support Files/Pods-zubTests/Pods-zubTests.release.xcconfig"; sourceTree = "<group>"; };
-		A2EE0626E19304E694A1CB68 /* libPods-zubTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zubTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		64C23F47FC16731EEA187FBB /* Pods-zub-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOS.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOS/Pods-zub-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		741FD74B027772DDB54AFCFF /* Pods-zubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zubTests.debug.xcconfig"; path = "Target Support Files/Pods-zubTests/Pods-zubTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7AFFC1D1BFFB2941FD19CD10 /* libPods-zub-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B9F47594FB0A11F3ACC2DFD /* libPods-zubTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zubTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A944E2A622F3955F00926140 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		A97F8C6722F2C5C00032D603 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		A97F8C9C22F2C62A0032D603 /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libyoga.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97F8CA022F2C6370032D603 /* libDoubleConversion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDoubleConversion.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5F2EE2A215A81BA72FBAE8F /* Pods-zubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zubTests.debug.xcconfig"; path = "Target Support Files/Pods-zubTests/Pods-zubTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DC5614897B2D68350CF93D85 /* libPods-zub.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0FEEA48F6BE7E7DA8A35ABF /* Pods-zub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.release.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.release.xcconfig"; sourceTree = "<group>"; };
+		B50B8C2DAAF016631AEE68AA /* Pods-zub-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E21A18AA4244E70C11E88258 /* libPods-zub.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E621994E62DD54EB30A502D8 /* Pods-zub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.debug.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		ED76A4C2DF3381624D1F0EA0 /* Pods-zub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.release.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.release.xcconfig"; sourceTree = "<group>"; };
+		F86BEAD46711B22ADADF049C /* Pods-zub-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				334BD48265C3AC4DB6E5AB5A /* libPods-zubTests.a in Frameworks */,
+				618E2ED15AB6083CAB2BE718 /* libPods-zubTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CB5B943538FA86EC7D43342 /* libPods-zub.a in Frameworks */,
+				CD529FC2220D7B52E2A577C1 /* libPods-zub.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC9B728457D129905167D869 /* libPods-zub-tvOS.a in Frameworks */,
+				4662A1BFEDC4F1570BEB6DEE /* libPods-zub-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				111D6EE5A9ACAB9CBE4B4A9E /* libPods-zub-tvOSTests.a in Frameworks */,
+				7A85706E9C500FA97474FB93 /* libPods-zub-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,10 +273,10 @@
 				A97F8C9C22F2C62A0032D603 /* libyoga.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				DC5614897B2D68350CF93D85 /* libPods-zub.a */,
-				779538153ABFDCC59EB165DA /* libPods-zub-tvOS.a */,
-				2821BF2F7D77FB62B2644713 /* libPods-zub-tvOSTests.a */,
-				A2EE0626E19304E694A1CB68 /* libPods-zubTests.a */,
+				E21A18AA4244E70C11E88258 /* libPods-zub.a */,
+				7AFFC1D1BFFB2941FD19CD10 /* libPods-zub-tvOS.a */,
+				12CF25D2AFB97D36B1D07B98 /* libPods-zub-tvOSTests.a */,
+				7B9F47594FB0A11F3ACC2DFD /* libPods-zubTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -284,14 +284,14 @@
 		37AEEE9490AA9D71BA55F525 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8074AB6E84B62EC75C8B60F7 /* Pods-zub.debug.xcconfig */,
-				E0FEEA48F6BE7E7DA8A35ABF /* Pods-zub.release.xcconfig */,
-				6E7966CB223188BD9E30E0AD /* Pods-zub-tvOS.debug.xcconfig */,
-				42369CA512B371C0F95656C1 /* Pods-zub-tvOS.release.xcconfig */,
-				8D39CA9EA4C5FB1DCD0BE529 /* Pods-zub-tvOSTests.debug.xcconfig */,
-				3AAAB1189E05B24D5A13F168 /* Pods-zub-tvOSTests.release.xcconfig */,
-				D5F2EE2A215A81BA72FBAE8F /* Pods-zubTests.debug.xcconfig */,
-				9C3A666DC86D4402F20BF2A0 /* Pods-zubTests.release.xcconfig */,
+				E621994E62DD54EB30A502D8 /* Pods-zub.debug.xcconfig */,
+				ED76A4C2DF3381624D1F0EA0 /* Pods-zub.release.xcconfig */,
+				0229D3D2A3A752F7AFFDFBE4 /* Pods-zub-tvOS.debug.xcconfig */,
+				64C23F47FC16731EEA187FBB /* Pods-zub-tvOS.release.xcconfig */,
+				B50B8C2DAAF016631AEE68AA /* Pods-zub-tvOSTests.debug.xcconfig */,
+				F86BEAD46711B22ADADF049C /* Pods-zub-tvOSTests.release.xcconfig */,
+				741FD74B027772DDB54AFCFF /* Pods-zubTests.debug.xcconfig */,
+				0DEB5A31670BBF633D791959 /* Pods-zubTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -370,7 +370,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "zubTests" */;
 			buildPhases = (
-				6E0534C1DEBBAC970F66E2E5 /* [CP] Check Pods Manifest.lock */,
+				0D282E893F204A05E0B55A2D /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -389,7 +389,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "zub" */;
 			buildPhases = (
-				A88B394038F1DC267937A103 /* [CP] Check Pods Manifest.lock */,
+				CBD8A33FE66AF5E67B794EF4 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -409,7 +409,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "zub-tvOS" */;
 			buildPhases = (
-				6B971237839B89594116219C /* [CP] Check Pods Manifest.lock */,
+				0B59DDA1175E50482A136CB8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -429,7 +429,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "zub-tvOSTests" */;
 			buildPhases = (
-				046A0E3BAEEEFB3DA7D955C1 /* [CP] Check Pods Manifest.lock */,
+				6D4D0C86C17CBE15581CE1F4 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -682,43 +682,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		046A0E3BAEEEFB3DA7D955C1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-zub-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		6B971237839B89594116219C /* [CP] Check Pods Manifest.lock */ = {
+		0B59DDA1175E50482A136CB8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -740,7 +704,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6E0534C1DEBBAC970F66E2E5 /* [CP] Check Pods Manifest.lock */ = {
+		0D282E893F204A05E0B55A2D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -762,7 +726,43 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A88B394038F1DC267937A103 /* [CP] Check Pods Manifest.lock */ = {
+		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native Code And Images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		6D4D0C86C17CBE15581CE1F4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-zub-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBD8A33FE66AF5E67B794EF4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -889,7 +889,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5F2EE2A215A81BA72FBAE8F /* Pods-zubTests.debug.xcconfig */;
+			baseConfigurationReference = 741FD74B027772DDB54AFCFF /* Pods-zubTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = H2RXQ38K8C;
@@ -914,7 +914,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C3A666DC86D4402F20BF2A0 /* Pods-zubTests.release.xcconfig */;
+			baseConfigurationReference = 0DEB5A31670BBF633D791959 /* Pods-zubTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -936,7 +936,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8074AB6E84B62EC75C8B60F7 /* Pods-zub.debug.xcconfig */;
+			baseConfigurationReference = E621994E62DD54EB30A502D8 /* Pods-zub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -959,7 +959,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0FEEA48F6BE7E7DA8A35ABF /* Pods-zub.release.xcconfig */;
+			baseConfigurationReference = ED76A4C2DF3381624D1F0EA0 /* Pods-zub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -981,7 +981,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E7966CB223188BD9E30E0AD /* Pods-zub-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 0229D3D2A3A752F7AFFDFBE4 /* Pods-zub-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1010,7 +1010,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42369CA512B371C0F95656C1 /* Pods-zub-tvOS.release.xcconfig */;
+			baseConfigurationReference = 64C23F47FC16731EEA187FBB /* Pods-zub-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1039,7 +1039,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D39CA9EA4C5FB1DCD0BE529 /* Pods-zub-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = B50B8C2DAAF016631AEE68AA /* Pods-zub-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1067,7 +1067,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AAAB1189E05B24D5A13F168 /* Pods-zub-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = F86BEAD46711B22ADADF049C /* Pods-zub-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
