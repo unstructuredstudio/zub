@@ -59,7 +59,7 @@ export default function VideoRecorder(props) {
     <View style={styles.cameraContainer}>
       {
         (state === PlayerState.PREVIEW || state === PlayerState.PLAYING ||
-          state === PlayerState.SAVED || state === PlayerState.LAST) &&
+          state === PlayerState.SAVED) &&
         <VideoPlayer
           playersState={playersState}
           updatePlayersState={updatePlayersState}

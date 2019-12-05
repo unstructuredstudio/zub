@@ -91,10 +91,6 @@ export default function PrimaryScreen(props) {
         newState = PlayerState.SAVED;
         break;
 
-      case PlayerState.SAVED:
-        newState = PlayerState.LAST;
-        break;
-
       default:
         newState = PlayerState.NONE;
     }
@@ -118,6 +114,9 @@ export default function PrimaryScreen(props) {
     setZubVideoUrl(url);
     navigate('ShareScreen', {zubVideoUrl: url});
   };
+
+  // FOR DEBUG 
+  //console.table(playersState)
 
   return (
     <Fragment>

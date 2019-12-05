@@ -20,8 +20,6 @@ import { mergeVideos, generateHash } from './Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
-global.copyVideoWithAudio = '';
-
 export default function VideoPlayer(props) {
   const { curScreenNum, updatePlayersState, playersState, updateZubVideoUrl } = props,
     state = playersState[curScreenNum].state,
@@ -60,13 +58,11 @@ export default function VideoPlayer(props) {
         RNFFmpeg.execute('-i ' + videoOnly + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
+          updatePlayersState('videoWithAudio', destPath);
         });
       }).catch(function(error) {
         console.log('An error occured while stoping the recording: ' + error);
       });
-
-      copyVideoWithAudio = destPath;
-      updatePlayersState('state', state);
     }
 
     if (state === PlayerState.PLAYING) {
@@ -81,8 +77,6 @@ export default function VideoPlayer(props) {
         } catch (ex) {
           console.log(ex);
         }
-    } else if (state === PlayerState.LAST) {
-      updatePlayersState('videoWithAudio', copyVideoWithAudio);
     }
   }, [state]);
 

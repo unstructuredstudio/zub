@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "android-dev": "react-native run-android --port=8081",
+    "log": "react-native log-android",
+    "devtools": "react-devtools",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -39,6 +42,7 @@
     "eslint-plugin-react-native": "^3.8.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.55.0",
+    "react-devtools": "^4.2.1",
     "react-test-renderer": "16.8.6"
   },
   "jest": {
