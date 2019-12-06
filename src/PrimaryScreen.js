@@ -153,7 +153,13 @@ export default function PrimaryScreen(props) {
                 stretch={true}
                 type="secondary"
                 onPress={() => {
-                  updatePlayersState('state', playersState[curScreenNum].state);
+                  let newState;
+                  if(playersState[curScreenNum].state === (PlayerState.RECORDING || PlayerState.NONE)) {
+                    newState = playersState[curScreenNum].state;
+                  } else {
+                    newState = PlayerState.NONE;
+                  }
+                  updatePlayersState('state', newState);
                 }}>
                 {
                   playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
