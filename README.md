@@ -8,7 +8,7 @@
 * Open the project’s `xcworkspace` file with XCODE to run, deploy, and build the app
 * Extra setup:
   * In case you are not relying on the latest version of `react-native-sound-recorder` node module, make additional changes to `ios/RNSRecorder.m` library from this pull request: https://github.com/kevinresol/react-native-sound-recorder/pull/31/files
-  * Uncheck rotation mode "PORTRAIT" from XCODE: https://stackoverflow.com/questions/32176548/how-to-disable-rotation-in-react-native
+  * Uncheck rotation mode "PORTRAIT" from XCODE: https://stackoverflow.com/questions/32176548/how-to-disable-rotation-in-react-native or by removing `<string>UIInterfaceOrientationPortrait</string>` from `Info.plist` file
   * Change the function name `componentWillMount` in `node_modules/react-native-animated-bar/index.js` to `UNSAFE_componentWillMount`
   * _Bonus:_ Enable hot-reloading of the application on the device for quick development and debugging
 
@@ -36,7 +36,7 @@
             }
         }
 
-  * To set rotation mode as "PORTRAT ", add the following lines to `AndroidManifest.xml`:
+  * To remove rotation mode "PORTRAIT ", add the following lines to `AndroidManifest.xml`:
     * Under MainActivity <activity> tag: `android:screenOrientation="landscape"`
     * Under `<appplication>` tag: `android:theme="@style/Theme.ReactNative.AppCompat.Light.NoActionBar.FullScreen">`
 
