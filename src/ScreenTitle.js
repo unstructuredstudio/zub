@@ -53,8 +53,7 @@ export default function ScreenTitle(props) {
   // required because normal 'absolute' position 'box' styled 
   // View is disappearing when backgroundColor is used
   return (
-    <View>
-      <View style={styles.titleBox}>
+    <View style={styles.titleBox}>
         <AwesomeButtonCartman
           borderRadius={15}
           borderWidth={10}
@@ -86,7 +85,6 @@ export default function ScreenTitle(props) {
           >
           <Text></Text>
         </AwesomeButtonCartman>
-      </View>
 
       <Modal isVisible={isModalVisible}>
           <View style={styles.infoBox}>
@@ -121,6 +119,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: '30%',
+    zIndex: 2,
   },
   infoBox: {
     flex: 1,
