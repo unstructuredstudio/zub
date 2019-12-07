@@ -6,11 +6,12 @@
  *
  */
 
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 import CameraRoll from '@react-native-community/cameraroll';
 import { RNFFmpeg } from 'react-native-ffmpeg';
 
+// Required for Android
 export async function requestMicPermission() {
   try {
     const granted = await PermissionsAndroid.request(
@@ -35,6 +36,24 @@ export async function requestMicPermission() {
   }
 }
 
+// Required for Android
+async function requestStoragePermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Zub Storage Permission',
+          message: 'Zub needs access to your storage ' +
+            'so you can save the final video',
+        },
+      );
+      return granted;
+    } catch (err) {
+      console.error('Failed to request permission ', err);
+      return null;
+    }
+}
+
 export async function deleteMediaFile(file) {
   const exists = await RNFS.exists(file);
   let promise = {};
@@ -55,6 +74,9 @@ export async function moveMediaFile(filePath, destPath) {
 
 export async function saveToCameraRoll(filePath) {
   let promise = {};
+  if (Platform.OS === 'android') {
+    await requestStoragePermission();
+  }
   promise = await CameraRoll.saveToCameraRoll(filePath, 'video');
   return promise;
 }
