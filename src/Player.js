@@ -90,6 +90,7 @@ export default function VideoPlayer(props) {
           style={styles.backgroundVideo}
           repeat={true}
           paused={videoPaused}
+          resizeMode="cover"
           onEnd={() => {
             setVideoPaused(!videoPaused);
           }}
