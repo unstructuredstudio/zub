@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     borderColor: '#00B8C4',
     borderWidth: 10,
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     display: 'flex',
   },
   containerRight: {
