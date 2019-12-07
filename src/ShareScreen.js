@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     backgroundVideo: {
         flex: 1,
         borderRadius: 10,
+        backgroundColor: "black"
     },
     videoContainer: {
         flex: 1,
