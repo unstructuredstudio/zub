@@ -81,43 +81,6 @@ export default function VideoPlayer(props) {
   }, [state]);
 
   if(videoOnly || videoWithAudio) {
-    const recordButton = 
-        <AwesomeButtonCartman
-          borderRadius={10}
-          height={50}
-          stretch={true}
-          raiseLevel={5}
-          type="secondary"
-          onPress={() => {
-            let isStatePlaying = state === PlayerState.PLAYING;
-            if(!isStatePlaying) {
-              playerRef.seek(0);
-            }
-            setVideoPaused(isStatePlaying);
-    
-            let newState;
-            if(state !== PlayerState.PREVIEW || PlayerState.PLAYING) {
-              newState = PlayerState.PREVIEW;
-            } else {
-              newState = state;
-            }
-            updatePlayersState('state', newState);
-          }}
-          title="Record">
-            Record Audio ⬤
-        </AwesomeButtonCartman>
-    
-    const recordingInProgress = 
-        <AwesomeButtonCartman
-          borderRadius={10}
-          height={50}
-          stretch={true}
-          raiseLevel={5}
-          type="disabled"
-          title="Recording in progress">
-            Recording...
-        </AwesomeButtonCartman>
-
     return (
       <View style={styles.videoContainer}>
         <Video
@@ -176,8 +139,33 @@ export default function VideoPlayer(props) {
         </View>
 
         <View style={styles.box}>
-          {state !== PlayerState.PLAYING ? recordButton: recordingInProgress}
-        </View>
+          <AwesomeButtonCartman
+            borderRadius={10}
+            height={50}
+            stretch={true}
+            raiseLevel={5}
+            type="secondary"
+            onPress={() => {
+              let isStatePlaying = state === PlayerState.PLAYING;
+              if(!isStatePlaying) {
+                playerRef.seek(0);
+              }
+              setVideoPaused(isStatePlaying);
+
+              let newState;
+              if(state !== PlayerState.PREVIEW || PlayerState.PLAYING) {
+                newState = PlayerState.PREVIEW;
+              } else {
+                newState = state;
+              }
+              updatePlayersState('state', newState);
+            }}
+            title="Record">
+            {
+              state === PlayerState.PLAYING ? 'Stop ■' : 'Record Audio ⬤'
+            }
+            </AwesomeButtonCartman>
+          </View>
       </View>
     );
   } else {
