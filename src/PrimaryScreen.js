@@ -54,12 +54,15 @@ export default function PrimaryScreen(props) {
 
   const switchScreenFn = index => () => switchScreen(index);
 
-  let isRecording = false;
+  let isRecording, isAudiorecording = false;
   for(let index = 0; index < playersState.length; index += 1) {
     const state = playersState[index];
-    if(state.state === PlayerState.RECORDING || state.state === PlayerState.PLAYING) {
+    if(state.state === PlayerState.PLAYING) {
       isRecording = true;
+      isAudiorecording = true;
       break;
+    } else if(state.state === PlayerState.RECORDING) {
+      isRecording = true;
     }
   }
 
@@ -125,7 +128,7 @@ export default function PrimaryScreen(props) {
   };
 
   // FOR DEBUG 
-  //console.table(playersState)
+  console.table(playersState)
 
   return (
     <Fragment>
@@ -161,6 +164,7 @@ export default function PrimaryScreen(props) {
                 height={100}
                 stretch={true}
                 type="secondary"
+                disabled={isAudiorecording}
                 onPress={() => {
                   let newState;
                   if(playersState[curScreenNum].state === (PlayerState.RECORDING || PlayerState.NONE)) {
