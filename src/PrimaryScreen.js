@@ -54,6 +54,18 @@ export default function PrimaryScreen(props) {
 
   const switchScreenFn = index => () => switchScreen(index);
 
+  let isRecording, isAudiorecording = false;
+  for(let index = 0; index < playersState.length; index += 1) {
+    const state = playersState[index];
+    if(state.state === PlayerState.PLAYING) {
+      isRecording = true;
+      isAudiorecording = true;
+      break;
+    } else if(state.state === PlayerState.RECORDING) {
+      isRecording = true;
+    }
+  }
+
   for (let i = 0; i < playersState.length; i++) {
     buttonElements.push(
       <View key={'view_' + i} style={styles.videoButtonContainer}>
@@ -65,8 +77,8 @@ export default function PrimaryScreen(props) {
           textSize={50}
           stretch={true}
           type={playersState[i].isActive ? 'primary' : 'disabled'}
-          onPress={switchScreenFn(i)}
-          >
+          onPress={isRecording ? null : switchScreenFn(i)}
+        >
           {playersState[i].button}
         </AwesomeButtonCartman>
       </View>
@@ -90,7 +102,7 @@ export default function PrimaryScreen(props) {
       case PlayerState.PLAYING:
         newState = PlayerState.SAVED;
         break;
-
+      
       default:
         newState = PlayerState.NONE;
     }
@@ -116,7 +128,7 @@ export default function PrimaryScreen(props) {
   };
 
   // FOR DEBUG 
-  //console.table(playersState)
+  console.table(playersState)
 
   return (
     <Fragment>
@@ -152,6 +164,7 @@ export default function PrimaryScreen(props) {
                 height={100}
                 stretch={true}
                 type="secondary"
+                disabled={isAudiorecording}
                 onPress={() => {
                   let newState;
                   if(playersState[curScreenNum].state === (PlayerState.RECORDING || PlayerState.NONE)) {

@@ -114,6 +114,7 @@ export default function VideoPlayer(props) {
           stretch={true}
           raiseLevel={5}
           type="disabled"
+          disabled={true}
           title="Recording in progress">
             Recording...
         </AwesomeButtonCartman>
