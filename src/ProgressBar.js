@@ -27,11 +27,11 @@ export default function ProgressBar(props) {
       setClipSize(maxClipSize);
     }
 
-    if (state === PlayerState.PLAYING) {
+    if (state === PlayerState.START_AUDIO_RECORDING) {
       setClipSize(videoDuration);
     }
 
-    if (state === PlayerState.RECORDING || state === PlayerState.PLAYING) {
+    if (state === PlayerState.RECORDING || state === PlayerState.START_AUDIO_RECORDING) {
       interval = setInterval(() => {
         if (count >= clipSize) {
           clearInterval(interval);

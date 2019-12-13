@@ -58,7 +58,7 @@ export default function VideoRecorder(props) {
   return (
     <View style={styles.cameraContainer}>
       {
-        (state === PlayerState.PREVIEW || state === PlayerState.PLAYING ||
+        (state === PlayerState.PREVIEW || state === PlayerState.STOP_AUDIO_RECORDING || state === PlayerState.START_AUDIO_RECORDING ||
           state === PlayerState.SAVED) &&
         <VideoPlayer
           playersState={playersState}
@@ -89,7 +89,7 @@ export default function VideoRecorder(props) {
               }}
               captureAudio={false}>
               {
-                state === PlayerState.PLAYING &&  (
+                state === PlayerState.START_AUDIO_RECORDING &&  (
                 <>
                   <View style={styles.box}>
                     <AwesomeButtonRick

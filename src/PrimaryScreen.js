@@ -57,7 +57,7 @@ export default function PrimaryScreen(props) {
   let isRecording, isAudiorecording = false;
   for(let index = 0; index < playersState.length; index += 1) {
     const state = playersState[index];
-    if(state.state === PlayerState.PLAYING) {
+    if(state.state === PlayerState.START_AUDIO_RECORDING) {
       isRecording = true;
       isAudiorecording = true;
       break;
@@ -76,6 +76,8 @@ export default function PrimaryScreen(props) {
           height={100}
           textSize={50}
           stretch={true}
+          // disable all buttons except the current screen
+          disabled={i == curScreenNum ? false: isRecording}
           type={playersState[i].isActive ? 'primary' : 'disabled'}
           onPress={isRecording ? null : switchScreenFn(i)}
         >
@@ -96,10 +98,14 @@ export default function PrimaryScreen(props) {
         break;
 
       case PlayerState.PREVIEW:
-        newState = PlayerState.PLAYING;
+        newState = PlayerState.START_AUDIO_RECORDING;
         break;
 
-      case PlayerState.PLAYING:
+      case PlayerState.START_AUDIO_RECORDING:
+        newState = PlayerState.STOP_AUDIO_RECORDING;
+        break;
+        
+      case PlayerState.STOP_AUDIO_RECORDING:
         newState = PlayerState.SAVED;
         break;
       
@@ -147,7 +153,7 @@ export default function PrimaryScreen(props) {
             />
           </View>
           { (playersState[curScreenNum].state === PlayerState.RECORDING ||
-          playersState[curScreenNum].state === PlayerState.PLAYING) &&
+          playersState[curScreenNum].state === PlayerState.START_AUDIO_RECORDING) &&
           <ProgressBar
             playersState={playersState}
             curScreenNum={curScreenNum}

@@ -58,20 +58,22 @@ export default function VideoPlayer(props) {
         RNFFmpeg.execute('-i ' + videoOnly + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
-          updatePlayersState('videoWithAudio', destPath);
+          // updatePlayersState('videoWithAudio', destPath);
+          state.videoWithAudio = destPath;
+          updatePlayersState('state', state)
         });
       }).catch(function(error) {
         console.log('An error occured while stoping the recording: ' + error);
       });
     }
 
-    if (state === PlayerState.PLAYING) {
+    if (state === PlayerState.START_AUDIO_RECORDING) {
       try {
         setTimeout(startAudioRecording, 100);
       } catch (ex) {
         console.log(ex);
       }
-    } else if (state === PlayerState.SAVED) {
+    } else if (state === PlayerState.STOP_AUDIO_RECORDING) {
         try {
           stopAudioRecording();
         } catch (ex) {
@@ -89,14 +91,14 @@ export default function VideoPlayer(props) {
           raiseLevel={5}
           type="secondary"
           onPress={() => {
-            let isStatePlaying = state === PlayerState.PLAYING;
+            let isStatePlaying = state === PlayerState.START_AUDIO_RECORDING;
             if(!isStatePlaying) {
               playerRef.seek(0);
             }
             setVideoPaused(isStatePlaying);
     
             let newState;
-            if(state !== PlayerState.PREVIEW || PlayerState.PLAYING) {
+            if(state !== PlayerState.PREVIEW || PlayerState.START_AUDIO_RECORDING) {
               newState = PlayerState.PREVIEW;
             } else {
               newState = state;
@@ -177,7 +179,7 @@ export default function VideoPlayer(props) {
         </View>
 
         <View style={styles.box}>
-          {state !== PlayerState.PLAYING ? recordButton: recordingInProgress}
+          {state !== PlayerState.START_AUDIO_RECORDING ? recordButton: recordingInProgress}
         </View>
       </View>
     );
