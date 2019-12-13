@@ -59,7 +59,6 @@ export default function VideoPlayer(props) {
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
           updatePlayersState('videoWithAudio', destPath);
-          // state.videoWithAudio = destPath;
           updatePlayersState('state', state)
         });
       }).catch(function(error) {

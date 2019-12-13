@@ -134,7 +134,7 @@ export default function PrimaryScreen(props) {
   };
 
   // FOR DEBUG 
-  console.table(playersState)
+  // console.table(playersState)
 
   return (
     <Fragment>
