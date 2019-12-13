@@ -44,13 +44,13 @@ export default function VideoRecorder(props) {
       }
     }
 
-    if (state === PlayerState.RECORDING) {
+    if (state === PlayerState.START_VIDEO_RECORDING) {
       try {
         setTimeout(startRecording, 100);
       } catch (ex) {
         console.log(ex);
       }
-    } else if (state === PlayerState.PREVIEW){
+    } else if (state === PlayerState.VIDEO_SAVED){
       stopRecording();
     }
   }, [state, curScreenNum]);
@@ -58,8 +58,8 @@ export default function VideoRecorder(props) {
   return (
     <View style={styles.cameraContainer}>
       {
-        (state === PlayerState.PREVIEW || state === PlayerState.STOP_AUDIO_RECORDING || state === PlayerState.START_AUDIO_RECORDING ||
-          state === PlayerState.SAVED) &&
+        (state === PlayerState.VIDEO_SAVED || state === PlayerState.STOP_AUDIO_RECORDING || state === PlayerState.START_AUDIO_RECORDING ||
+          state === PlayerState.AUDIO_VIDEO_SAVED) &&
         <VideoPlayer
           playersState={playersState}
           updatePlayersState={updatePlayersState}
@@ -68,7 +68,7 @@ export default function VideoRecorder(props) {
         />
       }
       {
-        (state === PlayerState.NONE || state === PlayerState.RECORDING) && (
+        (state === PlayerState.NONE || state === PlayerState.START_VIDEO_RECORDING) && (
           <>
             <RNCamera
               ref={ref => { cameraRef = ref; }}

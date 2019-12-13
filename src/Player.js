@@ -58,8 +58,8 @@ export default function VideoPlayer(props) {
         RNFFmpeg.execute('-i ' + videoOnly + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
-          // updatePlayersState('videoWithAudio', destPath);
-          state.videoWithAudio = destPath;
+          updatePlayersState('videoWithAudio', destPath);
+          // state.videoWithAudio = destPath;
           updatePlayersState('state', state)
         });
       }).catch(function(error) {
@@ -98,8 +98,8 @@ export default function VideoPlayer(props) {
             setVideoPaused(isStatePlaying);
     
             let newState;
-            if(state !== PlayerState.PREVIEW || PlayerState.START_AUDIO_RECORDING) {
-              newState = PlayerState.PREVIEW;
+            if(state !== PlayerState.VIDEO_SAVED || PlayerState.START_AUDIO_RECORDING) {
+              newState = PlayerState.VIDEO_SAVED;
             } else {
               newState = state;
             }

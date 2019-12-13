@@ -61,7 +61,7 @@ export default function PrimaryScreen(props) {
       isRecording = true;
       isAudiorecording = true;
       break;
-    } else if(state.state === PlayerState.RECORDING) {
+    } else if(state.state === PlayerState.START_VIDEO_RECORDING) {
       isRecording = true;
     }
   }
@@ -90,14 +90,14 @@ export default function PrimaryScreen(props) {
     let newState;
     switch (state) {
       case PlayerState.NONE:
-        newState = PlayerState.RECORDING;
+        newState = PlayerState.START_VIDEO_RECORDING;
         break;
 
-      case PlayerState.RECORDING:
-        newState = PlayerState.PREVIEW;
+      case PlayerState.START_VIDEO_RECORDING:
+        newState = PlayerState.VIDEO_SAVED;
         break;
 
-      case PlayerState.PREVIEW:
+      case PlayerState.VIDEO_SAVED:
         newState = PlayerState.START_AUDIO_RECORDING;
         break;
 
@@ -106,7 +106,7 @@ export default function PrimaryScreen(props) {
         break;
         
       case PlayerState.STOP_AUDIO_RECORDING:
-        newState = PlayerState.SAVED;
+        newState = PlayerState.AUDIO_VIDEO_SAVED;
         break;
       
       default:
@@ -152,7 +152,7 @@ export default function PrimaryScreen(props) {
               updatePlayersState={updatePlayersState}
             />
           </View>
-          { (playersState[curScreenNum].state === PlayerState.RECORDING ||
+          { (playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ||
           playersState[curScreenNum].state === PlayerState.START_AUDIO_RECORDING) &&
           <ProgressBar
             playersState={playersState}
@@ -173,7 +173,7 @@ export default function PrimaryScreen(props) {
                 disabled={isAudiorecording}
                 onPress={() => {
                   let newState;
-                  if(playersState[curScreenNum].state === (PlayerState.RECORDING || PlayerState.NONE)) {
+                  if(playersState[curScreenNum].state === (PlayerState.START_VIDEO_RECORDING || PlayerState.NONE)) {
                     newState = playersState[curScreenNum].state;
                   } else {
                     newState = PlayerState.NONE;
@@ -181,7 +181,7 @@ export default function PrimaryScreen(props) {
                   updatePlayersState('state', newState);
                 }}>
                 {
-                  playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
+                  playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ? 'STOP' : 'RECORD'
                 }
               </AwesomeButtonCartman>
             </View>
