@@ -57,11 +57,11 @@ export default function PrimaryScreen(props) {
   let isRecording, isAudiorecording = false;
   for(let index = 0; index < playersState.length; index += 1) {
     const state = playersState[index];
-    if(state.state === PlayerState.PLAYING) {
+    if(state.state === PlayerState.START_AUDIO_RECORDING) {
       isRecording = true;
       isAudiorecording = true;
       break;
-    } else if(state.state === PlayerState.RECORDING) {
+    } else if(state.state === PlayerState.START_VIDEO_RECORDING) {
       isRecording = true;
     }
   }
@@ -76,6 +76,8 @@ export default function PrimaryScreen(props) {
           height={100}
           textSize={50}
           stretch={true}
+          // disable all buttons except the current screen
+          disabled={i == curScreenNum ? false: isRecording}
           type={playersState[i].isActive ? 'primary' : 'disabled'}
           onPress={isRecording ? null : switchScreenFn(i)}
         >
@@ -88,19 +90,23 @@ export default function PrimaryScreen(props) {
     let newState;
     switch (state) {
       case PlayerState.NONE:
-        newState = PlayerState.RECORDING;
+        newState = PlayerState.START_VIDEO_RECORDING;
         break;
 
-      case PlayerState.RECORDING:
-        newState = PlayerState.PREVIEW;
+      case PlayerState.START_VIDEO_RECORDING:
+        newState = PlayerState.VIDEO_SAVED;
         break;
 
-      case PlayerState.PREVIEW:
-        newState = PlayerState.PLAYING;
+      case PlayerState.VIDEO_SAVED:
+        newState = PlayerState.START_AUDIO_RECORDING;
         break;
 
-      case PlayerState.PLAYING:
-        newState = PlayerState.SAVED;
+      case PlayerState.START_AUDIO_RECORDING:
+        newState = PlayerState.STOP_AUDIO_RECORDING;
+        break;
+        
+      case PlayerState.STOP_AUDIO_RECORDING:
+        newState = PlayerState.AUDIO_VIDEO_SAVED;
         break;
       
       default:
@@ -128,7 +134,7 @@ export default function PrimaryScreen(props) {
   };
 
   // FOR DEBUG 
-  console.table(playersState)
+  // console.table(playersState)
 
   return (
     <Fragment>
@@ -146,8 +152,8 @@ export default function PrimaryScreen(props) {
               updatePlayersState={updatePlayersState}
             />
           </View>
-          { (playersState[curScreenNum].state === PlayerState.RECORDING ||
-          playersState[curScreenNum].state === PlayerState.PLAYING) &&
+          { (playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ||
+          playersState[curScreenNum].state === PlayerState.START_AUDIO_RECORDING) &&
           <ProgressBar
             playersState={playersState}
             curScreenNum={curScreenNum}
@@ -167,7 +173,7 @@ export default function PrimaryScreen(props) {
                 disabled={isAudiorecording}
                 onPress={() => {
                   let newState;
-                  if(playersState[curScreenNum].state === (PlayerState.RECORDING || PlayerState.NONE)) {
+                  if(playersState[curScreenNum].state === (PlayerState.START_VIDEO_RECORDING || PlayerState.NONE)) {
                     newState = playersState[curScreenNum].state;
                   } else {
                     newState = PlayerState.NONE;
@@ -175,7 +181,7 @@ export default function PrimaryScreen(props) {
                   updatePlayersState('state', newState);
                 }}>
                 {
-                  playersState[curScreenNum].state === PlayerState.RECORDING ? 'STOP' : 'RECORD'
+                  playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ? 'STOP' : 'RECORD'
                 }
               </AwesomeButtonCartman>
             </View>

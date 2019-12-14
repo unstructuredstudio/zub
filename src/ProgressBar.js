@@ -22,16 +22,16 @@ export default function ProgressBar(props) {
   React.useEffect(() => {
     let interval = null;
 
-    if (state === PlayerState.NONE || state === PlayerState.PREVIEW) {
+    if (state === PlayerState.NONE || state === PlayerState.VIDEO_SAVED) {
       setCount(0);
       setClipSize(maxClipSize);
     }
 
-    if (state === PlayerState.PLAYING) {
+    if (state === PlayerState.START_AUDIO_RECORDING) {
       setClipSize(videoDuration);
     }
 
-    if (state === PlayerState.RECORDING || state === PlayerState.PLAYING) {
+    if (state === PlayerState.START_VIDEO_RECORDING || state === PlayerState.START_AUDIO_RECORDING) {
       interval = setInterval(() => {
         if (count >= clipSize) {
           clearInterval(interval);
