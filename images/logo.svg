@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="133.97552mm"
+   height="134.90477mm"
+   viewBox="0 0 133.97552 134.90477"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="app-logo.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4728">
+      <text
+         transform="rotate(-14.627182)"
+         id="text4732"
+         y="146.58273"
+         x="-112.97428"
+         style="font-style:normal;font-weight:normal;font-size:65.03919983px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.62598014"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'d puntillas D to tiptoe';-inkscape-font-specification:'d puntillas D to tiptoe';fill:#ffffff;stroke-width:1.62598014"
+           y="146.58273"
+           x="-112.97428"
+           id="tspan4730"
+           sodipodi:role="line">Zub</tspan></text>
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.50000001"
+     inkscape:cx="-727.27618"
+     inkscape:cy="242.66795"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g4562"
+     showgrid="false"
+     inkscape:window-width="3440"
+     inkscape:window-height="1407"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-right="10"
+     fit-margin-bottom="10" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-42.445551,-81.047617)">
+    <g
+       inkscape:export-xdpi="207.64999"
+       inkscape:export-ydpi="207.64999"
+       id="g4562"
+       transform="matrix(1.0692659,0,0,1,-3.6078022,5.7142811)">
+      <ellipse
+         ry="54.239582"
+         rx="53.270161"
+         cy="145.99852"
+         cx="105.74443"
+         id="path815-3"
+         style="fill:#cebb41;fill-opacity:1;stroke-width:0.26876339" />
+      <circle
+         r="52.916664"
+         cy="138.25"
+         cx="105.34196"
+         id="path815"
+         style="fill:#ee3355;fill-opacity:1;stroke-width:0.26458332" />
+      <ellipse
+         ry="52.916668"
+         rx="52.916664"
+         cy="132.40343"
+         cx="-20.499279"
+         id="path815-4"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+         clip-path="url(#clipPath4728)"
+         transform="translate(125.83822,5.8453114)" />
+    </g>
+  </g>
+</svg>

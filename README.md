@@ -1,4 +1,4 @@
-# Zub
+![Zub Logo](images/logo-small.png) 
 
 ### Development setup (iOS)
 * Set up React native CLI: https://facebook.github.io/react-native/docs/getting-started
