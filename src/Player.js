@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Platform} from 'react-native';
+import { StyleSheet, View, Platform, Text} from 'react-native';
 import Video from 'react-native-video';
 import SoundRecorder from 'react-native-sound-recorder';
 import { RNFFmpeg } from 'react-native-ffmpeg';
@@ -105,7 +105,7 @@ export default function VideoPlayer(props) {
             updatePlayersState('state', newState);
           }}
           title="Record">
-            Record Audio ⬤
+            <Text style={{fontSize: 20, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>REC VOICE</Text>
         </AwesomeButtonCartman>
     
     const recordingInProgress = 
@@ -117,7 +117,7 @@ export default function VideoPlayer(props) {
           type="disabled"
           disabled={true}
           title="Recording in progress">
-            Recording...
+            <Text style={{fontSize: 20, color: 'gray', fontFamily: 'Dpuntillas-Regular'}}>RECORDING</Text>
         </AwesomeButtonCartman>
 
     return (

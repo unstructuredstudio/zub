@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* zubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* zubTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -20,6 +19,7 @@
 		618E2ED15AB6083CAB2BE718 /* libPods-zubTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9F47594FB0A11F3ACC2DFD /* libPods-zubTests.a */; };
 		7A85706E9C500FA97474FB93 /* libPods-zub-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12CF25D2AFB97D36B1D07B98 /* libPods-zub-tvOSTests.a */; };
 		CD529FC2220D7B52E2A577C1 /* libPods-zub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E21A18AA4244E70C11E88258 /* libPods-zub.a */; };
+		0BFA0394727E4AF2BF976489 /* Dpuntillas-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +197,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED76A4C2DF3381624D1F0EA0 /* Pods-zub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.release.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.release.xcconfig"; sourceTree = "<group>"; };
 		F86BEAD46711B22ADADF049C /* Pods-zub-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */ = {isa = PBXFileReference; name = "Dpuntillas-Regular.ttf"; path = "../assets/fonts/Dpuntillas-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +315,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				37AEEE9490AA9D71BA55F525 /* Pods */,
+				7CCC31DF50A14B4DB619164C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -362,6 +364,15 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		7CCC31DF50A14B4DB619164C /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -647,6 +658,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				0BFA0394727E4AF2BF976489 /* Dpuntillas-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

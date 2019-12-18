@@ -7,6 +7,7 @@
     "android-dev": "react-native run-android --port=8081",
     "log": "react-native log-android",
     "devtools": "react-devtools",
+    "link": "react-native link",
     "test": "jest",
     "lint": "eslint ."
   },

@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  Text
 } from 'react-native';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import ScreenTitle from './ScreenTitle';
@@ -136,6 +137,10 @@ export default function PrimaryScreen(props) {
   // FOR DEBUG 
   // console.table(playersState)
 
+  let recordText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>REC</Text>
+  let stopText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>Stop</Text>
+
+
   return (
     <Fragment>
     <SafeAreaView flex={1}>
@@ -181,7 +186,7 @@ export default function PrimaryScreen(props) {
                   updatePlayersState('state', newState);
                 }}>
                 {
-                  playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ? 'STOP' : 'RECORD'
+                  playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ? stopText : recordText
                 }
               </AwesomeButtonCartman>
             </View>
