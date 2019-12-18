@@ -137,8 +137,8 @@ export default function PrimaryScreen(props) {
   // FOR DEBUG 
   // console.table(playersState)
 
-  let recordText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>REC</Text>
-  let stopText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>Stop</Text>
+  let recordText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>REC</Text>
+  let stopText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>Stop</Text>
 
 
   return (

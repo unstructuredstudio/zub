@@ -105,7 +105,7 @@ export default function VideoPlayer(props) {
             updatePlayersState('state', newState);
           }}
           title="Record">
-            <Text style={{fontSize: 20, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>REC VOICE</Text>
+            <Text style={{fontSize: 20, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>REC VOICE</Text>
         </AwesomeButtonCartman>
     
     const recordingInProgress = 
@@ -117,7 +117,7 @@ export default function VideoPlayer(props) {
           type="disabled"
           disabled={true}
           title="Recording in progress">
-            <Text style={{fontSize: 20, color: 'gray', fontFamily: 'Dpuntillas-Regular'}}>RECORDING</Text>
+            <Text style={{fontSize: 20, color: 'gray', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>RECORDING</Text>
         </AwesomeButtonCartman>
 
     return (

@@ -74,7 +74,7 @@ export default function ScreenTitle(props) {
                 setIsModalVisible(true)
               }}
               title="screen title">
-              <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: 'Dpuntillas-Regular'}}>{title} </Text>
+              <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>{title} </Text>
               <FontAwesomeIcon
                 icon={ faInfoCircle }
                 color={ '#ffc200' }
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     padding: 10,  
     fontSize: 22,
-    fontFamily: 'Dpuntillas-Regular'
+    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'
   },
   infoBoxText: {
     fontSize: 20, 
