@@ -74,7 +74,7 @@ export default function ScreenTitle(props) {
                 setIsModalVisible(true)
               }}
               title="screen title">
-              <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>{title} </Text>
+              <Text style={[styles.infoBoxTitleText]}>{title} </Text>
               <FontAwesomeIcon
                 icon={ faInfoCircle }
                 color={ '#ffc200' }
@@ -89,9 +89,9 @@ export default function ScreenTitle(props) {
       <Modal isVisible={isModalVisible}>
           <View style={styles.infoBox}>
             <View style={styles.infoBoxContent}>
-            <Text style={styles.infoBoxTitle}>{infoTitle[curScreenNum]}</Text>
+            <Text style={[styles.infoBoxTitleView, styles.infoBoxTitleText]}>{infoTitle[curScreenNum]}</Text>
               <View style={{padding: 15}}>
-                <Text style={styles.infoBoxText}> {infoText[curScreenNum]} </Text>
+                <Text style={styles.infoBoxSubtitleText}> {infoText[curScreenNum]} </Text>
                 <View style={{alignItems: "flex-end"}}>
                   <AwesomeButtonRick
                     borderRadius={50}
@@ -132,16 +132,19 @@ const styles = StyleSheet.create({
     borderColor: '#ffc200',
     borderWidth: 5
   },
-  infoBoxTitle: {
+  infoBoxTitleView: {
     backgroundColor: '#ee3355',
     color:'#ffc200',
     borderColor: '#ffc200',
     borderRadius: 7,
     padding: 10,  
-    fontSize: 22,
-    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'
   },
-  infoBoxText: {
+  infoBoxTitleText: {
+    fontSize: 25,
+    color:'#e1dfe2',
+    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+  },
+  infoBoxSubtitleText: {
     fontSize: 20, 
     color:'#787878',
   },
