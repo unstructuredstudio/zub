@@ -51,7 +51,8 @@ export default function PrimaryScreen(props) {
 
   const [curScreenNum, setCurScreenNum] = React.useState(0),
     [zubVideoUrl, setZubVideoUrl] = React.useState(''),
-    buttonElements = [];
+    buttonElements = [],
+    [isMerging, setMerging] = React.useState(false);
 
   const switchScreenFn = index => () => switchScreen(index);
 
@@ -132,13 +133,14 @@ export default function PrimaryScreen(props) {
   const updateZubVideoUrl = (url) => {
     setZubVideoUrl(url);
     navigate('ShareScreen', {zubVideoUrl: url});
+    setMerging(false);
   };
 
   // FOR DEBUG 
   // console.table(playersState)
 
-  let recordText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>REC</Text>
-  let stopText = <Text style={{fontSize: 25, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>Stop</Text>
+  let recordText = <Text style={styles.recordButtonText}>REC</Text>
+  let stopText = <Text style={styles.recordButtonText}>Stop</Text>
 
 
   return (
@@ -155,6 +157,8 @@ export default function PrimaryScreen(props) {
               curScreenNum={curScreenNum}
               updateZubVideoUrl={updateZubVideoUrl}
               updatePlayersState={updatePlayersState}
+              isMerging={isMerging}
+              setMerging={setMerging}
             />
           </View>
           { (playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING ||
@@ -177,6 +181,9 @@ export default function PrimaryScreen(props) {
                 type="secondary"
                 disabled={isAudiorecording}
                 onPress={() => {
+                  if(isMerging) {
+                    return;
+                  }
                   let newState;
                   if(playersState[curScreenNum].state === (PlayerState.START_VIDEO_RECORDING || PlayerState.NONE)) {
                     newState = playersState[curScreenNum].state;
@@ -197,7 +204,7 @@ export default function PrimaryScreen(props) {
   );
 
   function switchScreen(nextScreenNum) {
-    if (nextScreenNum === curScreenNum) {
+    if (nextScreenNum === curScreenNum || isMerging) {
       return;
     }
     playersState[curScreenNum].isActive = false;
@@ -242,19 +249,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#00B8C4',
   },
-  buttonText: {
-    fontSize: 50,
-    fontWeight: '700',
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff',
-    backgroundColor: 'transparent',
-  },
-  body: {
-    backgroundColor: '#ffffff',
-    display: 'flex',
-    flexDirection: 'column',
-  },
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -263,9 +257,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     display: 'flex',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000000',
+  recordButtonText: {
+    fontSize: 25,
+    color:'#e1dfe2',
+    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
   },
 });

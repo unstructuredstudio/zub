@@ -18,10 +18,11 @@ import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/ric
 import { requestMicPermission, deleteMediaFile } from './Utils';
 import { mergeVideos, generateHash } from './Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faCheckCircle, faRedo } from '@fortawesome/free-solid-svg-icons';
 
 export default function VideoPlayer(props) {
-  const { curScreenNum, updatePlayersState, playersState, updateZubVideoUrl } = props,
+  const { curScreenNum, updatePlayersState, playersState, updateZubVideoUrl,
+    isMerging, setMerging } = props,
     state = playersState[curScreenNum].state,
     [ videoPaused, setVideoPaused ] = React.useState(true);
 
@@ -90,6 +91,10 @@ export default function VideoPlayer(props) {
           raiseLevel={5}
           type="secondary"
           onPress={() => {
+            if(isMerging) {
+              return;
+            }
+
             let isStatePlaying = state === PlayerState.START_AUDIO_RECORDING;
             if(!isStatePlaying) {
               playerRef.seek(0);
@@ -105,7 +110,7 @@ export default function VideoPlayer(props) {
             updatePlayersState('state', newState);
           }}
           title="Record">
-            <Text style={{fontSize: 20, color:'#e1dfe2', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>REC VOICE</Text>
+            <Text style={[styles.buttonFontStyle, styles.recVoiceText]}>REC VOICE</Text>
         </AwesomeButtonCartman>
     
     const recordingInProgress = 
@@ -117,7 +122,7 @@ export default function VideoPlayer(props) {
           type="disabled"
           disabled={true}
           title="Recording in progress">
-            <Text style={{fontSize: 20, color: 'gray', fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular'}}>RECORDING</Text>
+            <Text style={[styles.buttonFontStyle, styles.recordingText]}>RECORDING</Text>
         </AwesomeButtonCartman>
 
     return (
@@ -145,16 +150,36 @@ export default function VideoPlayer(props) {
             <AwesomeButtonRick
               borderRadius={50}
               height={50}
-              stretch={true}
               textSize={30}
-              type="anchor"
+              width={isMerging ? 130:90}
+              type={isMerging ? "disabled": "anchor"}
               onPress={() => {
-                mergeVideosAndUpdateUrl();
+                if (!isMerging) {
+                  setMerging(true);
+                  mergeVideosAndUpdateUrl();
+                }
             }}>
-              ✓
+            { isMerging ?
+            <Text style={[styles.buttonFontStyle, styles.mergeDisabledText]}>
+            <FontAwesomeIcon
+              icon={ faRedo }
+              color={ '#c7e8ae' }
+              size={20}
+            /> MIXING..
+            </Text>
+            :
+            <Text style={[styles.buttonFontStyle, styles.mergeText]}>
+            <FontAwesomeIcon
+              icon={ faCheckCircle }
+              color={ '#34711f' }
+              size={20}
+            /> MIX
+            </Text>
+            }
             </AwesomeButtonRick>
           </View>
         }
+
         <View style={styles.playButton}>
           <AwesomeButtonRick
             borderRadius={50}
@@ -215,16 +240,31 @@ const styles = StyleSheet.create({
     left: 10,
     width: '22%',
   },
-  mergeButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    width: '22%',
-  },
   playButton: {
     position: 'absolute',
     bottom: 10,
     right: 10,
     width: '10%',
+  },
+  buttonFontStyle: {
+    fontSize: 20,
+    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+  },
+  mergeButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  mergeText: {
+    color: '#34711f',
+  },
+  mergeDisabledText: {
+    color: '#c7e8ae',
+  },
+  recordingText: {
+    color: 'gray',
+  },
+  recVoiceText: {
+    color: '#e1dfe2',
   },
 });

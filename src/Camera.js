@@ -17,7 +17,8 @@ import {  generateHash, deleteMediaFile } from './Utils';
 
 export default function VideoRecorder(props) {
   let cameraRef;
-  const { updatePlayersState, curScreenNum, playersState, updateZubVideoUrl } = props;
+  const { updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
+   isMerging, setMerging } = props;
   const state = playersState[curScreenNum].state;
 
   React.useEffect(() => {
@@ -65,6 +66,8 @@ export default function VideoRecorder(props) {
           updatePlayersState={updatePlayersState}
           updateZubVideoUrl={updateZubVideoUrl}
           curScreenNum={curScreenNum}
+          isMerging={isMerging}
+          setMerging={setMerging}
         />
       }
       {
@@ -88,25 +91,6 @@ export default function VideoRecorder(props) {
                 buttonNegative: 'Cancel',
               }}
               captureAudio={false}>
-              {
-                state === PlayerState.START_AUDIO_RECORDING &&  (
-                <>
-                  <View style={styles.box}>
-                    <AwesomeButtonRick
-                      borderRadius={50}
-                      height={50}
-                      stretch={true}
-                      type="anchor"
-                      onPress={() => setPlaying(true)} title="Play">
-                      PLAY ▶
-                    </AwesomeButtonRick>
-                  </View>
-                  <View style={styles.box} />
-                  <View style={styles.box} />
-                  <View style={styles.box} />
-                </>
-                )
-              }
             </RNCamera>
           </>
         )
