@@ -7,17 +7,19 @@
  */
 
 import React, { Fragment } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import Video from 'react-native-video';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faDownload, faPlay, faChevronLeft, faPause, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faPlay, faChevronLeft, faPause, faRedo, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { saveToCameraRoll } from './Utils';
+import Modal from "react-native-modal";
 
 export default function ShareScreen(props) {
     const { navigate } = props.navigation,
         [ videoPaused, setVideoPaused ] = React.useState(true),
-        [ isMediaSaved, setIsMediaSaved ] = React.useState(false);
+        [ isSaving, setIsSaving ] = React.useState(false),
+        [isModalVisible, setIsModalVisible] = React.useState(false);
 
     let zubVideoUrl = props.navigation.getParam('zubVideoUrl');
 
@@ -40,6 +42,7 @@ export default function ShareScreen(props) {
                         <AwesomeButtonRick
                             borderRadius={50}
                             textSize={30}
+                            height={50}
                             stretch={true}
                             type="secondary"
                             onPress={() => {
@@ -55,6 +58,7 @@ export default function ShareScreen(props) {
                     <View style={styles.playButton}>
                         <AwesomeButtonRick
                             borderRadius={50}
+                            height={50}
                             textSize={30}
                             stretch={true}
                             type="secondary"
@@ -77,29 +81,68 @@ export default function ShareScreen(props) {
                     <View style={styles.downloadButton}>
                         <AwesomeButtonRick
                             borderRadius={50}
+                            height={50}
                             textSize={30}
-                            stretch={true}
-                            type={isMediaSaved ? 'anchor' : 'secondary'}
+                            width={isSaving ? 150:110}
+                            type={isSaving ? "disabled": "anchor"}
                             onPress={() => {
-                                if (saveToCameraRoll(zubVideoUrl)) {
-                                    setIsMediaSaved(true);
+                                if(!isSaving) {
+                                    setIsSaving(true);
+                                    if (saveToCameraRoll(zubVideoUrl)) {
+                                        setIsSaving(false);
+                                        setIsModalVisible(!isModalVisible);
+                                    }
                                 }
                             }}
                             title="Save">
-                            { isMediaSaved ?
+                            { isSaving ?
+                            <Text style={[styles.buttonFontStyle, styles.saveDisabledText]}>
                             <FontAwesomeIcon
-                                icon={ faCheck }
-                                color={ '#34711f' }
-                                size={30}
-                            /> :
+                                icon={ faRedo }
+                                color={ '#c7e8ae' }
+                                size={20}
+                            /> SAVING... </Text> :
+                            <Text style={[styles.buttonFontStyle, styles.saveText]}>
                             <FontAwesomeIcon
                                 icon={ faDownload }
-                                color={ '#349890' }
-                            />
+                                color={ '#34711f' }
+                                size={20}
+                            /> SAVE
+                            </Text>
                             }
                         </AwesomeButtonRick>
                     </View>
                 </View>
+                <Modal isVisible={isModalVisible}>
+                    <View style={styles.infoBox}>
+                        <View style={styles.infoBoxContent}>
+                        <Text style={[styles.infoBoxTitleView, styles.infoBoxTitleText]}>Video saved!</Text>
+                        <View style={{padding: 15}}>
+                            <Text style={styles.infoBoxSubtitleText}> You can view the saved video in your phone's gallery. </Text>
+                            <View style={{alignItems: "flex-end"}}>
+                            <AwesomeButtonRick
+                                borderRadius={50}
+                                height={50}
+                                textSize={30}
+                                width={90}
+                                type="anchor"
+                                onPress={() => {
+                                    setIsSaving(false);
+                                    setIsModalVisible(!isModalVisible);
+                                }}>
+                                <Text style={[styles.buttonFontStyle, styles.okText]}>
+                                <FontAwesomeIcon
+                                    icon={ faCheckCircle }
+                                    color={ '#34711f' }
+                                    size={20}
+                                /> OK
+                                </Text>
+                            </AwesomeButtonRick>
+                            </View>
+                        </View>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </SafeAreaView>
         </Fragment>
@@ -121,6 +164,10 @@ const styles = StyleSheet.create({
     videoContainer: {
         flex: 1,
     },
+    buttonFontStyle: {
+        fontSize: 20,
+        fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+    },
     backButton: {
         position: 'absolute',
         top: 10,
@@ -130,14 +177,49 @@ const styles = StyleSheet.create({
     playButton: {
         position: 'absolute',
         bottom: 10,
-        right: 90,
+        left: 10,
         width: '10%',
     },
     downloadButton: {
         position: 'absolute',
         bottom: 10,
         right: 10,
-        width: '10%',
+    },
+    saveText: {
+        color: '#34711f',
+      },
+    saveDisabledText: {
+        color: '#c7e8ae',
+    },
+    infoBox: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    infoBoxContent: {
+        backgroundColor: '#e1dfe2',
+        justifyContent: 'center',
+        borderRadius: 7,
+        borderColor: '#ffc200',
+        borderWidth: 5
+    },
+    infoBoxTitleView: {
+        backgroundColor: '#ee3355',
+        color:'#ffc200',
+        borderColor: '#ffc200',
+        borderRadius: 7,
+        padding: 10,
+    },
+    infoBoxTitleText: {
+        fontSize: 25,
+        color:'#e1dfe2',
+        fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+    },
+    infoBoxSubtitleText: {
+        fontSize: 20,
+        color:'#787878',
+    },
+    okText: {
+        color: '#34711f',
     },
 });
 
