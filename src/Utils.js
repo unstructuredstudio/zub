@@ -85,9 +85,12 @@ export async function mergeVideos(playersState) {
   console.log('Merging videos...');
 
   let cacheDir = RNFS.CachesDirectoryPath,
-    video_0 = playersState[0].videoWithAudio || playersState[0].videoOnly,
-    video_1 = playersState[1].videoWithAudio || playersState[1].videoOnly,
-    video_2 = playersState[2].videoWithAudio || playersState[2].videoOnly,
+    videoWithAudio_0 = playersState[0].videoWithAudio,
+    videoWithAudio_1 = playersState[1].videoWithAudio,
+    videoWithAudio_2 = playersState[2].videoWithAudio,
+    video_0 = videoWithAudio_0 || playersState[0].videoOnly,
+    video_1 = videoWithAudio_1 || playersState[1].videoOnly,
+    video_2 = videoWithAudio_2 || playersState[2].videoOnly,
     im_0 = cacheDir + '/im_0.ts',
     im_1 = cacheDir + '/im_1.ts',
     im_2 = cacheDir + '/im_2.ts',
@@ -95,6 +98,12 @@ export async function mergeVideos(playersState) {
     ff_trans_cmd = ' -c copy -bsf:v h264_mp4toannexb -f mpegts ',
     ff_con_cmd = ' -c copy -bsf:a aac_adtstoasc ',
     output = '';
+
+  if (!(videoWithAudio_0 && videoWithAudio_1 && videoWithAudio_2) || (
+    videoWithAudio_2 === '' && videoWithAudio_1 === '' && videoWithAudio_0 === ''
+  )) {
+    return output;
+  }
 
   const promise1 = deleteMediaFile(zub_vid);
   const promise2 = deleteMediaFile(im_0);
