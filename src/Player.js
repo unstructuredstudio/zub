@@ -19,12 +19,15 @@ import { requestMicPermission, deleteMediaFile } from './Utils';
 import { mergeVideos, generateHash } from './Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlay, faPause, faCheckCircle, faRedo } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-native-modal';
 
 export default function VideoPlayer(props) {
   const { curScreenNum, updatePlayersState, playersState, updateZubVideoUrl,
     isMerging, setMerging } = props,
     state = playersState[curScreenNum].state,
-    [ videoPaused, setVideoPaused ] = React.useState(true);
+    [ videoPaused, setVideoPaused ] = React.useState(true),
+    [ isModalVisible, setIsModalVisible ] = React.useState(false),
+    [ missingAudiosMsg, setMissingAudiosMsg ] = React.useState('');
 
   let playerRef,
     videoOnly = playersState[curScreenNum].videoOnly,
@@ -59,8 +62,8 @@ export default function VideoPlayer(props) {
         RNFFmpeg.execute('-i ' + videoOnly + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
-          updatePlayersState('videoWithAudio', destPath);
-          updatePlayersState('state', state)
+            updatePlayersState('videoWithAudio', destPath);
+            updatePlayersState('state', state);
         });
       }).catch(function(error) {
         console.log('An error occured while stoping the recording: ' + error);
@@ -82,8 +85,8 @@ export default function VideoPlayer(props) {
     }
   }, [state]);
 
-  if(videoOnly || videoWithAudio) {
-    const recordButton = 
+  if (videoOnly || videoWithAudio) {
+    const recordButton =
         <AwesomeButtonCartman
           borderRadius={10}
           height={50}
@@ -91,18 +94,18 @@ export default function VideoPlayer(props) {
           raiseLevel={5}
           type="secondary"
           onPress={() => {
-            if(isMerging) {
+            if (isMerging) {
               return;
             }
 
             let isStatePlaying = state === PlayerState.START_AUDIO_RECORDING;
-            if(!isStatePlaying) {
+            if (!isStatePlaying) {
               playerRef.seek(0);
             }
             setVideoPaused(isStatePlaying);
-    
+
             let newState;
-            if(state !== PlayerState.VIDEO_SAVED || PlayerState.START_AUDIO_RECORDING) {
+            if (state !== PlayerState.VIDEO_SAVED || PlayerState.START_AUDIO_RECORDING) {
               newState = PlayerState.VIDEO_SAVED;
             } else {
               newState = state;
@@ -111,9 +114,9 @@ export default function VideoPlayer(props) {
           }}
           title="Record">
             <Text style={[styles.buttonFontStyle, styles.recVoiceText]}>REC VOICE</Text>
-        </AwesomeButtonCartman>
-    
-    const recordingInProgress = 
+        </AwesomeButtonCartman>;
+
+    const recordingInProgress =
         <AwesomeButtonCartman
           borderRadius={10}
           height={50}
@@ -123,7 +126,7 @@ export default function VideoPlayer(props) {
           disabled={true}
           title="Recording in progress">
             <Text style={[styles.buttonFontStyle, styles.recordingText]}>RECORDING</Text>
-        </AwesomeButtonCartman>
+        </AwesomeButtonCartman>;
 
     return (
       <View style={styles.videoContainer}>
@@ -151,9 +154,15 @@ export default function VideoPlayer(props) {
               borderRadius={50}
               height={50}
               textSize={30}
-              width={isMerging ? 130:90}
-              type={isMerging ? "disabled": "anchor"}
+              width={isMerging ? 130 : 90}
+              type={isMerging ? 'disabled' : 'anchor'}
               onPress={() => {
+
+                if (state !== PlayerState.AUDIO_VIDEO_SAVED && state !==
+                  PlayerState.VIDEO_SAVED) {
+                  return;
+                }
+
                 if (!isMerging) {
                   setMerging(true);
                   mergeVideosAndUpdateUrl();
@@ -203,16 +212,65 @@ export default function VideoPlayer(props) {
         </View>
 
         <View style={styles.box}>
-          {state !== PlayerState.START_AUDIO_RECORDING ? recordButton: recordingInProgress}
+          {state !== PlayerState.START_AUDIO_RECORDING ? recordButton : recordingInProgress}
         </View>
+
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.infoBox}>
+            <View style={styles.infoBoxContent}>
+                <Text style={[styles.infoBoxTitleView, styles.infoBoxTitleText]}>Mixing error!</Text>
+                <View style={{padding: 15}}>
+                  <Text style={styles.infoBoxSubtitleText}> {missingAudiosMsg} </Text>
+                  <View style={{alignItems: 'flex-end'}}>
+                    <AwesomeButtonRick
+                      borderRadius={50}
+                      height={50}
+                      textSize={30}
+                      width={90}
+                      type="anchor"
+                      onPress={() => {
+                        setMerging(false);
+                        setIsModalVisible(!isModalVisible);
+                      }}>
+                      <Text style={[styles.buttonFontStyle, styles.okText]}>
+                      <FontAwesomeIcon
+                          icon={ faCheckCircle }
+                          color={ '#34711f' }
+                          size={20}
+                      /> OK
+                      </Text>
+                  </AwesomeButtonRick>
+                  </View>
+                </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   } else {
-    return(null);
+    return (null);
   }
 
   async function mergeVideosAndUpdateUrl() {
     let merged_video = await mergeVideos(playersState);
+
+    if (!merged_video) {
+      let msg = 'You are missing audio for video ';
+      if (playersState[0].videoWithAudio === '') {
+        msg = msg.concat('1, ');
+      }
+      if (playersState[1].videoWithAudio === '') {
+        msg = msg.concat('2, ');
+      }
+      if (playersState[2].videoWithAudio === '') {
+        msg = msg.concat('3, ');
+      }
+      msg = msg.substring(0, msg.length - 2);
+      setMissingAudiosMsg(msg);
+      setIsModalVisible(true);
+      return;
+    }
+
     if (merged_video) {
       updateZubVideoUrl(merged_video);
     }
@@ -248,7 +306,7 @@ const styles = StyleSheet.create({
   },
   buttonFontStyle: {
     fontSize: 20,
-    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
   mergeButton: {
     position: 'absolute',
@@ -266,5 +324,35 @@ const styles = StyleSheet.create({
   },
   recVoiceText: {
     color: '#e1dfe2',
+  },
+  infoBox: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  infoBoxContent: {
+    backgroundColor: '#e1dfe2',
+    justifyContent: 'center',
+    borderRadius: 7,
+    borderColor: '#ffc200',
+    borderWidth: 5,
+  },
+  infoBoxTitleView: {
+    backgroundColor: '#ee3355',
+    color:'#ffc200',
+    borderColor: '#ffc200',
+    borderRadius: 7,
+    padding: 10,
+  },
+  infoBoxTitleText: {
+    fontSize: 25,
+    color:'#e1dfe2',
+    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
+  },
+  infoBoxSubtitleText: {
+    fontSize: 20,
+    color:'#787878',
+  },
+  okText: {
+    color: '#34711f',
   },
 });
