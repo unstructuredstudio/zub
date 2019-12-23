@@ -132,16 +132,15 @@ export default function PrimaryScreen(props) {
 
   const updateZubVideoUrl = (url) => {
     setZubVideoUrl(url);
-    navigate('ShareScreen', {zubVideoUrl: url});
+    navigate('ShareScreen', {zubVideoUrl: url, playersState: playersState});
     setMerging(false);
   };
 
   // FOR DEBUG 
-  // console.table(playersState)
+  console.table(playersState)
 
   let recordText = <Text style={styles.recordButtonText}>REC</Text>
-  let stopText = <Text style={styles.recordButtonText}>Stop</Text>
-
+  let stopText = <Text style={styles.recordButtonText}>Stop</Text>  
 
   return (
     <Fragment>

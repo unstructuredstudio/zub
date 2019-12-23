@@ -78,7 +78,19 @@ export async function saveToCameraRoll(filePath) {
     await requestStoragePermission();
   }
   promise = await CameraRoll.saveToCameraRoll(filePath, 'video');
+  // Clean app cache after saving merged video to remove temporary files
+  cleanCache()
   return promise;
+}
+
+function cleanCache(updatePlayerState) {
+  RNFS.unlink(RNFS.CachesDirectoryPath)
+  .then( () => {
+      console.log("App cache cleaned")
+  })
+  .catch((err) => {
+      console.log(err.message);
+  });
 }
 
 export async function mergeVideos(playersState) {
