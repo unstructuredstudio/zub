@@ -7,41 +7,35 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import Modal from "react-native-modal";
+import { faInfoCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-native-modal';
 
 
 export default function ScreenTitle(props) {
-  const [title, setTitle] = React.useState("INTRO");
+  const [title, setTitle] = React.useState('MOTIVATION');
   const { curScreenNum } = props;
 
-  const infoText = [
-    "In the first video clip...",
-    "Info 2",
-    "Info 3"
-  ]
-
   const infoTitle = [
-    "Introduce the project!",
-    "What materials did you use?",
-    "How did you build it?"
-  ]
+    'How did you start?',
+    'What materials did you use?',
+    'How did you make it?',
+  ];
 
   React.useEffect(() => {
     if (curScreenNum === 0) {
-      setTitle("INTRO");
+      setTitle('MOTIVATION');
     }
 
     if (curScreenNum === 1) {
-      setTitle("MATERIALS");
+      setTitle('MATERIALS');
     }
 
     if (curScreenNum === 2) {
-      setTitle("MAKING");
+      setTitle('MAKING');
     }
 
   }, [title, curScreenNum]);
@@ -49,8 +43,8 @@ export default function ScreenTitle(props) {
   // For modal
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
-  // This elaborate hack of using a button with a button is 
-  // required because normal 'absolute' position 'box' styled 
+  // This elaborate hack of using a button with a button is
+  // required because normal 'absolute' position 'box' styled
   // View is disappearing when backgroundColor is used
   return (
     <View style={styles.titleBox}>
@@ -71,7 +65,7 @@ export default function ScreenTitle(props) {
               raiseLevel={4}
               type="secondary"
               onPress={() => {
-                setIsModalVisible(true)
+                setIsModalVisible(true);
               }}
               title="screen title">
               <Text style={[styles.infoBoxTitleText]}>{title} </Text>
@@ -83,7 +77,7 @@ export default function ScreenTitle(props) {
             </AwesomeButtonCartman>
           }
           >
-          <Text></Text>
+          <Text />
         </AwesomeButtonCartman>
 
       <Modal isVisible={isModalVisible}>
@@ -91,8 +85,32 @@ export default function ScreenTitle(props) {
             <View style={styles.infoBoxContent}>
             <Text style={[styles.infoBoxTitleView, styles.infoBoxTitleText]}>{infoTitle[curScreenNum]}</Text>
               <View style={{padding: 15}}>
-                <Text style={styles.infoBoxSubtitleText}> {infoText[curScreenNum]} </Text>
-                <View style={{alignItems: "flex-end"}}>
+                {curScreenNum === 0 &&
+                <Text style={styles.infoBoxSubtitleText}>
+                Introduce your project and motivation behind it in the first clip!
+                </Text>
+                }
+
+                {curScreenNum === 1 &&
+                <Text style={styles.infoBoxSubtitleText}>
+                Share the types of materials and tools used in the second clip!
+                </Text>
+                }
+
+                {curScreenNum === 2 &&
+                <Text style={styles.infoBoxSubtitleText}>
+                Highlight your making process and fun moments in the third clip!
+                </Text>
+                }
+
+                <Text style={styles.infoBoxText}>NOTE: Use the
+                  <Image style={styles.videoButtonImage} source={require('../images/video-button.png')} />
+                  button to record the video first, then &nbsp;
+                  <Image style={styles.audioButtonImage} source={require('../images/audio-button.png')} />
+                  &nbsp; button to voice over it.
+                </Text>
+
+                <View style={{alignItems: 'flex-end'}}>
                   <AwesomeButtonRick
                     borderRadius={50}
                     height={50}
@@ -100,9 +118,15 @@ export default function ScreenTitle(props) {
                     width={90}
                     type="anchor"
                     onPress={() => {
-                      setIsModalVisible(!isModalVisible)
+                      setIsModalVisible(!isModalVisible);
                   }}>
-                    Ok ✓
+                    <Text style={[styles.okText]}>
+                      <FontAwesomeIcon
+                        icon={ faCheckCircle }
+                        color={ '#34711f' }
+                        size={20}
+                    /> OK
+                    </Text>
                   </AwesomeButtonRick>
                 </View>
               </View>
@@ -118,7 +142,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '30%',
+    width: '32%',
     zIndex: 2,
   },
   infoBox: {
@@ -130,22 +154,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 7,
     borderColor: '#ffc200',
-    borderWidth: 5
+    borderWidth: 5,
   },
   infoBoxTitleView: {
     backgroundColor: '#ee3355',
     color:'#ffc200',
     borderColor: '#ffc200',
     borderRadius: 7,
-    padding: 10,  
+    padding: 10,
   },
   infoBoxTitleText: {
     fontSize: 25,
     color:'#e1dfe2',
-    fontFamily: Platform.OS === "ios" ? 'd puntillas D to tiptoe': 'Dpuntillas-Regular',
+    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
   infoBoxSubtitleText: {
-    fontSize: 20, 
+    fontSize: 22,
     color:'#787878',
+  },
+  infoBoxText: {
+    fontSize: 20,
+    color:'#787878',
+  },
+  videoButtonImage: {
+    height: 40,
+    width: 40,
+    resizeMode: 'contain',
+  },
+  audioButtonImage: {
+    height: 30,
+    width: 70,
+    resizeMode: 'contain',
+  },
+  okText: {
+    color: '#34711f',
+    fontSize: 20,
+    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
 });
