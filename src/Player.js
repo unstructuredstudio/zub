@@ -50,16 +50,30 @@ export default function VideoPlayer(props) {
       });
     }
 
+    // This formats the vide duration in the string needed by ffmpeg
+    const getVideoDurationInStringFormat = (num) => {
+      let num1 = +num;
+      let str = '';
+      if(num1 < 10) {
+        str = str + '0' + num1;
+      } else if(num1 < 60) {
+        str = str + num1;
+      }
+      return `00:00:${str}`;
+    }
     async function stopAudioRecording() {
       const destPath = RNFS.CachesDirectoryPath + '/' + generateHash() + '_output_' +
         curScreenNum + '.mp4';
 
       await deleteMediaFile(videoWithAudio);
       await SoundRecorder.stop()
-      .then(function(audio) {
+      .then(async function(audio) {
         console.log('Stopped audio recording, audio file saved at: ' + audio.path);
-        //Combine audio and video
-        RNFFmpeg.execute('-i ' + videoOnly + ' -i ' + audio.path + ' -c copy ' + destPath, ' ')
+        const videoLen = (await RNFFmpeg.getMediaInformation(videoOnly)).duration;
+        const newVideoDuration = Math.round(videoLen/1000).toFixed(0);
+        // We need the -t option to truncate the recorded audio + video to the length of video
+        const stmt =`-i ${videoOnly} -i ${audio.path} -t ${getVideoDurationInStringFormat(newVideoDuration)} -c copy ${destPath}`;
+        RNFFmpeg.execute(stmt, ' ')
         .then(function(media) {
           console.log('FFmpeg process exited with rc ' + media.rc);
             updatePlayersState('videoWithAudio', destPath);
