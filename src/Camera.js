@@ -28,7 +28,6 @@ export default function VideoRecorder(props) {
         // listDirContents(RNFS.CachesDirectoryPath);
         preVideoOnly = videoOnly;
         preVideoWithAudio = videoWithAudio;
-        console.log("PREV VIDEO FILENAME" + preVideoOnly + " PREV VIDEO WITH AUDIO" + preVideoWithAudio);
         const options = { path: RNFS.CachesDirectoryPath + '/' + generateHash() +
           '_video_' + curScreenNum + '.mp4' },
           { uri } = await cameraRef.recordAsync(options);

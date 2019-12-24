@@ -137,7 +137,7 @@ export default function PrimaryScreen(props) {
   };
 
   // FOR DEBUG 
-  console.table(playersState)
+  // console.table(playersState)
 
   let recordText = <Text style={styles.recordButtonText}>REC</Text>
   let stopText = <Text style={styles.recordButtonText}>Stop</Text>  

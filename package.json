@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "android-dev": "react-native run-android --port=8081",
+    "android-release": "react-native run-android --variant=release --port=8081",
     "log": "react-native log-android",
     "devtools": "react-devtools",
     "link": "react-native link",
