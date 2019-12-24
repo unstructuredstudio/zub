@@ -12,24 +12,32 @@ import { RNCamera } from 'react-native-camera';
 import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
 import { PlayerState } from './Constants';
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
-import {  generateHash, deleteMediaFile } from './Utils';
+import {  generateHash, deleteMediaFile, listDirContents } from './Utils';
 
 export default function VideoRecorder(props) {
   let cameraRef;
   const { updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
    isMerging, setMerging } = props;
   const state = playersState[curScreenNum].state;
+  const videoOnly = playersState[curScreenNum].videoOnly
+  const videoWithAudio = playersState[curScreenNum].videoWithAudio
 
   React.useEffect(() => {
     async function startRecording() {
       try {
+        // listDirContents(RNFS.CachesDirectoryPath);
+        preVideoOnly = videoOnly;
+        preVideoWithAudio = videoWithAudio;
+        console.log("PREV VIDEO FILENAME" + preVideoOnly + " PREV VIDEO WITH AUDIO" + preVideoWithAudio);
         const options = { path: RNFS.CachesDirectoryPath + '/' + generateHash() +
           '_video_' + curScreenNum + '.mp4' },
-          { uri } = await cameraRef.recordAsync(options),
-          preVideoOnly = playersState[curScreenNum].videoOnly;
+          { uri } = await cameraRef.recordAsync(options);
         await deleteMediaFile(preVideoOnly);
+        if (preVideoWithAudio != '') {
+          await deleteMediaFile(preVideoWithAudio);
+        }
         updatePlayersState('videoOnly', uri);
+        // listDirContents(RNFS.CachesDirectoryPath);
       } catch (ex) {
         console.log(ex);
       }
@@ -54,7 +62,7 @@ export default function VideoRecorder(props) {
     } else if (state === PlayerState.VIDEO_SAVED){
       stopRecording();
     }
-  }, [state, curScreenNum]);
+  }, [state, curScreenNum, videoOnly, videoWithAudio]);
 
   return (
     <View style={styles.cameraContainer}>

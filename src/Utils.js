@@ -83,13 +83,20 @@ export async function saveToCameraRoll(filePath) {
   return promise;
 }
 
-function cleanCache(updatePlayerState) {
+function cleanCache() {
   RNFS.unlink(RNFS.CachesDirectoryPath)
   .then( () => {
       console.log("App cache cleaned")
   })
   .catch((err) => {
       console.log(err.message);
+  });
+}
+
+export function listDirContents(directory) {
+  RNFS.readdir(directory)
+  .then((list) => {
+    console.log(list)
   });
 }
 
