@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faDownload, faPlay, faChevronLeft, faPause, faRedo, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { saveToCameraRoll } from './Utils';
 import Modal from 'react-native-modal';
+import { PlayerState } from './Constants';
 
 export default function ShareScreen(props) {
     const { navigate } = props.navigation,
@@ -22,6 +23,23 @@ export default function ShareScreen(props) {
         [ isModalVisible, setIsModalVisible ] = React.useState(false);
 
     let zubVideoUrl = props.navigation.getParam('zubVideoUrl');
+    const playersState = props.navigation.getParam('playersState');
+
+    // Set States to default
+    function clearStates(playersState) {
+        for (let i = 0; i < playersState.length; i++) {
+            playersState[i].state = PlayerState.NONE;
+            playersState[i].videoOnly = '';
+            playersState[i].videoWithAudio = '';
+            playersState[i].videoDuration = 0;
+            if (i == 0) {
+                playersState[i].isActive = true;
+            } else {
+                playersState[i].isActive = false;
+            }
+        }
+        console.log("Zub screen states reset to default")
+    }
 
     return (
         <Fragment>
@@ -46,7 +64,7 @@ export default function ShareScreen(props) {
                                 stretch={true}
                                 type="secondary"
                                 onPress={() => {
-                                    navigate('PrimaryScreen');
+                                    navigate('PrimaryScreen', {playersState: playersState});
                                 }}
                                 title="Back"
                             >
@@ -92,6 +110,7 @@ export default function ShareScreen(props) {
                                         if (saveToCameraRoll(zubVideoUrl)) {
                                             setIsSaving(false);
                                             setIsModalVisible(!isModalVisible);
+                                            clearStates(playersState)
                                         }
                                     }
                                 }}
