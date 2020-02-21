@@ -16,6 +16,7 @@ import { saveToCameraRoll } from './Utils';
 import Modal from 'react-native-modal';
 import { PlayerState } from './Constants';
 
+
 export default function ShareScreen(props) {
     const { navigate } = props.navigation,
         [ videoPaused, setVideoPaused ] = React.useState(true),
@@ -30,7 +31,6 @@ export default function ShareScreen(props) {
         for (let i = 0; i < playersState.length; i++) {
             playersState[i].state = PlayerState.NONE;
             playersState[i].videoOnly = '';
-            playersState[i].videoWithAudio = '';
             playersState[i].videoDuration = 0;
             if (i == 0) {
                 playersState[i].isActive = true;
