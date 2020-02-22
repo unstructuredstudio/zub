@@ -8,17 +8,24 @@
 
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import AwesomeButtonCartman from
+  'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonRick from
+  'react-native-really-awesome-button/src/themes/rick';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faInfoCircle, faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-native-modal';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
+import PropTypes from 'prop-types';
 
+/**
+ * Renders screen titles and modals associated with each
+ * @param {object} props
+ * @return {string}
+ */
 export default function ScreenTitle(props) {
   const [title, setTitle] = React.useState('MOTIVATION');
   const {curScreenNum} = props;
-
   const infoTitle = [
     'How did you start?',
     'What materials did you use?',
@@ -82,12 +89,13 @@ export default function ScreenTitle(props) {
       <Modal isVisible={isModalVisible}>
         <View style={styles.infoBox}>
           <View style={styles.infoBoxContent}>
-            <Text style={[styles.infoBoxTitleView, styles.infoBoxTitleText]}>{infoTitle[curScreenNum]}</Text>
-            <View style={{padding: 15}}>
+            <Text style={[styles.infoBoxTitleView,
+              styles.infoBoxTitleText]}>{infoTitle[curScreenNum]}</Text>
+            <View style={styles.infoBoxView}>
               {curScreenNum === 0 &&
-                <Text style={styles.infoBoxSubtitleText}>
-                Introduce your project and motivation behind it in the first clip!
-                </Text>
+              <Text style={styles.infoBoxSubtitleText}>
+              Introduce your project and motivation behind it in the first clip!
+              </Text>
               }
 
               {curScreenNum === 1 &&
@@ -103,13 +111,15 @@ export default function ScreenTitle(props) {
               }
 
               <Text style={styles.infoBoxText}>NOTE: Use the
-                <Image style={styles.videoButtonImage} source={require('../images/video-button.png')} />
+                <Image style={styles.videoButtonImage}
+                  source={require('../images/video-button.png')} />
                   button to record the video first, then &nbsp;
-                <Image style={styles.audioButtonImage} source={require('../images/audio-button.png')} />
+                <Image style={styles.audioButtonImage}
+                  source={require('../images/audio-button.png')} />
                   &nbsp; button to voice over it.
               </Text>
 
-              <View style={{alignItems: 'flex-end'}}>
+              <View style={styles.infoBoxBody}>
                 <AwesomeButtonRick
                   borderRadius={50}
                   height={50}
@@ -136,6 +146,10 @@ export default function ScreenTitle(props) {
   );
 }
 
+ScreenTitle.propTypes = {
+  curScreenNum: PropTypes.number,
+};
+
 const styles = StyleSheet.create({
   titleBox: {
     position: 'absolute',
@@ -155,6 +169,9 @@ const styles = StyleSheet.create({
     borderColor: '#ffc200',
     borderWidth: 5,
   },
+  infoBoxView: {
+    padding: 15,
+  },
   infoBoxTitleView: {
     backgroundColor: '#ee3355',
     color: '#ffc200',
@@ -165,11 +182,15 @@ const styles = StyleSheet.create({
   infoBoxTitleText: {
     fontSize: 25,
     color: '#e1dfe2',
-    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
+    fontFamily: Platform.OS ===
+      'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
   infoBoxSubtitleText: {
     fontSize: 22,
     color: '#787878',
+  },
+  infoBoxBody: {
+    alignItems: 'flex-end',
   },
   infoBoxText: {
     fontSize: 20,
@@ -188,6 +209,7 @@ const styles = StyleSheet.create({
   okText: {
     color: '#34711f',
     fontSize: 20,
-    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
+    fontFamily: Platform.OS ===
+      'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
 });

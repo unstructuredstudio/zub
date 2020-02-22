@@ -18,10 +18,16 @@ import {
   View,
   Text,
 } from 'react-native';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonCartman from
+  'react-native-really-awesome-button/src/themes/cartman';
 import ScreenTitle from './ScreenTitle';
+import PropTypes from 'prop-types';
 
-
+/**
+ * Renders primary screen controls, decides & update their states
+ * @param {object} props
+ * @return {string}
+ */
 export default function PrimaryScreen(props) {
   const {navigate} = props.navigation;
   const [playersState, setPlayersState] = React.useState([
@@ -49,7 +55,6 @@ export default function PrimaryScreen(props) {
   ]);
 
   const [curScreenNum, setCurScreenNum] = React.useState(0);
-  const [zubVideoUrl, setZubVideoUrl] = React.useState('');
   const buttonElements = [];
   const [isMerging, setMerging] = React.useState(false);
 
@@ -112,7 +117,6 @@ export default function PrimaryScreen(props) {
   };
 
   const updateZubVideoUrl = (url) => {
-    setZubVideoUrl(url);
     navigate('ShareScreen', {zubVideoUrl: url, playersState: playersState});
     setMerging(false);
   };
@@ -141,7 +145,8 @@ export default function PrimaryScreen(props) {
                 setMerging={setMerging}
               />
             </View>
-            { (playersState[curScreenNum].state === PlayerState.START_VIDEO_RECORDING) &&
+            { (playersState[curScreenNum].state ===
+              PlayerState.START_VIDEO_RECORDING) &&
           <ProgressBar
             playersState={playersState}
             curScreenNum={curScreenNum}
@@ -183,6 +188,10 @@ export default function PrimaryScreen(props) {
     </Fragment>
   );
 
+  /**
+   * Switches screen when button numbered 1, 2 or 3 are pressed
+   * @param {number} nextScreenNum
+   */
   function switchScreen(nextScreenNum) {
     if (nextScreenNum === curScreenNum || isMerging) {
       return;
@@ -194,6 +203,9 @@ export default function PrimaryScreen(props) {
   }
 }
 
+PrimaryScreen.propTypes = {
+  navigation: PropTypes.object,
+};
 // Remove Navigation Header
 PrimaryScreen.navigationOptions = {header: null};
 
@@ -240,6 +252,7 @@ const styles = StyleSheet.create({
   recordButtonText: {
     fontSize: 25,
     color: '#e1dfe2',
-    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
+    fontFamily: Platform.OS === 'ios' ?
+      'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
 });

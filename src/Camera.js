@@ -14,7 +14,13 @@ import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
 import {PlayerState} from './Constants';
 import {generateHash, deleteMediaFile, requestMicPermission} from './Utils';
+import PropTypes from 'prop-types';
 
+/**
+ * Handles video recording functionalities
+ * @param {object} props
+ * @return {string}
+ */
 export default function VideoRecorder(props) {
   let cameraRef;
   const {updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
@@ -23,6 +29,9 @@ export default function VideoRecorder(props) {
   const videoOnly = playersState[curScreenNum].videoOnly;
 
   React.useEffect(() => {
+    /**
+     * Starts video recording
+     */
     async function startRecording() {
       let preVideoOnly;
       try {
@@ -40,6 +49,9 @@ export default function VideoRecorder(props) {
       }
     }
 
+    /**
+     * Stops video recording
+     */
     async function stopRecording() {
       try {
         console.log('Stop the recording...');
@@ -103,6 +115,15 @@ export default function VideoRecorder(props) {
     </View>
   );
 }
+
+VideoRecorder.propTypes = {
+  updatePlayersState: PropTypes.func,
+  curScreenNum: PropTypes.number,
+  playersState: PropTypes.array,
+  updateZubVideoUrl: PropTypes.func,
+  isMerging: PropTypes.bool,
+  setMerging: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   cameraContainer: {

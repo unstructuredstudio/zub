@@ -11,7 +11,9 @@ import RNFS from 'react-native-fs';
 import CameraRoll from '@react-native-community/cameraroll';
 import {RNFFmpeg} from 'react-native-ffmpeg';
 
-// Required for Android
+/**
+ * Requests mic permission; for Android only
+ */
 export async function requestMicPermission() {
   try {
     const granted = await PermissionsAndroid.request(
@@ -36,7 +38,9 @@ export async function requestMicPermission() {
   }
 }
 
-// Required for Android
+/**
+ * Requests storage permission; for Android only
+ */
 async function requestStoragePermission() {
   try {
     const granted = await PermissionsAndroid.request(
@@ -54,6 +58,11 @@ async function requestStoragePermission() {
   }
 }
 
+/**
+ * Deletes a media file
+ * @param {string} file
+ * @return {promise} promise
+ */
 export async function deleteMediaFile(file) {
   const exists = await RNFS.exists(file);
   let promise = {};
@@ -63,6 +72,12 @@ export async function deleteMediaFile(file) {
   return promise;
 }
 
+/**
+ * Moves a media file from one location to another
+ * @param {string} filePath
+ * @param {string} destPath
+ * @return {promise} promise
+ */
 export async function moveMediaFile(filePath, destPath) {
   const exists = await RNFS.exists(filePath);
   let promise = {};
@@ -72,6 +87,11 @@ export async function moveMediaFile(filePath, destPath) {
   return promise;
 }
 
+/**
+ * Saves a file to phones camera roll
+ * @param {string} filePath
+ * @return {promise} promise
+ */
 export async function saveToCameraRoll(filePath) {
   let promise = {};
   if (Platform.OS === 'android') {
@@ -83,6 +103,9 @@ export async function saveToCameraRoll(filePath) {
   return promise;
 }
 
+/**
+ * Cleans the cache directory
+ */
 function cleanCache() {
   RNFS.unlink(RNFS.CachesDirectoryPath)
       .then( () => {
@@ -93,6 +116,11 @@ function cleanCache() {
       });
 }
 
+/**
+ * Merges all the videos to generate a single recording
+ * @param {object} playersState
+ * @return {string} output
+ */
 export async function mergeVideos(playersState) {
   console.log('Merging videos...');
 
@@ -113,7 +141,8 @@ export async function mergeVideos(playersState) {
   const promise3 = deleteMediaFile(im1);
   const promise4 = deleteMediaFile(im2);
 
-  await Promise.all([promise1, promise2, promise3, promise4]).then(function(res) {
+  await Promise.all([promise1, promise2, promise3,
+    promise4]).then(function(res) {
     console.log('Existing videos deleted ' + res);
   });
 
@@ -131,7 +160,8 @@ export async function mergeVideos(playersState) {
   await RNFFmpeg.execute('-i ' + video2 + ffTransCmd + im2)
       .then((media2) => console.log(media2.rc));
 
-  await RNFFmpeg.execute('-i concat:' + im0 + '|' + im1 + '|' + im2 + ffConCmd + zubVid)
+  await RNFFmpeg.execute('-i concat:' + im0 + '|' +
+    im1 + '|' + im2 + ffConCmd + zubVid)
       .then(function(mediaZub) {
         if (mediaZub.rc === 0) {
           output = zubVid;
@@ -141,9 +171,14 @@ export async function mergeVideos(playersState) {
   return output;
 }
 
+/**
+ * Generates a six digit hash key
+ * @return {string} result
+ */
 export function generateHash() {
   const length = 6;
-  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const chars =
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = '';
 
   for (let i = length; i > 0; --i) {

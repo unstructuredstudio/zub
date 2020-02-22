@@ -10,27 +10,31 @@ import React from 'react';
 import {StyleSheet, View, Platform, Text} from 'react-native';
 import Video from 'react-native-video';
 import {PlayerState} from './Constants';
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import AwesomeButtonRick from
+  'react-native-really-awesome-button/src/themes/rick';
 import {mergeVideos} from './Utils';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPlay, faPause, faCheckCircle, faRedo} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from
+  '@fortawesome/react-native-fontawesome';
+import {faPlay, faPause, faCheckCircle, faRedo}
+  from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Renders video player controls
+ * @param {object} props
+ * @return {string}
+ */
 export default function VideoPlayer(props) {
   const {curScreenNum, updatePlayersState, playersState, updateZubVideoUrl,
     isMerging, setMerging} = props;
+
   const state = playersState[curScreenNum].state;
   const [videoPaused, setVideoPaused] = React.useState(true);
-
-  let playerRef;
   const videoOnly = playersState[curScreenNum].videoOnly;
 
   if (videoOnly) {
     return (
       <View style={styles.videoContainer}>
         <Video
-          ref={(ref) => {
-            playerRef = ref;
-          }}
           source={{uri: videoOnly}}
           muted={false}
           style={styles.backgroundVideo}
@@ -46,7 +50,8 @@ export default function VideoPlayer(props) {
         />
 
         {
-          playersState[0].videoOnly !== '' && playersState[1].videoOnly !== '' &&
+          playersState[0].videoOnly !== '' &&
+          playersState[1].videoOnly !== '' &&
           playersState[2].videoOnly !== '' &&
           <View style={styles.mergeButton}>
             <AwesomeButtonRick
@@ -112,6 +117,9 @@ export default function VideoPlayer(props) {
     return (null);
   }
 
+  /**
+   * Merges all the videos and saves the url to a variable
+   */
   async function mergeVideosAndUpdateUrl() {
     const mergedVideo = await mergeVideos(playersState);
     if (mergedVideo) {
@@ -149,7 +157,8 @@ const styles = StyleSheet.create({
   },
   buttonFontStyle: {
     fontSize: 20,
-    fontFamily: Platform.OS === 'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
+    fontFamily: Platform.OS ===
+      'ios' ? 'd puntillas D to tiptoe' : 'Dpuntillas-Regular',
   },
   mergeButton: {
     position: 'absolute',
