@@ -7,45 +7,54 @@
  */
 
 import * as React from 'react';
-import { StyleSheet, View }  from 'react-native';
-import { RNCamera } from 'react-native-camera';
+import {Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {RNCamera} from 'react-native-camera';
 import RNFS from 'react-native-fs';
 import VideoPlayer from './Player';
-import { PlayerState } from './Constants';
-import {  generateHash, deleteMediaFile, listDirContents } from './Utils';
+import {PlayerState} from './Constants';
+import {generateHash, deleteMediaFile, requestMicPermission} from './Utils';
+import PropTypes from 'prop-types';
 
+/**
+ * Handles video recording functionalities
+ * @param {object} props
+ * @return {string}
+ */
 export default function VideoRecorder(props) {
   let cameraRef;
-  const { updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
-   isMerging, setMerging } = props;
+  const {updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
+    isMerging, setMerging} = props;
   const state = playersState[curScreenNum].state;
-  const videoOnly = playersState[curScreenNum].videoOnly
-  const videoWithAudio = playersState[curScreenNum].videoWithAudio
+  const videoOnly = playersState[curScreenNum].videoOnly;
 
   React.useEffect(() => {
+    /**
+     * Starts video recording
+     */
     async function startRecording() {
+      let preVideoOnly;
       try {
-        // listDirContents(RNFS.CachesDirectoryPath);
-        preVideoOnly = videoOnly;
-        preVideoWithAudio = videoWithAudio;
-        const options = { path: RNFS.CachesDirectoryPath + '/' + generateHash() +
-          '_video_' + curScreenNum + '.mp4' },
-          { uri } = await cameraRef.recordAsync(options);
-        await deleteMediaFile(preVideoOnly);
-        if (preVideoWithAudio != '') {
-          await deleteMediaFile(preVideoWithAudio);
+        if (Platform.OS === 'android') {
+          await requestMicPermission();
         }
+        preVideoOnly = videoOnly;
+        const options = {path: RNFS.CachesDirectoryPath + '/' + generateHash() +
+          '_video_' + curScreenNum + '.mp4'};
+        const {uri} = await cameraRef.recordAsync(options);
+        await deleteMediaFile(preVideoOnly);
         updatePlayersState('videoOnly', uri);
-        // listDirContents(RNFS.CachesDirectoryPath);
       } catch (ex) {
         console.log(ex);
       }
     }
 
+    /**
+     * Stops video recording
+     */
     async function stopRecording() {
       try {
         console.log('Stop the recording...');
-        updatePlayersState('videoWithAudio', '');
         await cameraRef.stopRecording();
       } catch (ex) {
         console.log(ex);
@@ -58,16 +67,15 @@ export default function VideoRecorder(props) {
       } catch (ex) {
         console.log(ex);
       }
-    } else if (state === PlayerState.VIDEO_SAVED){
+    } else if (state === PlayerState.VIDEO_SAVED) {
       stopRecording();
     }
-  }, [state, curScreenNum, videoOnly, videoWithAudio]);
+  }, [state, curScreenNum, videoOnly, cameraRef, updatePlayersState]);
 
   return (
     <View style={styles.cameraContainer}>
       {
-        (state === PlayerState.VIDEO_SAVED || state === PlayerState.STOP_AUDIO_RECORDING || state === PlayerState.START_AUDIO_RECORDING ||
-          state === PlayerState.AUDIO_VIDEO_SAVED) &&
+        (state === PlayerState.VIDEO_SAVED) &&
         <VideoPlayer
           playersState={playersState}
           updatePlayersState={updatePlayersState}
@@ -78,10 +86,13 @@ export default function VideoRecorder(props) {
         />
       }
       {
-        (state === PlayerState.NONE || state === PlayerState.START_VIDEO_RECORDING) && (
+        (state === PlayerState.NONE || state ===
+          PlayerState.START_VIDEO_RECORDING) && (
           <>
             <RNCamera
-              ref={ref => { cameraRef = ref; }}
+              ref={(ref) => {
+                cameraRef = ref;
+              }}
               style={styles.cameraContainer}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.off}
@@ -97,14 +108,22 @@ export default function VideoRecorder(props) {
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}
-              captureAudio={false}>
-            </RNCamera>
+              captureAudio={true} />
           </>
         )
       }
     </View>
   );
 }
+
+VideoRecorder.propTypes = {
+  updatePlayersState: PropTypes.func,
+  curScreenNum: PropTypes.number,
+  playersState: PropTypes.array,
+  updateZubVideoUrl: PropTypes.func,
+  isMerging: PropTypes.bool,
+  setMerging: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   cameraContainer: {
