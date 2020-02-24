@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import AwesomeButtonCartman from
   'react-native-really-awesome-button/src/themes/cartman';
 import AwesomeButtonRick from
@@ -110,14 +110,8 @@ export default function ScreenTitle(props) {
                 </Text>
               }
 
-              <Text style={styles.infoBoxText}>NOTE: Use the
-                <Image style={styles.videoButtonImage}
-                  source={require('../images/video-button.png')} />
-                  button to record the video first, then &nbsp;
-                <Image style={styles.audioButtonImage}
-                  source={require('../images/audio-button.png')} />
-                  &nbsp; button to voice over it.
-              </Text>
+              <Text style={styles.infoBoxText}>NOTE: Use the "REC" button to
+              record the video.</Text>
 
               <View style={styles.infoBoxBody}>
                 <AwesomeButtonRick
@@ -129,13 +123,12 @@ export default function ScreenTitle(props) {
                   onPress={() => {
                     setIsModalVisible(!isModalVisible);
                   }}>
-                  <Text style={[styles.okText]}>
-                    <FontAwesomeIcon
-                      icon={ faCheckCircle }
-                      color={ '#34711f' }
-                      size={20}
-                    /> OK
-                  </Text>
+                  <Text style={[styles.okText]}> OK </Text>
+                  <FontAwesomeIcon
+                    icon={ faCheckCircle }
+                    color={ '#34711f' }
+                    size={20}
+                  />
                 </AwesomeButtonRick>
               </View>
             </View>

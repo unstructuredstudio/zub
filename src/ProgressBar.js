@@ -75,7 +75,7 @@ export default function ProgressBar(props) {
 
 ProgressBar.propTypes = {
   curScreenNum: PropTypes.number,
-  playersState: PropTypes.object,
+  playersState: PropTypes.array,
   updatePlayersState: PropTypes.func,
 };
 
