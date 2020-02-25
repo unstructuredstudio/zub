@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 export default function VideoRecorder(props) {
   let cameraRef;
   const {updatePlayersState, curScreenNum, playersState, updateZubVideoUrl,
-    isMerging, setMerging} = props;
+    isMerging, setMerging, setCurScreenNum } = props;
   const state = playersState[curScreenNum].state;
   const videoOnly = playersState[curScreenNum].videoOnly;
 
@@ -81,6 +81,7 @@ export default function VideoRecorder(props) {
           updatePlayersState={updatePlayersState}
           updateZubVideoUrl={updateZubVideoUrl}
           curScreenNum={curScreenNum}
+          setCurScreenNum={setCurScreenNum}
           isMerging={isMerging}
           setMerging={setMerging}
         />

@@ -15,7 +15,7 @@ import AwesomeButtonRick from
 import {mergeVideos} from './Utils';
 import {FontAwesomeIcon} from
   '@fortawesome/react-native-fontawesome';
-import {faPlay, faPause, faCheckCircle, faRedo}
+import {faPlay, faPause, faCheckCircle, faRedo, faAngleRight}
   from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -25,7 +25,7 @@ import {faPlay, faPause, faCheckCircle, faRedo}
  */
 export default function VideoPlayer(props) {
   const {curScreenNum, updatePlayersState, playersState, updateZubVideoUrl,
-    isMerging, setMerging} = props;
+    isMerging, setMerging, setCurScreenNum} = props;
 
   const state = playersState[curScreenNum].state;
   const [videoPaused, setVideoPaused] = React.useState(true);
@@ -71,22 +71,51 @@ export default function VideoPlayer(props) {
                 }
               }}>
               { isMerging ?
-            <Text style={[styles.buttonFontStyle, styles.mergeDisabledText]}>
+              <Text style={[styles.buttonFontStyle, styles.mergeDisabledText]}>
+                MIXING..
+              </Text> :
+              <Text style={[styles.buttonFontStyle, styles.mergeText]}>
+                MIX
+              </Text>
+              }
+              { isMerging ?
               <FontAwesomeIcon
                 icon={ faRedo }
                 color={ '#c7e8ae' }
                 size={20}
-              /> MIXING..
-            </Text> :
-            <Text style={[styles.buttonFontStyle, styles.mergeText]}>
+              /> :
               <FontAwesomeIcon
                 icon={ faCheckCircle }
                 color={ '#34711f' }
                 size={20}
-              /> MIX
-            </Text>
+              />
               }
             </AwesomeButtonRick>
+          </View>
+        }
+
+        {
+          (playersState[0].videoOnly !== '' || playersState[1].videoOnly !== ''
+          || playersState[2].videoOnly !== '') &&
+            !(playersState[0].videoOnly !== '' &&
+            playersState[1].videoOnly !== '' &&
+            playersState[2].videoOnly !== '') &&
+          <View style={styles.nextButton}>
+            <AwesomeButtonRick
+            borderRadius={50}
+            textSize={50}
+            stretch={true}
+            type="anchor"
+            onPress={() => {
+              switchScreen();
+            }}>
+            <Text style={[styles.buttonFontStyle, styles.mergeText]}>NEXT</Text>
+            <FontAwesomeIcon
+              icon={ faAngleRight }
+              color={ '#34711f' }
+              size={20}
+            />
+          </AwesomeButtonRick>
           </View>
         }
 
@@ -126,6 +155,19 @@ export default function VideoPlayer(props) {
       updateZubVideoUrl(mergedVideo);
     }
   }
+
+  function switchScreen() {
+    let nextScreenNum;
+    if (curScreenNum === 0 || curScreenNum === 1) {
+      nextScreenNum = curScreenNum + 1;
+    } else if (curScreenNum === 2) {
+      nextScreenNum = 0;
+    }
+    playersState[curScreenNum].isActive = false;
+    playersState[nextScreenNum].isActive = true;
+    updatePlayersState(playersState);
+    setCurScreenNum(nextScreenNum);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -154,6 +196,12 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
     width: '10%',
+  },
+  nextButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    width: '20%',
   },
   buttonFontStyle: {
     fontSize: 20,

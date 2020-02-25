@@ -128,18 +128,21 @@ export default function ShareScreen(props) {
                 title="Save">
                 { isSaving ?
                 <Text style={[styles.buttonFontStyle, styles.saveDisabledText]}>
+                  SAVING... </Text> :
+                <Text style={[styles.buttonFontStyle, styles.saveText]}>
+                  SAVE </Text>
+                }
+                { isSaving ?
                   <FontAwesomeIcon
                     icon={ faRedo }
                     color={ '#c7e8ae' }
                     size={20}
-                  /> SAVING... </Text> :
-                <Text style={[styles.buttonFontStyle, styles.saveText]}>
+                  /> :
                   <FontAwesomeIcon
                     icon={ faDownload }
                     color={ '#34711f' }
                     size={20}
-                  /> SAVE
-                </Text>
+                  />
                 }
               </AwesomeButtonRick>
             </View>

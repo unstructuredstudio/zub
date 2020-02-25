@@ -139,6 +139,7 @@ export default function PrimaryScreen(props) {
               <VideoRecorder
                 playersState={playersState}
                 curScreenNum={curScreenNum}
+                setCurScreenNum={setCurScreenNum}
                 updateZubVideoUrl={updateZubVideoUrl}
                 updatePlayersState={updatePlayersState}
                 isMerging={isMerging}
