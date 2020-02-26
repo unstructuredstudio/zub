@@ -5,8 +5,10 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* zubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* zubTests.m */; };
+		0BFA0394727E4AF2BF976489 /* Dpuntillas-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -18,8 +20,10 @@
 		4662A1BFEDC4F1570BEB6DEE /* libPods-zub-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AFFC1D1BFFB2941FD19CD10 /* libPods-zub-tvOS.a */; };
 		618E2ED15AB6083CAB2BE718 /* libPods-zubTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9F47594FB0A11F3ACC2DFD /* libPods-zubTests.a */; };
 		7A85706E9C500FA97474FB93 /* libPods-zub-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12CF25D2AFB97D36B1D07B98 /* libPods-zub-tvOSTests.a */; };
+		A9C9547024062492009E2D2F /* title-making-h264.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9C9546F24062492009E2D2F /* title-making-h264.mp4 */; };
+		A9C95473240624A3009E2D2F /* title-motivation-h264.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9C95471240624A3009E2D2F /* title-motivation-h264.mp4 */; };
+		A9C95474240624A3009E2D2F /* title-materials-h264.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9C95472240624A3009E2D2F /* title-materials-h264.mp4 */; };
 		CD529FC2220D7B52E2A577C1 /* libPods-zub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E21A18AA4244E70C11E88258 /* libPods-zub.a */; };
-		0BFA0394727E4AF2BF976489 /* Dpuntillas-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +184,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = zub/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = zub/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = zub/main.m; sourceTree = "<group>"; };
+		2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Dpuntillas-Regular.ttf"; path = "../assets/fonts/Dpuntillas-Regular.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* zub-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "zub-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* zub-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zub-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64C23F47FC16731EEA187FBB /* Pods-zub-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOS.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOS/Pods-zub-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,6 +195,12 @@
 		A97F8C6722F2C5C00032D603 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		A97F8C9C22F2C62A0032D603 /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libyoga.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97F8CA022F2C6370032D603 /* libDoubleConversion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDoubleConversion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9C95469240623DC009E2D2F /* videos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = videos; path = ../assets/videos; sourceTree = "<group>"; };
+		A9C9546B240623FC009E2D2F /* title-making-h264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "title-making-h264.mp4"; path = "../assets/videos/title-making-h264.mp4"; sourceTree = "<group>"; };
+		A9C9546D24062423009E2D2F /* videos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = videos; path = ../assets/videos; sourceTree = "<group>"; };
+		A9C9546F24062492009E2D2F /* title-making-h264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "title-making-h264.mp4"; path = "../assets/videos/title-making-h264.mp4"; sourceTree = "<group>"; };
+		A9C95471240624A3009E2D2F /* title-motivation-h264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "title-motivation-h264.mp4"; path = "../assets/videos/title-motivation-h264.mp4"; sourceTree = "<group>"; };
+		A9C95472240624A3009E2D2F /* title-materials-h264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "title-materials-h264.mp4"; path = "../assets/videos/title-materials-h264.mp4"; sourceTree = "<group>"; };
 		B50B8C2DAAF016631AEE68AA /* Pods-zub-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E21A18AA4244E70C11E88258 /* libPods-zub.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-zub.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E621994E62DD54EB30A502D8 /* Pods-zub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.debug.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,7 +208,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED76A4C2DF3381624D1F0EA0 /* Pods-zub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub.release.xcconfig"; path = "Target Support Files/Pods-zub/Pods-zub.release.xcconfig"; sourceTree = "<group>"; };
 		F86BEAD46711B22ADADF049C /* Pods-zub-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zub-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-zub-tvOSTests/Pods-zub-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */ = {isa = PBXFileReference; name = "Dpuntillas-Regular.ttf"; path = "../assets/fonts/Dpuntillas-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,6 +307,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7CCC31DF50A14B4DB619164C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +327,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A9C95472240624A3009E2D2F /* title-materials-h264.mp4 */,
+				A9C95471240624A3009E2D2F /* title-motivation-h264.mp4 */,
+				A9C9546F24062492009E2D2F /* title-making-h264.mp4 */,
+				A9C9546D24062423009E2D2F /* videos */,
+				A9C9546B240623FC009E2D2F /* title-making-h264.mp4 */,
+				A9C95469240623DC009E2D2F /* videos */,
 				13B07FAE1A68108700A75B9A /* zub */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* zubTests */,
@@ -364,15 +388,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		7CCC31DF50A14B4DB619164C /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				2A44980DA1C34EC9B2BF2CF1 /* Dpuntillas-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -656,6 +671,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C95473240624A3009E2D2F /* title-motivation-h264.mp4 in Resources */,
+				A9C95474240624A3009E2D2F /* title-materials-h264.mp4 in Resources */,
+				A9C9547024062492009E2D2F /* title-making-h264.mp4 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				0BFA0394727E4AF2BF976489 /* Dpuntillas-Regular.ttf in Resources */,
