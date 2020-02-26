@@ -7,7 +7,7 @@
  */
 
 import {PermissionsAndroid, Platform} from 'react-native';
-import RNFS, { existsAssets } from 'react-native-fs';
+import RNFS from 'react-native-fs';
 import CameraRoll from '@react-native-community/cameraroll';
 import {RNFFmpeg} from 'react-native-ffmpeg';
 
@@ -56,6 +56,18 @@ async function requestStoragePermission() {
     console.error('Failed to request permission ', err);
     return null;
   }
+}
+/**
+ * Checks if a file exists
+ * @param {string} file
+ * @return {promise} promise
+ */
+export async function fileExists(file) {
+  const exists = await RNFS.exists(file);
+  if (exists) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -134,25 +146,39 @@ export async function mergeVideos(playersState) {
   const t0 = cacheDir + '/t0.ts';
   const t1 = cacheDir + '/t1.ts';
   const t2 = cacheDir + '/t2.ts';
+  const title0 = cacheDir + '/title0.mp4';
+  const title1 = cacheDir + '/title1.mp4';
+  const title2 = cacheDir + '/title2.mp4';
 
   // Synfig animations were first geenrated as MPEG4-part 2 (ffmpeg) then converted to h264
   // via "ffmpeg -i title-materials.mp4 -vcodec libx264 title-materials-h264.mp4"
 
   // Copy the titles to cacheDir
-  // TODO: Ensure assets are physically present in iOS and are then copied. Then, test!
   if (Platform.OS === 'android') {
-    await RNFS.copyFileAssets('videos/title-motivation-h264.mp4', cacheDir + '/title0.mp4');
-    await RNFS.copyFileAssets('videos/title-materials-h264.mp4', cacheDir + '/title1.mp4');
-    await RNFS.copyFileAssets('videos/title-making-h264.mp4', cacheDir + '/title2.mp4');
-  } else if (Platform.OS === 'ios'){
-    await RNFS.copyAssetsFileIOS('videos/title-motivation-h264.mp4', cacheDir + '/title0.mp4', 0, 0);
-    await RNFS.copyAssetsFileIOS('videos/title-motivation-h264.mp4', cacheDir + '/title1.mp4', 0, 0);
-    await RNFS.copyAssetsFileIOS('videos/title-motivation-h264.mp4', cacheDir + '/title2.mp4', 0, 0);
-  }
+    if (!(await fileExists(title0))) {
+      await RNFS.copyFileAssets('videos/title-motivation-h264.mp4', title0);
+    }
 
-  const title0 = cacheDir + '/title0.mp4';
-  const title1 = cacheDir + '/title1.mp4';
-  const title2 = cacheDir + '/title2.mp4';
+    if (!(await fileExists(title1))) {
+      await RNFS.copyFileAssets('videos/title-materials-h264.mp4', title1);
+    }
+
+    if (!(await fileExists(title2))) {
+      await RNFS.copyFileAssets('videos/title-making-h264.mp4', title2);
+    }
+  } else if (Platform.OS === 'ios'){
+    if (!(await fileExists(title0))) {
+      await RNFS.copyFile(RNFS.MainBundlePath + '/title-motivation-h264.mp4', title0);
+    }
+
+    if (!(await fileExists(title1))) {
+      await RNFS.copyFile(RNFS.MainBundlePath + '/title-materials-h264.mp4', title1);
+    }
+
+    if (!(await fileExists(title2))) {
+      await RNFS.copyFile(RNFS.MainBundlePath + '/title-making-h264.mp4', title2);
+    }
+  }
 
   const zubVid = cacheDir + '/zub_video.mp4';
   const ffTransCmd = ' -c copy -bsf:v h264_mp4toannexb -f mpegts ';
@@ -165,6 +191,8 @@ export async function mergeVideos(playersState) {
   const promise5 = deleteMediaFile(t0);
   const promise6 = deleteMediaFile(t1);
   const promise7 = deleteMediaFile(t2);
+
+  let output;
 
   await Promise.all([promise1, promise2, promise3,
     promise4, promise5, promise6, promise7]).then(function(res) {
@@ -183,7 +211,7 @@ export async function mergeVideos(playersState) {
 
   await RNFFmpeg.execute('-i ' + title1 + ffTransCmd + t1)
       .then((title) => console.log(title.rc));
-  
+
   await RNFFmpeg.execute('-i ' + title2 + ffTransCmd + t2)
       .then((title) => console.log(title.rc));
 

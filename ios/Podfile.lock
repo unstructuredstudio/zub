@@ -58,13 +58,13 @@ PODS:
     - React-cxxreact (= 0.60.4)
     - React-jsi (= 0.60.4)
   - React-jsinspector (0.60.4)
-  - react-native-camera (3.11.1):
+  - react-native-camera (3.13.1):
     - React
-    - react-native-camera/RCT (= 3.11.1)
-    - react-native-camera/RN (= 3.11.1)
-  - react-native-camera/RCT (3.11.1):
+    - react-native-camera/RCT (= 3.13.1)
+    - react-native-camera/RN (= 3.13.1)
+  - react-native-camera/RCT (3.13.1):
     - React
-  - react-native-camera/RN (3.11.1):
+  - react-native-camera/RN (3.13.1):
     - React
   - react-native-cameraroll (1.3.0):
     - React
@@ -74,10 +74,10 @@ PODS:
   - react-native-ffmpeg/https (0.3.6):
     - mobile-ffmpeg-https (= 4.2.2)
     - React
-  - react-native-video (5.0.2):
+  - react-native-video (4.4.4):
     - React
-    - react-native-video/Video (= 5.0.2)
-  - react-native-video/Video (5.0.2):
+    - react-native-video/Video (= 4.4.4)
+  - react-native-video/Video (4.4.4):
     - React
   - React-RCTActionSheet (0.60.4):
     - React-Core (= 0.60.4)
@@ -226,10 +226,10 @@ SPEC CHECKSUMS:
   React-jsi: 21d3153b1153fbf6510a92b6b11e33e725cb7432
   React-jsiexecutor: 7549641e48bafae7bfee3f3ea19bf4901639c5de
   React-jsinspector: 73f24a02fa684ed6a2b828ba116874a2191ded88
-  react-native-camera: b7ad0c9648c3ea83f58a3ef4f815ab4acd88dc7e
+  react-native-camera: 0a8d6bb1c1c8bcdf1d6d9105b418ac8b0fe35af9
   react-native-cameraroll: ad20f5a93c25cb83a76455df57a2c62fbb63aaed
   react-native-ffmpeg: 6fff131b518706f0672d25784f11399c06a45f08
-  react-native-video: 961749da457e73bf0b5565edfbaffc25abfb8974
+  react-native-video: 25d5aebb3c9d7cdefe7a909306c7ab40be4a892c
   React-RCTActionSheet: 9f71d7ae3e8fb10e08d162cbf14c621349dbfab3
   React-RCTAnimation: 981d8c95b0e30918a9832ccac32af83562a27fae
   React-RCTBlob: 21e73d1020a302a75fed30dbaee9f15287b80baa
