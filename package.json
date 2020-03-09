@@ -23,6 +23,7 @@
     "react-native": "0.60.4",
     "react-native-animated-bar": "^0.2.0",
     "react-native-camera": "^3.13.1",
+    "react-native-device-info": "^5.5.3",
     "react-native-ffmpeg": "^0.3.6",
     "react-native-fontawesome": "^7.0.0",
     "react-native-fs": "^2.16.2",

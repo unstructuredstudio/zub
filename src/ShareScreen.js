@@ -14,12 +14,13 @@ import AwesomeButtonRick from
   'react-native-really-awesome-button/src/themes/rick';
 import {FontAwesomeIcon} from
   '@fortawesome/react-native-fontawesome';
-import {faDownload, faPlay, faChevronLeft, faPause, faRedo, faCheckCircle}
+import {faDownload, faPlay, faChevronLeft, faPause, faRedo, faCheckCircle, faShare}
   from '@fortawesome/free-solid-svg-icons';
 import {saveToCameraRoll} from './Utils';
 import Modal from 'react-native-modal';
 import {PlayerState} from './Constants';
 import PropTypes from 'prop-types';
+import DeviceInfo, { getUniqueId } from 'react-native-device-info';
 
 /**
  * Screen that allows playing & saving the final recording
@@ -33,6 +34,10 @@ export default function ShareScreen(props) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const zubVideoUrl = props.navigation.getParam('zubVideoUrl');
   const playersState = props.navigation.getParam('playersState');
+
+  // TODO: This is security by obscurity (bad!). Need to replace later on by pinned device certificates/user identity.
+  // For production env, replace "ZUB" with unique/hidden env identifier added to DEVICE_INFO in Zub as well as ZubHub.
+  var DEVICE_ID = 'ZUB:'+DeviceInfo.getUniqueId();
 
   /**
    * Resets player states
@@ -146,6 +151,42 @@ export default function ShareScreen(props) {
                 }
               </AwesomeButtonRick>
             </View>
+            <View style={styles.shareButton}>
+              <AwesomeButtonRick
+                borderRadius={50}
+                height={50}
+                textSize={30}
+                width={250}
+                type={'anchor'}
+                onPress={() => {
+                  // TODO: Complete the Uploade API Process
+                  // 1. First Fetch upload token via API call to /api/uploadToken
+                  // 2. Make API call to Vimeo to upload video
+                  fetch('http://localhost:5000/api/uploadToken/'+DEVICE_ID)
+                    .then((res) => res.json())
+                    .then((responseJson) => {
+                      console.log(responseJson);
+                      // Make Vimeo API calls to upload
+                      console.log("Uploading...")
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                  });
+                }}
+                title="Share">
+                { 
+                <Text style={[styles.buttonFontStyle, styles.saveText]}>
+                  Share on ZubHub </Text>
+                }
+                {
+                  <FontAwesomeIcon
+                    icon={ faShare }
+                    color={ '#34711f' }
+                    size={20}
+                  />
+                }
+              </AwesomeButtonRick>
+            </View>
           </View>
           <Modal isVisible={isModalVisible}>
             <View style={styles.infoBox}>
@@ -221,10 +262,17 @@ const styles = StyleSheet.create({
     left: 10,
     width: '10%',
   },
-  downloadButton: {
+  
+  shareButton: {
     position: 'absolute',
     bottom: 10,
-    right: 10,
+    right: 20,
+  },
+
+  downloadButton: {
+    position: 'absolute',
+    bottom: 70,
+    right: 20,
   },
   saveText: {
     color: '#34711f',
