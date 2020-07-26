@@ -1,4 +1,4 @@
-package com.zub;
+package studio.unstructured.zub;
 
 import android.app.Application;
 import android.util.Log;

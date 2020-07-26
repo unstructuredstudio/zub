@@ -1,4 +1,4 @@
-package com.zub;
+package studio.unstructured.zub;
 
 import com.facebook.react.ReactActivity;
 
