@@ -109,7 +109,7 @@ export async function saveToCameraRoll(filePath) {
   if (Platform.OS === 'android') {
     await requestStoragePermission();
   }
-  promise = await CameraRoll.saveToCameraRoll(filePath, 'video');
+  promise = await CameraRoll.save(filePath, 'video');
   // Clean app cache after saving merged video to remove temporary files
   cleanCache();
   return promise;
